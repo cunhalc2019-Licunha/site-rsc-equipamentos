@@ -1,0 +1,120 @@
+{
+  "sectors": [
+    {
+      "slug": "refrigeracao",
+      "name": "Refrigeração",
+      "desc": "Balcões, freezers, cervejeiras e expositores para conservar e vender melhor.",
+      "cover": "img/freezer.jpg"
+    },
+    {
+      "slug": "coccao",
+      "name": "Cocção",
+      "desc": "Fritadeiras, broilers, chapas e fogões industriais de alto desempenho.",
+      "cover": "img/broiler.jpg"
+    },
+    {
+      "slug": "acougue",
+      "name": "Açougue",
+      "desc": "Serras fita, moedores e equipamentos para processamento de carnes.",
+      "cover": "img/serra-fita.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": "balcao-refrigerado-1p-inox",
+      "name": "Balcão Refrigerado 1 Porta Inox",
+      "brand": "Aço inox · 220V",
+      "sector": "refrigeracao",
+      "images": ["img/balcao.jpg", "img/balcao2.jpg"],
+      "price": 2900,
+      "oldPrice": 5400,
+      "methods": ["pix"],
+      "badge": "Promoção",
+      "condition": "Seminovo",
+      "stock": 1,
+      "desc": "Balcão refrigerado de 1 porta, totalmente em aço inox. Em ótimo estado e funcionando perfeitamente. Ideal para bares, restaurantes e lanchonetes.",
+      "specs": {
+        "Medidas (C × L × A)": "1,50 × 0,72 × 0,89 m",
+        "Tensão": "220 volts",
+        "Material": "Aço inox",
+        "Garantia": "3 meses pela loja"
+      },
+      "note": "Preço promocional somente para pagamento à vista (PIX)."
+    },
+    {
+      "id": "cervejeira-slim-gelopar",
+      "name": "Cervejeira Slim",
+      "brand": "Gelopar",
+      "sector": "refrigeracao",
+      "images": ["img/cervejeira.jpg"],
+      "price": null,
+      "condition": "Seminovo",
+      "stock": 1,
+      "desc": "Cervejeira vertical slim com adesivagem personalizada. Perfeita para bares, choperias e conveniências.",
+      "specs": { "Marca": "Gelopar", "Tipo": "Vertical slim" }
+    },
+    {
+      "id": "freezer-dupla-acao-metalfrio",
+      "name": "Freezer Dupla Ação",
+      "brand": "Metalfrio",
+      "sector": "refrigeracao",
+      "images": ["img/freezer.jpg"],
+      "price": null,
+      "condition": "Seminovo",
+      "stock": 1,
+      "desc": "Funciona como refrigerador ou freezer. Porta de vidro para exposição de produtos.",
+      "specs": { "Marca": "Metalfrio", "Função": "Refrigerador / Freezer", "Porta": "Vidro" }
+    },
+    {
+      "id": "expositor-vertical",
+      "name": "Expositor Vertical Refrigerado",
+      "brand": "Porta de vidro",
+      "sector": "refrigeracao",
+      "images": ["img/expositor.jpg"],
+      "price": null,
+      "condition": "Seminovo",
+      "stock": 1,
+      "desc": "Expositor refrigerado vertical com prateleiras aramadas. Ideal para bebidas e laticínios.",
+      "specs": { "Tipo": "Vertical", "Prateleiras": "Aramadas" }
+    },
+    {
+      "id": "broiler-macom",
+      "name": "Broiler a Gás",
+      "brand": "Macom",
+      "sector": "coccao",
+      "images": ["img/broiler.jpg"],
+      "price": null,
+      "condition": "Seminovo",
+      "stock": 1,
+      "desc": "Char broiler em aço inox com grelha de ferro fundido. Marcas de grelhado perfeitas.",
+      "specs": { "Marca": "Macom", "Alimentação": "Gás" }
+    },
+    {
+      "id": "fritadeiras-vulcan-macom",
+      "name": "Fritadeiras Vulcan e Macom",
+      "brand": "Vulcan · Macom",
+      "sector": "coccao",
+      "images": ["img/fritadeiras.jpg"],
+      "price": null,
+      "discounts": { "card": 7, "pix": 13 },
+      "badge": "Até 13% off",
+      "condition": "Consulte",
+      "stock": 5,
+      "desc": "Alto desempenho, durabilidade e economia de óleo e energia. 7% de desconto no cartão ou 13% de desconto no PIX.",
+      "specs": { "Marcas": "Vulcan e Macom", "Desconto cartão": "7%", "Desconto PIX": "13%" }
+    },
+    {
+      "id": "serra-fita-skymsen",
+      "name": "Serra Fita para Açougue",
+      "brand": "Skymsen",
+      "sector": "acougue",
+      "images": ["img/serra-fita.jpg"],
+      "price": null,
+      "badge": "Promoção",
+      "condition": "Seminovo",
+      "stock": 1,
+      "desc": "Serra fita profissional em aço inox com mesa deslizante. Corte preciso de carnes e ossos.",
+      "specs": { "Marca": "Skymsen", "Material": "Aço inox" }
+    }
+  ]
+}
