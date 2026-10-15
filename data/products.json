@@ -1,120 +1,3959 @@
 {
-  "sectors": [
-    {
-      "slug": "refrigeracao",
-      "name": "Refrigeração",
-      "desc": "Balcões, freezers, cervejeiras e expositores para conservar e vender melhor.",
-      "cover": "img/freezer.jpg"
-    },
-    {
-      "slug": "coccao",
-      "name": "Cocção",
-      "desc": "Fritadeiras, broilers, chapas e fogões industriais de alto desempenho.",
-      "cover": "img/broiler.jpg"
-    },
-    {
-      "slug": "acougue",
-      "name": "Açougue",
-      "desc": "Serras fita, moedores e equipamentos para processamento de carnes.",
-      "cover": "img/serra-fita.jpg"
-    }
-  ],
-  "products": [
-    {
-      "id": "balcao-refrigerado-1p-inox",
-      "name": "Balcão Refrigerado 1 Porta Inox",
-      "brand": "Aço inox · 220V",
-      "sector": "refrigeracao",
-      "images": ["img/balcao.jpg", "img/balcao2.jpg"],
-      "price": 2900,
-      "oldPrice": 5400,
-      "methods": ["pix"],
-      "badge": "Promoção",
-      "condition": "Seminovo",
-      "stock": 1,
-      "desc": "Balcão refrigerado de 1 porta, totalmente em aço inox. Em ótimo estado e funcionando perfeitamente. Ideal para bares, restaurantes e lanchonetes.",
-      "specs": {
-        "Medidas (C × L × A)": "1,50 × 0,72 × 0,89 m",
-        "Tensão": "220 volts",
-        "Material": "Aço inox",
-        "Garantia": "3 meses pela loja"
-      },
-      "note": "Preço promocional somente para pagamento à vista (PIX)."
-    },
-    {
-      "id": "cervejeira-slim-gelopar",
-      "name": "Cervejeira Slim",
-      "brand": "Gelopar",
-      "sector": "refrigeracao",
-      "images": ["img/cervejeira.jpg"],
-      "price": null,
-      "condition": "Seminovo",
-      "stock": 1,
-      "desc": "Cervejeira vertical slim com adesivagem personalizada. Perfeita para bares, choperias e conveniências.",
-      "specs": { "Marca": "Gelopar", "Tipo": "Vertical slim" }
-    },
-    {
-      "id": "freezer-dupla-acao-metalfrio",
-      "name": "Freezer Dupla Ação",
-      "brand": "Metalfrio",
-      "sector": "refrigeracao",
-      "images": ["img/freezer.jpg"],
-      "price": null,
-      "condition": "Seminovo",
-      "stock": 1,
-      "desc": "Funciona como refrigerador ou freezer. Porta de vidro para exposição de produtos.",
-      "specs": { "Marca": "Metalfrio", "Função": "Refrigerador / Freezer", "Porta": "Vidro" }
-    },
-    {
-      "id": "expositor-vertical",
-      "name": "Expositor Vertical Refrigerado",
-      "brand": "Porta de vidro",
-      "sector": "refrigeracao",
-      "images": ["img/expositor.jpg"],
-      "price": null,
-      "condition": "Seminovo",
-      "stock": 1,
-      "desc": "Expositor refrigerado vertical com prateleiras aramadas. Ideal para bebidas e laticínios.",
-      "specs": { "Tipo": "Vertical", "Prateleiras": "Aramadas" }
-    },
-    {
-      "id": "broiler-macom",
-      "name": "Broiler a Gás",
-      "brand": "Macom",
-      "sector": "coccao",
-      "images": ["img/broiler.jpg"],
-      "price": null,
-      "condition": "Seminovo",
-      "stock": 1,
-      "desc": "Char broiler em aço inox com grelha de ferro fundido. Marcas de grelhado perfeitas.",
-      "specs": { "Marca": "Macom", "Alimentação": "Gás" }
-    },
-    {
-      "id": "fritadeiras-vulcan-macom",
-      "name": "Fritadeiras Vulcan e Macom",
-      "brand": "Vulcan · Macom",
-      "sector": "coccao",
-      "images": ["img/fritadeiras.jpg"],
-      "price": null,
-      "discounts": { "card": 7, "pix": 13 },
-      "badge": "Até 13% off",
-      "condition": "Consulte",
-      "stock": 5,
-      "desc": "Alto desempenho, durabilidade e economia de óleo e energia. 7% de desconto no cartão ou 13% de desconto no PIX.",
-      "specs": { "Marcas": "Vulcan e Macom", "Desconto cartão": "7%", "Desconto PIX": "13%" }
-    },
-    {
-      "id": "serra-fita-skymsen",
-      "name": "Serra Fita para Açougue",
-      "brand": "Skymsen",
-      "sector": "acougue",
-      "images": ["img/serra-fita.jpg"],
-      "price": null,
-      "badge": "Promoção",
-      "condition": "Seminovo",
-      "stock": 1,
-      "desc": "Serra fita profissional em aço inox com mesa deslizante. Corte preciso de carnes e ossos.",
-      "specs": { "Marca": "Skymsen", "Material": "Aço inox" }
-    }
-  ]
+ "sectors": [
+  {
+   "slug": "pias",
+   "name": "Pias e tanques",
+   "desc": "Pias, tanques e cubas industriais em aço inox.",
+   "cover": "img/produtos/rsc-produto-001.jpg"
+  },
+  {
+   "slug": "estantes",
+   "name": "Estantes e prateleiras",
+   "desc": "Estantes, prateleiras e roupeiros em aço inox.",
+   "cover": "img/produtos/rsc-produto-017.jpg"
+  },
+  {
+   "slug": "mesas-inox",
+   "name": "Mesas de inox",
+   "desc": "Mesas de trabalho em aço inox, com ou sem espelho e prateleira.",
+   "cover": "img/produtos/rsc-produto-036.jpg"
+  },
+  {
+   "slug": "geladeiras",
+   "name": "Geladeiras e freezers",
+   "desc": "Geladeiras expositoras, cervejeiras, freezers e adegas.",
+   "cover": "img/produtos/rsc-produto-066.jpg"
+  },
+  {
+   "slug": "balcoes-refrigerados",
+   "name": "Balcões refrigerados",
+   "desc": "Balcões refrigerados e vitrines em aço inox.",
+   "cover": "img/produtos/rsc-produto-081.jpg"
+  },
+  {
+   "slug": "cortadores",
+   "name": "Cortadores e processadores",
+   "desc": "Cortadores de frios, fatiadores e processadores.",
+   "cover": "img/produtos/rsc-produto-099.jpg"
+  },
+  {
+   "slug": "fogoes",
+   "name": "Fogões, chapas e char broiler",
+   "desc": "Fogões industriais, chapas, char broilers e bifeteiras.",
+   "cover": "img/produtos/rsc-produto-112.jpg"
+  },
+  {
+   "slug": "fritadeiras",
+   "name": "Fritadeiras",
+   "desc": "Fritadeiras industriais elétricas e a gás.",
+   "cover": "img/produtos/rsc-produto-131.jpg"
+  },
+  {
+   "slug": "fornos",
+   "name": "Fornos e aquecedores",
+   "desc": "Fornos, salamandras, estufas e aquecedores.",
+   "cover": "img/produtos/rsc-produto-139.jpg"
+  },
+  {
+   "slug": "seladoras",
+   "name": "Seladoras a vácuo",
+   "desc": "Seladoras a vácuo para conservação de alimentos.",
+   "cover": "img/produtos/rsc-produto-153.jpg"
+  },
+  {
+   "slug": "balancas",
+   "name": "Balanças e etiquetadoras",
+   "desc": "Balanças comerciais e etiquetadoras.",
+   "cover": "img/produtos/rsc-produto-160.jpg"
+  },
+  {
+   "slug": "masseiras",
+   "name": "Masseiras e batedeiras",
+   "desc": "Masseiras, batedeiras e cilindros para panificação.",
+   "cover": "img/produtos/rsc-produto-168.jpg"
+  },
+  {
+   "slug": "moedores",
+   "name": "Moedores de carne",
+   "desc": "Moedores de carne industriais.",
+   "cover": "img/produtos/rsc-produto-170.jpg"
+  },
+  {
+   "slug": "utensilios",
+   "name": "Utensílios novos",
+   "desc": "Utensílios novos para cozinha profissional.",
+   "cover": "img/produtos/rsc-produto-173.jpg"
+  },
+  {
+   "slug": "liquidificadores",
+   "name": "Liquidificadores e espremedores",
+   "desc": "Liquidificadores industriais e espremedores.",
+   "cover": "img/produtos/rsc-produto-183.jpg"
+  },
+  {
+   "slug": "loucas",
+   "name": "Taças, copos e pratos",
+   "desc": "Taças, copos, pratos, travessas e louças.",
+   "cover": "img/produtos/rsc-produto-193.jpg"
+  },
+  {
+   "slug": "mesas-cadeiras",
+   "name": "Mesas com cadeiras",
+   "desc": "Jogos de mesa com cadeiras para restaurantes e lanchonetes.",
+   "cover": "img/produtos/rsc-produto-202.jpg"
+  },
+  {
+   "slug": "buffet",
+   "name": "Buffet e banho-maria",
+   "desc": "Buffets térmicos e banho-maria.",
+   "cover": "img/produtos/rsc-produto-216.jpg"
+  },
+  {
+   "slug": "coifas",
+   "name": "Coifas",
+   "desc": "Coifas e exaustores para cozinha industrial.",
+   "cover": "img/produtos/rsc-produto-219.jpg"
+  },
+  {
+   "slug": "escorredores",
+   "name": "Escorredores",
+   "desc": "Escorredores de inox.",
+   "cover": "img/produtos/rsc-produto-223.jpg"
+  }
+ ],
+ "products": [
+  {
+   "id": "tanque-90x70x86-industrial-cuba-funda-todo-no-aco-inox",
+   "name": "Tanque 90x70x86 industrial cuba funda todo no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-001.jpg"
+   ],
+   "price": 1800.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Tanque industrial cuba funda todo no aço inox usado ótimo estado como podemos ver nas fotos (C × L × A) Medidas 90x70x86 Cuba 70x50x45.",
+   "specs": {
+    "Medidas (C × L × A)": "90x70x86"
+   }
+  },
+  {
+   "id": "tanque-60x60x90-cuba-pequena-de-inox",
+   "name": "Tanque 60x60x90 cuba pequena de inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-002.jpg"
+   ],
+   "price": 799.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Tanque cuba pequena de inox no estado de novo (C × L × A) Medidas 60x60x90 Cuba 34x40x16.",
+   "specs": {
+    "Medidas (C × L × A)": "60x60x90"
+   }
+  },
+  {
+   "id": "pia-assepsia-50x50x54marca-macom-toda-no-aco-inox",
+   "name": "Pia assepsia 50x50x54marca MACOM toda no aço inox",
+   "brand": "Macom",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-003.jpg"
+   ],
+   "price": 1100.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia assepsia marca MACOM toda no aço inox usada em ótimo estado (C × L × A) Medidas 50x50x54.",
+   "specs": {
+    "Medidas (C × L × A)": "50x50x54",
+    "Marca": "Macom"
+   }
+  },
+  {
+   "id": "pia-assepsia-54x67x21-de-inox",
+   "name": "Pia assepsia 54x67x21 de inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-004.jpg"
+   ],
+   "price": 450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia assepsia de inox em ótimo estado Medidas 54x67x21 Cuba 35x40x17.",
+   "specs": {
+    "Medidas (C × L × A)": "54x67x21"
+   }
+  },
+  {
+   "id": "pia-assepsia-40x40x27com-acionamento-no-joelho-nova",
+   "name": "Pia assepsia 40x40x27com acionamento no joelho nova",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-005.jpg"
+   ],
+   "price": 1250.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Pia assepsia com acionamento no joelho nova temos a pronta entrega (C × L × A) Medidas 40x40x27 Cuba 25x25x12 cada pia de assepsia em aço inox é um equipamento essencial para ambientes que exigem rigorosos padrões de higiene, como hospitais, clínicas, laboratórios e cozinhas industriais. Sua principal função é permitir a higienização das mãos sem contato manual com a torneira, prevenindo a contaminação cruzada.",
+   "specs": {
+    "Medidas (C × L × A)": "40x40x27"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "pia-3-cubas-1-70x80x92-toda-no-aco-inox",
+   "name": "Pia 3 cubas 1,70x80x92 toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-006.jpg"
+   ],
+   "price": 2980.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "Pia 3 cubas toda no aço inox usada no estado de nova industrial (C × L × A) Medidas 1,70x80x92 Cubas 51x63x40.",
+   "specs": {
+    "Medidas (C × L × A)": "1,70x80x92"
+   }
+  },
+  {
+   "id": "pia-3-10x66x87-2-cubas-grandes-e-fundas-toda-no-aco-inox",
+   "name": "Pia 3,10x66x87. 2 cubas grandes e fundas toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-007.jpg"
+   ],
+   "price": 3850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia Industrial 2 cubas grandes e fundas toda no aço inox usada em ótimo estado como podemos ver nas fotos (C × L × A) Medidas 3,10x66x87 Cuba 61x50x35.",
+   "specs": {
+    "Medidas (C × L × A)": "3,10x66x87"
+   }
+  },
+  {
+   "id": "pia-2-00x60x89-2-cubas-a-do-lado-esquerdo-bem-funda-toda-no-",
+   "name": "Pia 2,00x60x89. 2 cubas a do lado esquerdo bem funda toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-008.jpg"
+   ],
+   "price": 2650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial 2 cubas a do lado esquerdo bem funda toda no aço inox usada em ótimo estado (C × L × A) Medidas 2,00x60x89 Cuba direita 60x40x62 Cuba esquerda 50x40x25.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x60x89"
+   }
+  },
+  {
+   "id": "pia-2-00x60x90-1-cuba-central-toda-no-aco-inox-nova-sem-uso",
+   "name": "Pia 2,00x60x90 .1 cuba central toda no aço inox nova sem uso",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-009.jpg"
+   ],
+   "price": 2950.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Pia 1 cuba central toda no aço inox nova sem uso com prateleira inferior temos outras a pronta entrega fazemos sobre encomenda (C × L × A) Medidas 2,00x60x90 Cuba 50x40x16.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x60x90"
+   }
+  },
+  {
+   "id": "pia-1-cuba-central-1-80x60x90-toda-no-aco-inox",
+   "name": "Pia 1 cuba central 1,80x60x90 toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-010.jpg"
+   ],
+   "price": 1850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial 1 cuba central toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,80x60x90 Cuba 40x34x20.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x60x90"
+   }
+  },
+  {
+   "id": "pia-1-80x60x89-1-cuba-central-industrial-toda-no-aco-inox",
+   "name": "Pia 1,80x60x89 1 cuba central industrial toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-011.jpg"
+   ],
+   "price": 1845.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial 1 cuba central toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,80x60x89 Cuba 40x34x17.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x60x89"
+   }
+  },
+  {
+   "id": "pia-1-80x60x89-1-cuba-central-industrial-toda-no-aco-inox-12",
+   "name": "Pia 1,80x60x89 1 cuba central industrial toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-012.jpg"
+   ],
+   "price": 1840.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial 1 cuba central 1,80x60x89 toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,80x60x89 Cuba 40x34x17.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x60x89"
+   }
+  },
+  {
+   "id": "pia-1-80x60x89-1-cuba-central-industrial-toda-no-aco-inox-13",
+   "name": "Pia 1,80x60x89. 1 cuba central industrial toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-013.jpg"
+   ],
+   "price": 1835.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial 1 cuba central toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,80x60x89 Cuba 40x34x17.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x60x89"
+   }
+  },
+  {
+   "id": "pia-1-80x60x-89-1-cuba-central-toda-no-aco-inox",
+   "name": "Pia 1,80x60x,89. 1 cuba central toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-014.jpg"
+   ],
+   "price": 1815.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial 1 cuba central toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,80x60x89 Cuba 40x34x17.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x60x89"
+   }
+  },
+  {
+   "id": "pia-1-80x60x87-1-cuba-central-toda-no-aco-inox",
+   "name": "Pia 1,80x60x87. 1 cuba central toda no aço inox",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-015.jpg"
+   ],
+   "price": 1810.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pia industrial. 1 cuba central toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,80x60x87 Cuba 40x34x17.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x60x87"
+   }
+  },
+  {
+   "id": "pia-3-17x70x90-2-cuba-central-com-prateleira-inferior-nova-s",
+   "name": "Pia 3,17x70x90 . 2 cuba central com prateleira inferior nova sem uso",
+   "brand": "",
+   "sector": "pias",
+   "images": [
+    "img/produtos/rsc-produto-016.jpg"
+   ],
+   "price": 4800.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Pia industrial 2 cuba central com prateleira inferior nova sem uso toda no aço inox 430 Medidas 3,17x70x90 Cuba 50x40x25.",
+   "specs": {
+    "Medidas (C × L × A)": "3,17x70x90"
+   }
+  },
+  {
+   "id": "estante-93x28x1-78-de-aco-6-prateleira-ajustavel-suporta-30-",
+   "name": "Estante 93x28x1,78 de aço 6 prateleira ajustável suporta 30 kg",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-017.jpg"
+   ],
+   "price": 280.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante de aço 6 prateleira ajustável suporta 30 kg por bandeja nova garantia de 180 dias de fábrica temos a pronta entrega ótimo para estoques (C × L × A) Medidas 93x28x1,78 cada.",
+   "specs": {
+    "Medidas (C × L × A)": "93x28x1,78",
+    "Garantia": "180 dias"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "estante-1-50x50x1-75-lisa-com-4-prateleira-nova-toda-no-aco-",
+   "name": "Estante 1,50x50x1,75 lisa com 4 prateleira Nova toda no aço inox",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-018.jpg"
+   ],
+   "price": 2550.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante lisa com 4 prateleira Nova toda no aço inox 430 temos a pronta entrega, fazemos sobre encomenda na medida que o cliente desejar. Medidas 1,50x50x1,75.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x50x1,75"
+   }
+  },
+  {
+   "id": "estante-1-40x40x1-85-4-planos-toda-no-aco-inox-430-nova",
+   "name": "Estante 1,40x40x1,85 4 planos toda no aço inox 430 nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-019.jpg"
+   ],
+   "price": 2500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante 4 planos toda no aço inox 430 nova temos a pronta entrega fazemos sobre encomenda na medida que vc cliente desejar (C × L × A) Medidas 1,40x40x1,85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x40x1,85"
+   }
+  },
+  {
+   "id": "estante-1-43x55x2-75-de-inox-nova-a-pronta-entrega",
+   "name": "Estante 1,43x55x2,75 de inox nova a pronta entrega",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-020.jpg"
+   ],
+   "price": 2150.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante de inox nova a pronta entrega Medidas 1,43x55x1,75. Fazemos sobe medidas também mesas de inox,pias ,Prateleira.",
+   "specs": {
+    "Medidas (C × L × A)": "1,43x55x1,75"
+   }
+  },
+  {
+   "id": "estante-1-20x50x1-75-lisa-com-4-prateleira-nova-toda-no-aco-",
+   "name": "Estante 1,20x50x1,75 lisa com 4 prateleira Nova toda no aço inox",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-021.jpg"
+   ],
+   "price": 1990.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante lisa com 4 prateleira Nova toda no aço inox 430 temos a pronta entrega, fazemos sobre encomenda na medida que o cliente desejar. Medidas 1,20x50x1,75.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x50x1,75"
+   }
+  },
+  {
+   "id": "estante-1-20x40x1-85-4-planos-toda-no-aco-inox-430-nova",
+   "name": "Estante 1,20x40x1,85 4 planos toda no aço inox 430 nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-022.jpg"
+   ],
+   "price": 2250.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante 1,20x40x1,85 4 planos toda no aço inox 430 nova temos a pronta entrega fazemos sobre encomenda na medida que vc cliente desejar (C × L × A) Medidas 1,20x40x1,85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x40x1,85"
+   }
+  },
+  {
+   "id": "estante-perfurada-toda-de-inox-nova-sem-uso",
+   "name": "Estante perfurada toda de inox nova sem uso",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-023.jpg"
+   ],
+   "price": 2145.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Estante perfurada toda de inox nova sem uso temos a pronta entrega fazemos sobre medidas também Medidas valor 1,20x50x1,75. R$ 2.145,00 1,50x50x1,75. R$ 2.550,00.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x50x1,75"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "escorredor-1-60x40-todo-no-aco-inox-novo-sem-uso-comprimento",
+   "name": "Escorredor 1,60x40 todo no aço inox novo sem uso Comprimento X",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-024.jpg"
+   ],
+   "price": 700.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Escorredor todo no aço inox novo sem uso (C × L × A) Medidas 1,60x40.",
+   "specs": {
+    "Medidas (C × L × A)": "1,60x40"
+   }
+  },
+  {
+   "id": "prateleiras-de-inox-nova-a-pronta-entrega",
+   "name": "Prateleiras de inox nova A pronta entrega",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-025.jpg"
+   ],
+   "price": 370.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleiras de inox nova A pronta entrega Medidas 1,00x40 R$ 370,00 1,50x40 R$ 550,00 2,00x40 R$ 730,00 2,50x40 R$ 930,00 Fazemos sobe medida também mesa de inox ,pia,prateleiras.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x40"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "prateleira-perfurada-toda-de-inox-nova-sem-uso",
+   "name": "Prateleira perfurada toda de inox nova sem uso",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-026.jpg"
+   ],
+   "price": 410.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira perfurada toda de inox nova sem uso Temos a pronta entrega Fazemos sobre medidas também Medidas valor 1,00x40. R$ 410,00 1,20x40. R$ 480,00 1,50x40. R$ 590,00.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x40"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "prateleira-70x30-lisa-de-parede-toda-no-aco-inox-nova",
+   "name": "Prateleira 70x30 lisa de parede toda no aço inox nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-027.jpg"
+   ],
+   "price": 325.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira 70x30 lisa de parede toda no aço inox nova temos a pronta entrega fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 70x30.",
+   "specs": {
+    "Medidas (C × L × A)": "70x30"
+   }
+  },
+  {
+   "id": "prateleira-70x40-de-parede-toda-no-aco-inox-nova-sem-uso",
+   "name": "Prateleira 70x40 de parede toda no aço inox nova sem uso",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-028.jpg"
+   ],
+   "price": 350.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira 70x40 de parede toda no aço inox nova sem uso fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 70x40x. ou 70x30 fica o mesmo valor.",
+   "specs": {
+    "Medidas (C × L × A)": "70x40"
+   }
+  },
+  {
+   "id": "prateleira-80x40-toda-de-inox-430-nova-sem-uso",
+   "name": "Prateleira 80x40 toda de inox 430 nova sem uso",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-029.jpg"
+   ],
+   "price": 330.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira toda de inox 430 nova sem uso temos a pronta entrega Medidas 80x40.",
+   "specs": {
+    "Medidas (C × L × A)": "80x40"
+   }
+  },
+  {
+   "id": "prateleira-96x29-toda-de-inox-430-nova-sem-uso",
+   "name": "Prateleira 96x29 toda de inox 430 nova sem uso",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-030.jpg"
+   ],
+   "price": 370.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira toda de inox 430 nova sem uso temos a pronta entrega Medidas 96x29.",
+   "specs": {
+    "Medidas (C × L × A)": "96x29"
+   }
+  },
+  {
+   "id": "prateleira-97x40-lisa-de-parede-toda-no-aco-inox-nova",
+   "name": "Prateleira 97x40 lisa de parede toda no aço inox nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-031.jpg"
+   ],
+   "price": 350.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira lisa de parede toda no aço inox nova temos a pronta entrega fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 97x40.",
+   "specs": {
+    "Medidas (C × L × A)": "97x40"
+   }
+  },
+  {
+   "id": "prateleira-1-00x40-vazada-de-parede-toda-no-aco-inox-nova",
+   "name": "Prateleira 1,00x40 vazada de parede toda no aço inox nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-032.jpg"
+   ],
+   "price": 425.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira 1,00x40 vazada de parede toda no aço inox nova temos a pronta entrega fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 1,00x40.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x40"
+   }
+  },
+  {
+   "id": "prateleira-1-15x30-perfurada-de-parede-toda-no-aco-inox-nova",
+   "name": "Prateleira 1,15x30 perfurada de parede toda no aço inox nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-033.jpg"
+   ],
+   "price": 450.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira perfurada de parede toda no aço inox nova temos a pronta entrega fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 1,15x30.",
+   "specs": {
+    "Medidas (C × L × A)": "1,15x30"
+   }
+  },
+  {
+   "id": "prateleira-1-20x50-lisa-de-parede-toda-no-aco-inox-nova",
+   "name": "Prateleira 1,20x50 lisa de parede toda no aço inox nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-034.jpg"
+   ],
+   "price": 535.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira 1,20x50 lisa de parede toda no aço inox nova temos a pronta entrega fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 1,20x50.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x50"
+   }
+  },
+  {
+   "id": "prateleira-1-25x40-lisa-de-parede-toda-no-aco-inox-nova",
+   "name": "Prateleira 1,25x40 lisa de parede toda no aço inox nova",
+   "brand": "",
+   "sector": "estantes",
+   "images": [
+    "img/produtos/rsc-produto-035.jpg"
+   ],
+   "price": 470.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Prateleira lisa de parede toda no aço inox nova temos a pronta entrega fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 1,25x40.",
+   "specs": {
+    "Medidas (C × L × A)": "1,25x40"
+   }
+  },
+  {
+   "id": "mesa-1-30x70x90-com-espelho-frontal-e-lateral-lado-esquerdo-",
+   "name": "Mesa 1,30x70x90 com espelho frontal e lateral lado esquerdo & espaço",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-036.jpg"
+   ],
+   "price": 1150.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa com espelho frontal e lateral lado esquerdo & espaço pra descarte contraventada toda no aço inox usada em ótimo estado ideal para sua cozinha industrial Medidas 1,30x70x90 Descarte 20x20.",
+   "specs": {
+    "Medidas (C × L × A)": "1,30x70x90"
+   }
+  },
+  {
+   "id": "mesa-1-20x70x89-com-prateleiras-tubular-toda-no-aco-inox",
+   "name": "Mesa 1,20x70x89 com prateleiras tubular toda no aço inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-037.jpg"
+   ],
+   "price": 1640.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa com prateleiras tubular toda no aço inox usada ótimo estado (C × L × A) Medidas 1,20x70x89.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x70x89"
+   }
+  },
+  {
+   "id": "mesa-1-20x1-00x87-industrial-toda-no-aco-inox-com-um-lado-pr",
+   "name": "Mesa 1,20x1,00x87 industrial toda no aço inox com um lado pra coloca",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-038.jpg"
+   ],
+   "price": 1850.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa industrial toda no aço inox com um lado pra coloca bandejas /Assadeiras no estado de nova (C × L × A) Médias 1,20x1,00x87 Espaço pra Gn 59x89.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x1,00x87"
+   }
+  },
+  {
+   "id": "mesa-1-23x73x83-lisa-bem-reforcada-com-rodizio-pra-facilitar",
+   "name": "Mesa 1,23x73x83 lisa bem reforçada com rodízio pra facilitar",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-039.jpg"
+   ],
+   "price": 1650.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa bem reforçada com rodízio pra facilitar a locomoção está no estado de nova tampo de cima novo na película (C × L × A) Meddias 1,23x73x83.",
+   "specs": {
+    "Medidas (C × L × A)": "1,23x73x83"
+   }
+  },
+  {
+   "id": "mesa-1-40x70x82-toda-no-aco-inox-com-rodizio-pra-facilitar",
+   "name": "Mesa 1,40x70x82 toda no aço inox com rodízio pra facilitar",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-040.jpg"
+   ],
+   "price": 1900.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa toda no aço inox com rodízio pra facilitar a locomoção tem uma prateleira neutra em cima usada em ótimo estado (C × L × A) Medidas 1,40x70x82 Prateleira 1,40x63x53 Altura total 1,56.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x70x82"
+   }
+  },
+  {
+   "id": "mesa-1-40x70x90-com-prateleiras-tubular-toda-no-aco-inox",
+   "name": "Mesa 1,40x70x90 com prateleiras tubular toda no aço inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-041.jpg"
+   ],
+   "price": 1650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa com prateleiras tubular toda no aço inox usada ótimo estado (C × L × A) Medidas 1,40x70x90 Prateleira em cima 1,40x30x75.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x70x90"
+   }
+  },
+  {
+   "id": "mesa-1-40x70x85-com-espelho-estrutura-de-inox-com-tampo-de-p",
+   "name": "Mesa 1,40x70x85 com espelho estrutura de inox com tampo de politileno",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-042.jpg"
+   ],
+   "price": 1650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa com espelho estrutura de inox com tampo de politileno usada em ótimo estado (C × L × A) Medidas 1,40x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-40x64x88-lisa-toda-no-aco-inox",
+   "name": "Mesa 1,40x64x88 lisa toda no aço inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-043.jpg"
+   ],
+   "price": 1450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa lisa toda no aço inox usada em ótimo estado (C × L × A) Medidas 1,40x64 x88.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x64x88"
+   }
+  },
+  {
+   "id": "mesa-1-40x70x85-toda-de-inox-com-espaco-pra-descarte-do-lado",
+   "name": "Mesa 1,40x70x85 toda de inox com espaço pra descarte do lado esquerdo",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-044.jpg"
+   ],
+   "price": 1280.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa toda de inox com espaço pra descarte do lado esquerdo em ótimo estado Medidas 1,40x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-50x70x90-toda-de-inox-com-5-espacos-pra-gns-e-pratele",
+   "name": "Mesa 1,50x70x90 toda de inox com 5 espaços pra gns e prateleira",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-045.jpg"
+   ],
+   "price": 1250.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa toda de inox com 5 espaços pra gns e prateleira em baixo em ótimo estado Medidas 1,50x70x90.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x70x90"
+   }
+  },
+  {
+   "id": "mesa-1-90x70x85-com-espelho-prateleira-inferior",
+   "name": "Mesa 1,90x70x85 com espelho & prateleira inferior",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-046.jpg"
+   ],
+   "price": 1760.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa com espelho & prateleira inferior no estado de nova (C × L × A) Medidas 1,90x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,90x70x85"
+   }
+  },
+  {
+   "id": "mesa-3-00x80x90-toda-de-inox-430-com-espelho-frontal-e-later",
+   "name": "Mesa 3,00x80x90 toda de inox 430 com espelho frontal e laterais",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-047.jpg"
+   ],
+   "price": 4500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa toda de inox 430 com espelho frontal e laterais com prateleira inferior nova sem uso fazemos sobre encomendas sobre medidas também Medidas 3,00x80x90.",
+   "specs": {
+    "Medidas (C × L × A)": "3,00x80x90"
+   }
+  },
+  {
+   "id": "mesa-2-50x70x90-nova-toda-no-aco-inox-com-bancada-aquecida",
+   "name": "Mesa 2,50x70x90 nova toda no aço inox com bancada aquecida",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-048.jpg"
+   ],
+   "price": 10900.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa industrial nova toda no aço inox com bancada aquecida 2 prateleira inferior neutra 2 prateleira superior neutra Espaço pra gn's é molhos Fazemos sobre encomenda na medida que vc precisa (C × L × A) Medidas 2,50x70x90 Altura total 1,70 Espaço pista aquecida 2,50x38 Espaço gns 1,46x25 Parte aquecida 64x25 2 Prateleira neutra 2,50x40.",
+   "specs": {
+    "Medidas (C × L × A)": "2,50x70x90"
+   }
+  },
+  {
+   "id": "mesa-2-00x80x85-nova-sem-uso-toda-no-aco-inox-com-prateleira",
+   "name": "Mesa 2,00x80x85 nova sem uso toda no aço inox com prateleira inferior",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-049.jpg"
+   ],
+   "price": 2400.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa nova sem uso toda no aço inox com prateleira inferior temos a pronta entrega Medidas 2,00x80x85.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x80x85"
+   }
+  },
+  {
+   "id": "mesa-2-00x70x85-toda-de-inox-tres-planos-nova-sem-uso",
+   "name": "Mesa 2,00x70x85 toda de inox três planos nova sem uso",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-050.jpg"
+   ],
+   "price": 2700.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa toda de inox três planos nova sem uso temos a pronta entrega , fazemos sobre encomenda na medida que o cliente desejar Medidas 2,00x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x70x85"
+   }
+  },
+  {
+   "id": "mesa-2-00x70x85-c-espelho-e-prateleira-em-baixo-toda-no-aco-",
+   "name": "Mesa 2,00x70x85 c/espelho e prateleira em baixo toda no aço inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-051.jpg"
+   ],
+   "price": 2400.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa c/espelho e prateleira em baixo toda no aço inox 430 nova sem uso fazemos sobre medidas Medidas 2,00x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x70x85"
+   }
+  },
+  {
+   "id": "mesa-2-00x65x85-com-espelho-prateleira-inferior-toda-no-aco-",
+   "name": "Mesa 2,00x65x85 com espelho & prateleira inferior toda no aço inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-052.jpg"
+   ],
+   "price": 2300.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa com espelho & prateleira inferior toda no aço inox nova sem uso (C × L × A) Medidas 2,00x65x85.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x65x85"
+   }
+  },
+  {
+   "id": "mesa-2-00x70x85-lisa-toda-de-inox-com-prateleira-em-baixo-no",
+   "name": "Mesa 2,00x70x85 lisa toda de inox com prateleira em baixo nova sem",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-053.jpg"
+   ],
+   "price": 2100.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa toda de inox com prateleira em baixo nova sem uso inox 430 temos a pronta entrega Medidas 2,000x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "2,000x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-98x50x90-lisa-com-prateleira-inferior-vazada-toda-no-",
+   "name": "Mesa 1,98x50x90 lisa com prateleira inferior vazada toda no aço inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-054.jpg"
+   ],
+   "price": 1700.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa lisa com prateleira inferior vazada toda no aço inox nova com preço de usada (C × L × A) Medidas 1,98x50x90.",
+   "specs": {
+    "Medidas (C × L × A)": "1,98x50x90"
+   }
+  },
+  {
+   "id": "mesa-1-80x70x85-lisa-toda-no-aco-inox-430-com-prateleira-inf",
+   "name": "Mesa 1,80x70x85 lisa toda no aço inox 430 com prateleira inferior",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-055.jpg"
+   ],
+   "price": 1900.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa toda no aço inox 430 com prateleira inferior nova sem uso temos a pronta entrega e fazemos sobre encomenda na medida que vc desejar (C × L × A) Medidas 1,80x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,80x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-60x80x85-lisa-toda-de-inox-com-tampo-de-polietileno-n",
+   "name": "Mesa 1,60x80x85 lisa toda de inox com tampo de polietileno nova sem",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-056.jpg"
+   ],
+   "price": 2230.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa toda de inox com tampo de polietileno nova sem uso fazemos sobre encomenda na medida que vc desejar o tampo branco de polietileno e ideal para cortes e manipulação de carnes e alimentos em geral 1,60x80x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,60x80x85"
+   }
+  },
+  {
+   "id": "mesa-1-50x70x85-lisa-inox-nova-ainda-na-pelicula",
+   "name": "Mesa 1,50x70x85 lisa inox nova ainda na película",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-057.jpg"
+   ],
+   "price": 1640.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa inox nova ainda na película Medidas 1,50x70x85 Inox 430.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-40x70x85-de-inox-nova-sem-uso-com-prateleira-embaixo-",
+   "name": "Mesa 1,40x70x85 de inox nova sem uso com prateleira embaixo Inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-058.jpg"
+   ],
+   "price": 1420.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa de inox nova sem uso com prateleira embaixo Inox 430 fazemos sobre medidas Medidas 1,40x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,40x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-20x80x85-lisa-toda-de-inox-com-tampo-de-polietileno-n",
+   "name": "Mesa 1,20x80x85 lisa toda de inox com tampo de polietileno nova sem",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-059.jpg"
+   ],
+   "price": 1920.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa toda de inox com tampo de polietileno nova sem uso fazemos sobre encomenda na medida que vc desejar o tampo branco de polietileno e ideal para cortes e manipulação de carnes e alimentos em geral medidas 1,20x80x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x80x85"
+   }
+  },
+  {
+   "id": "mesa-1-20x70x85-lisa-inox-nova-medidas-1-20x70x85-inox",
+   "name": "Mesa 1,20x70x85 lisa inox nova Medidas 1,20x70x85 Inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-060.jpg"
+   ],
+   "price": 1500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa inox nova Medidas 1,20x70x85 Inox 430.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-20x70x85-tres-planos-toda-de-inox-nova-sem-uso-inox",
+   "name": "Mesa 1,20x70x85 três planos toda de inox nova sem uso inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-061.jpg"
+   ],
+   "price": 1950.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa três planos toda de inox nova sem uso inox 430 fazemos sobre encomenda na medida que vc precisa de 3 a 8 dias úteis Medidas 1,20x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x70x85"
+   }
+  },
+  {
+   "id": "mesa-1-00x70x85-lisa-toda-de-inox-com-prateleira-em-baixo-no",
+   "name": "Mesa 1,00x70x85 lisa toda de inox com prateleira em baixo nova sem",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-062.jpg"
+   ],
+   "price": 1300.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa toda de inox com prateleira em baixo nova sem uso inox 430 Medidas 1,00x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x70x85"
+   }
+  },
+  {
+   "id": "mesa-90x60x90-lisa-com-prateleira-inferior-nova-sem-uso-medi",
+   "name": "Mesa 90x60x90 lisa com prateleira inferior nova sem uso Medidas",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-063.jpg"
+   ],
+   "price": 1150.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa com prateleira inferior nova sem uso (C × L × A) Medidas 90x60x90.",
+   "specs": {
+    "Medidas (C × L × A)": "90x60x90"
+   }
+  },
+  {
+   "id": "mesa-80x70x65-nova-toda-de-inox-com-prateleira-inferior-inox",
+   "name": "Mesa 80x70x65 nova toda de inox com prateleira inferior inox",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-064.jpg"
+   ],
+   "price": 1100.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa nova toda de inox com prateleira inferior inox 430 fazemos sobre medidas temos algumas a pronta entrega Medidas 80x70x65.",
+   "specs": {
+    "Medidas (C × L × A)": "80x70x65"
+   }
+  },
+  {
+   "id": "mesa-80x70x85-lisa-inox-430-nova",
+   "name": "Mesa 80x70x85 lisa inox 430 nova",
+   "brand": "",
+   "sector": "mesas-inox",
+   "images": [
+    "img/produtos/rsc-produto-065.jpg"
+   ],
+   "price": 1100.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Mesa lisa inox 430 nova Medidas 80x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "80x70x85"
+   }
+  },
+  {
+   "id": "ilha-2-00x80x96-para-congelados-e-resfriados-expositora-220-",
+   "name": "Ilha 2,00x80x96 para congelados e resfriados expositora 220 volts",
+   "brand": "Gelopar",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-066.jpg"
+   ],
+   "price": 5500.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "ilha 2,00x80x96 para congelados e resfriados expositora 220 volts 4 portas marca GELOPAR ( usada ) no estado de nova funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 2,00x80x96.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x80x96",
+    "Tensão": "220V",
+    "Marca": "Gelopar",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "geladeira-2-36x62x2-02-expositora-5-portas-220-volts",
+   "name": "Geladeira 2,36x62x2,02 expositora 5 portas 220 volts",
+   "brand": "Conservex",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-067.jpg"
+   ],
+   "price": 10900.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "Geladeira 2,36x62x2,02 expositora 5 portas 220 volts no estado de nova marca CONSERVEX funcionando perfeitamente garantia de 3 meses pela loja. ( Usada ) (C × L × A) Medidas 2,36x62x2,02 Características Principais • Capacidade: Aproximadamente 1.750 litros. • Estrutura: 5 portas de vidro com iluminação interna em LED e prateleiras aramadas ajustáveis. • Uso recomendado: Conservação e exposição comercial de frios, laticínios e bebidas.",
+   "specs": {
+    "Medidas (C × L × A)": "2,36x62x2,02",
+    "Tensão": "220V",
+    "Marca": "Conservex",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "1.750 litros"
+   }
+  },
+  {
+   "id": "geladeira-1-35x60x1-83-2-portas-expositora-220-volts-marca-c",
+   "name": "Geladeira 1,35x60x1,83. 2 portas expositora 220 volts marca CONSERVEX",
+   "brand": "Conservex",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-068.jpg"
+   ],
+   "price": 6800.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Geladeira 2 portas expositora 220 volts marca CONSERVEX industrial funcionando perfeitamente garantia de 3 meses pela loja (Usada) (C × L × A) Medidas 1,35x60x1,83.",
+   "specs": {
+    "Medidas (C × L × A)": "1,35x60x1,83",
+    "Tensão": "220V",
+    "Marca": "Conservex",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "geladeira-67x60x2-04-expositora-449-7-litros-220-volts-marca",
+   "name": "Geladeira 67x60x2,04 expositora 449,7 Litros 220 volts marca Imbera",
+   "brand": "Imbera",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-069.jpg"
+   ],
+   "price": 3650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Geladeira industrial expositora 449,7 Litros 220 volts marca Imbera funcionando perfeitamente garantia de 3 meses pela loja ( Usada) Ótimo estado (C × L × A) Medidas 67x60x2,04.",
+   "specs": {
+    "Medidas (C × L × A)": "67x60x2,04",
+    "Tensão": "220V",
+    "Marca": "Imbera",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "449,7 litros"
+   }
+  },
+  {
+   "id": "geladeira-70x81x1-88-industrial-toda-no-aco-inox-marca-macom",
+   "name": "Geladeira 70x81x1,88 industrial toda no aço inox marca MACOM 220 volts",
+   "brand": "Macom",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-070.jpg"
+   ],
+   "price": 5900.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Geladeira industrial toda no aço inox marca MACOM 220 volts funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 70x81x1,88.",
+   "specs": {
+    "Medidas (C × L × A)": "70x81x1,88",
+    "Tensão": "220V",
+    "Marca": "Macom",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "adega-64x63x1-00-climatizada-220-volts-175-litros-vertical",
+   "name": "Adega 64x63x1,00 climatizada 220 volts 175 litros vertical",
+   "brand": "Venax",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-071.jpg"
+   ],
+   "price": 1850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "adega 64x63x1,00 climatizada 220 volts 175 litros vertical da marca Venax capacidade para aproximadamente 48 garrafas ( usado) funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 64x63x1,00.",
+   "specs": {
+    "Medidas (C × L × A)": "64x63x1,00",
+    "Tensão": "220V",
+    "Marca": "Venax",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "175 litros"
+   }
+  },
+  {
+   "id": "geladeira-67x60x2-05-expositora-449-7-litros-110-volts-marca",
+   "name": "Geladeira 67x60x2,05 expositora 449,7 Litros 110 volts marca Imbera",
+   "brand": "Imbera",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-072.jpg"
+   ],
+   "price": 4205.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Geladeira industrial expositora 449,7 Litros 110 volts marca Imbera funcionando perfeitamente garantia de 3 meses pela loja ( Usada) Ótimo estado (C × L × A) Medidas 67x60x2,05.",
+   "specs": {
+    "Medidas (C × L × A)": "67x60x2,05",
+    "Tensão": "110V",
+    "Marca": "Imbera",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "449,7 litros"
+   }
+  },
+  {
+   "id": "cervejeira-53x62x1-87-vertical-porta-com-visor-220-volts-276",
+   "name": "Cervejeira 53x62x1,87 vertical porta com visor 220 volts . 276 litros",
+   "brand": "Metalfrio",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-073.jpg"
+   ],
+   "price": 3600.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cervejeira 53x62x1,87 vertical porta com visor 220 volts . 276 litros marca METALFRIO ( usada ) funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 53x62x1,87.",
+   "specs": {
+    "Medidas (C × L × A)": "53x62x1,87",
+    "Tensão": "220V",
+    "Marca": "Metalfrio",
+    "Garantia": "3 meses",
+    "Capacidade": "276 litros"
+   }
+  },
+  {
+   "id": "cervejeira-53x63x1-88-slin-porta-com-visor-276-litros-220-vo",
+   "name": "Cervejeira 53x63x1,88 slin porta com visor 276 litros 220 volts",
+   "brand": "Metalfrio",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-074.jpg"
+   ],
+   "price": 2850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cervejeira slin porta com visor 276 litros 220 volts marca METALFRIO funcionando perfeitamente garantia de 3 meses pela loja usada (C × L × A) Medidas 53x63x1,88.",
+   "specs": {
+    "Medidas (C × L × A)": "53x63x1,88",
+    "Tensão": "220V",
+    "Marca": "Metalfrio",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "276 litros"
+   }
+  },
+  {
+   "id": "cervejeira-52x63x2-78-vertical-slin-284-litros-110-volts-mar",
+   "name": "Cervejeira 52x63x2,78 vertical slin 284 litros 110 volts marca FRICON",
+   "brand": "Fricon",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-075.jpg"
+   ],
+   "price": 3300.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "Cervejeira vertical slin 284 litros 110 volts marca FRICON usada no estado de nova como se ver nas fotos funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 52x63x1,78.",
+   "specs": {
+    "Medidas (C × L × A)": "52x63x1,78",
+    "Tensão": "110V",
+    "Marca": "Fricon",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "284 litros"
+   }
+  },
+  {
+   "id": "freezer-68x78x1-98-vertical-porta-cega-220-volts-marca-gelop",
+   "name": "Freezer 68x78x1,98 vertical porta cega 220 volts marca GELOPAR",
+   "brand": "Gelopar",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-076.jpg"
+   ],
+   "price": 3350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Freezer vertical porta cega 220 volts marca GELOPAR ( usado ) funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 68x78x1,98.",
+   "specs": {
+    "Medidas (C × L × A)": "68x78x1,98",
+    "Tensão": "220V",
+    "Marca": "Gelopar",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "freezer-53x61x1-90-slin-expositor-220-volts-317litros-marca-",
+   "name": "Freezer 53x61x1,90 slin expositor 220 volts 317litros marca Metalfrio",
+   "brand": "Metalfrio",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-077.jpg"
+   ],
+   "price": 5300.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Freezer slin expositor 220 volts 317litros marca Metalfrio funcionando perfeitamente garantia de 3 meses pela loja Medidas 53x61x1,90.",
+   "specs": {
+    "Medidas (C × L × A)": "53x61x1,90",
+    "Tensão": "220V",
+    "Marca": "Metalfrio",
+    "Garantia": "3 meses pela loja",
+    "Capacidade": "317 litros"
+   }
+  },
+  {
+   "id": "geladeira-1-60x57x1-94-6-portas-marca-frilux-220-volts-nova",
+   "name": "Geladeira 1,60x57x1,94 6 portas marca frilux 220 volts nova",
+   "brand": "Frilux",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-078.jpg"
+   ],
+   "price": 10900.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Geladeira 1,60x57x1,94 industrial 6 portas marca frilux 220 volts nova garantia de 6 meses pela fábrica Aproximadamente 1.100L ideal para cozinhas industrial (C × L × A) Medidas 1,60x57x1,94.",
+   "specs": {
+    "Medidas (C × L × A)": "1,60x57x1,94",
+    "Tensão": "220V",
+    "Marca": "Frilux",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "geladeira-industrial-4-portas-nova-sem-uso-marca-kofisa-220-",
+   "name": "Geladeira industrial 4 portas nova sem uso marca KOFISA 220 volts",
+   "brand": "Kofisa",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-079.jpg"
+   ],
+   "price": 7600.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Geladeira industrial 4 portas nova sem uso marca KOFISA 220 volts 765 litros data de fábrica 05/2024 garantia de 1 ano pela fábrica Medidas 1,15x58x1,95.",
+   "specs": {
+    "Medidas (C × L × A)": "1,15x58x1,95",
+    "Tensão": "220V",
+    "Marca": "Kofisa",
+    "Capacidade": "765 litros"
+   }
+  },
+  {
+   "id": "geladeira-1-15x58x1-95-4-portas-nova-sem-uso-marca-kofisa-22",
+   "name": "Geladeira 1,15x58x1,95 4 portas nova sem uso marca KOFISA 220 volts",
+   "brand": "Kofisa",
+   "sector": "geladeiras",
+   "images": [
+    "img/produtos/rsc-produto-080.jpg"
+   ],
+   "price": 7900.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Geladeira industrial 4 portas nova sem uso marca KOFISA 220 volts 765 litros data de fábrica 05/2024 garantia de 1 ano pela fábrica Medidas 1,15x58x1,95.",
+   "specs": {
+    "Medidas (C × L × A)": "1,15x58x1,95",
+    "Tensão": "220V",
+    "Marca": "Kofisa",
+    "Capacidade": "765 litros"
+   }
+  },
+  {
+   "id": "balcao-2-00x60x1-00-expositor-refrigerado-de-inox-220-volts",
+   "name": "Balcão 2,00x60x1,00 expositor refrigerado de inox 220 volts",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-081.jpg"
+   ],
+   "price": 8700.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão expositor refrigerado de inox 220 volts ótimo estado de conservação ideal para bolos ,frios ,Bebidas e outros, revisado funcionando perfeitamente garantia de 3 meses pela loja ( Usado ) Inox 430 (C × L × A) Medidas 2,00x60x1,00.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x60x1,00",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-10x65x1-13-refrigerado-expositor-220-volts-marca-co",
+   "name": "Balcão 1,10x65x1,13 refrigerado expositor 220 volts marca CONSERVEX",
+   "brand": "Conservex",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-082.jpg"
+   ],
+   "price": 2350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado expositor 220 volts marca CONSERVEX funcionando perfeitamente garantia de 3 meses pela loja está em ótimo estado ( usado ) (C × L × A) Medidas 1,10x65x1,13.",
+   "specs": {
+    "Medidas (C × L × A)": "1,10x65x1,13",
+    "Tensão": "220V",
+    "Marca": "Conservex",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-13x70x87-1-porta-todo-no-aco-inox-por-dentro-e-por-",
+   "name": "Balcão 1,13x70x87. 1 porta todo no aço inox por dentro e por fora",
+   "brand": "Berta",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-083.jpg"
+   ],
+   "price": 3850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado industrial 1 porta todo no aço inox por dentro e por fora marca BERTA (C × L × A) Medidas 1,13x70x87.",
+   "specs": {
+    "Medidas (C × L × A)": "1,13x70x87",
+    "Marca": "Berta"
+   }
+  },
+  {
+   "id": "balcao-1-00x70x85-1-porta-1-cuba-lado-esquerdo-todo-de-inox",
+   "name": "Balcão 1,00x70x85 .1 porta 1 cuba lado esquerdo todo de inox",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-084.jpg"
+   ],
+   "price": 4100.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado 1 porta 1 cuba lado esquerdo todo de inox funcionando perfeitamente garantia de 3 meses pela loja Medidas 1,00x70x85 Cuba 40x34x12.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x70x85",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-90x70x85-1-porta-de-inox-220-volts-marca-berta",
+   "name": "Balcão 90x70x85 .1 porta de inox 220 volts marca BERTA",
+   "brand": "Berta",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-085.jpg"
+   ],
+   "price": 3900.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado industrial 1 porta de inox 220 volts marca BERTA funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 90x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "90x70x85",
+    "Tensão": "220V",
+    "Marca": "Berta",
+    "Garantia": "3 meses"
+   }
+  },
+  {
+   "id": "balcao-70x90x90-condimentadora-refrigerada-220-volts-acompan",
+   "name": "Balcão 70x90x90 condimentadora refrigerada 220 volts acompanha as",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-086.jpg"
+   ],
+   "price": 3650.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "Balcão condimentadora refrigerada 220 volts acompanha as 6 cubas tem 2 prateleira neutra todo no aço inox usado no estado de novo funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 70 x 90 x 90 ( 1,37)altura total Prateleira 70 x 40 x 46 (11 entre uma e outra.",
+   "specs": {
+    "Medidas (C × L × A)": "70x90x90",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-85x70x80-2-portas-para-barril-de-chopp-220-volts-ma",
+   "name": "Balcão 1,85x70x80 2 portas para barril de chopp 220 volts marca MACOM",
+   "brand": "Macom",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-087.jpg"
+   ],
+   "price": 6800.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado 2 portas para barril de chopp 220 volts marca MACOM todo no aço inox está em ótimo estado revisado funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 1,85x70x80 Espaço pra porta C59xA53,5.",
+   "specs": {
+    "Medidas (C × L × A)": "1,85x70x80",
+    "Tensão": "220V",
+    "Marca": "Macom",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-73x70x71-220-volts-2-portas-todo-no-aco-inox-medida",
+   "name": "Balcão 1,73x70x71 . 220 volts 2 portas todo no aço inox Medidas",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-088.jpg"
+   ],
+   "price": 7350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado 220 volts 2 portas todo no aço inox em ótimo estado revisado funcionando perfeitamente garantia de 3 meses pela loja ideal para sua cozinha industrial (C × L × A) Medidas 1,73x70x71.",
+   "specs": {
+    "Medidas (C × L × A)": "1,73x70x71",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-50x65x90-2-portas-industrial-todo-no-aco-inox-por-d",
+   "name": "Balcão 1,50x65x90 2 portas industrial todo no aço inox por dentro",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-089.jpg"
+   ],
+   "price": 8350.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balcão refrigerado 220 volts 2 portas industrial todo no aço inox por dentro e por fora novo sem uso garantia de 3 meses pela loja Refrigeração ar forçado (C × L × A) Medidas 1,50x65x90.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x65x90",
+    "Tensão": "220V",
+    "Garantia": "3 meses"
+   }
+  },
+  {
+   "id": "balcao-1-50x65x90-220-volts-2-portas-industrial-todo-no-aco-",
+   "name": "Balcão 1,50x65x90 220 volts 2 portas industrial todo no aço inox",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-090.jpg"
+   ],
+   "price": 8360.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balcão refrigerado 220 volts 2 portas industrial todo no aço inox por dentro e por fora novo sem uso garantia de 3 meses pela loja Refrigeração ar forçado (C × L × A) Medidas 1,50x65x90.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x65x90",
+    "Tensão": "220V",
+    "Garantia": "3 meses"
+   }
+  },
+  {
+   "id": "balcao-1-50x70x83-2-portas-de-inox-marca-elvi-220-volts",
+   "name": "Balcão 1,50x70x83 . 2 portas de inox marca Elvi 220 volts",
+   "brand": "Elvi",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-091.jpg"
+   ],
+   "price": 5300.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado 2 portas de inox marca Elvi 220 volts funcionando perfeitamente garantia de 3 meses pela loja Medidas 1,50x70x83.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x70x83",
+    "Tensão": "220V",
+    "Marca": "Elvi",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-2-portas-1-50x70x842-220-volts-todo-no-aco-inox-marca",
+   "name": "Balcão 2 portas 1,50x70x842 220 volts todo no aço inox marca TOPEMA",
+   "brand": "Topema",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-092.jpg"
+   ],
+   "price": 4650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão 2 portas refrigerado 220 volts todo no aço inox marca TOPEMA funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 1,50x70x84.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x70x84",
+    "Tensão": "220V",
+    "Marca": "Topema",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-45x70x85-2-portas-marca-macom-todo-no-aco-inox-por-",
+   "name": "Balcão 1,45x70x85 . 2 portas marca MACOM todo no aço inox por dentro",
+   "brand": "Macom",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-093.jpg"
+   ],
+   "price": 5970.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balcão refrigerado 2 portas marca MACOM todo no aço inox por dentro e por fora no estado de novo unidade completa motor novo tampo de cima novo vai com garantia de 3 meses pela loja (C × L × A) Medidas 1,45x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,45x70x85",
+    "Marca": "Macom",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-35x51x88-industrial-2-portas-1-cuba-direita-1-condi",
+   "name": "Balcão 1,35x51x88 industrial 2 portas 1 cuba direita 1 condimentadora",
+   "brand": "Berta",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-094.jpg"
+   ],
+   "price": 5500.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado industrial 2 portas 1 cuba direita 1 condimentadora refrigerada 1 prateleira neutra em cima da condimentadora 220 volts marca BERTA funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 1,35x51x88 Condimentadora externa 92x39x60 Interna 86x31x15 Cuba 30x30x17.",
+   "specs": {
+    "Medidas (C × L × A)": "1,35x51x88",
+    "Tensão": "220V",
+    "Marca": "Berta",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-2-portas-1-27x70x85-refrigerado-220-volts-todo-no-aco",
+   "name": "Balcão 2 portas 1,27x70x85 refrigerado 220 volts todo no aço inox",
+   "brand": "Electrolux",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-095.jpg"
+   ],
+   "price": 4350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão refrigerado 2 portas 220 volts todo no aço inox por dentro e por fora marca ELECTROLUX usado em ótimo estado funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 1,27x70x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,27x70x85",
+    "Tensão": "220V",
+    "Marca": "Electrolux",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-76x70x90-2-portas-220-volts-todo-no-aco-inox-por-de",
+   "name": "Balcão 1,76x70x90. 2 portas 220 volts todo no aço inox por dentro",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-096.jpg"
+   ],
+   "price": 5800.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão 2 portas 220 volts todo no aço inox por dentro e por fora revisado funcionando perfeitamente garantia de 3 meses pela loja facilitamos pagamento no cartão no pix tem desconto ( usado ) casa de máquinas Lado esquerdo onde fica o motor (C × L × A) Medidas 1,76x70x90.",
+   "specs": {
+    "Medidas (C × L × A)": "1,76x70x90",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-1-75x70x90-refrigerado-2-portas-220-volts-todo-no-aco",
+   "name": "Balcão 1,75x70x90 refrigerado 2 portas 220 volts todo no aço inox",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-097.jpg"
+   ],
+   "price": 5900.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão 1,75x70x90 refrigerado 2 portas 220 volts todo no aço inox por dentro e por fora revisado funcionando perfeitamente garantia de 3 meses pela loja facilitamos pagamento no cartão no pix tem desconto ( usado ) casa de máquinas Lado direito onde fica o motor (C × L × A) Medidas 1,75x70x90.",
+   "specs": {
+    "Medidas (C × L × A)": "1,75x70x90",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balcao-2-00x70x90-de-barman-refrigerado-3-portas-220-volts-c",
+   "name": "Balcão 2,00x70x90 de Barman Refrigerado 3 portas 220 volts Caribe,",
+   "brand": "",
+   "sector": "balcoes-refrigerados",
+   "images": [
+    "img/produtos/rsc-produto-098.jpg"
+   ],
+   "price": 18900.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balcão de Barman Refrigerado 3 portas 220 volts Caribe, fabricado pela Referencial Inox, construído totalmente em aço inoxidável.O equipamento inclui módulos de condimentadora para frutas e uma área de tampo de corte em altileno com abertura para descarte de resíduos.Possui refrigeração horizontal com portas na parte inferior para armazenamento.O modelo Caribe é desenhado para otimizar o fluxo de trabalho de bartenders em bares e cozinhas profissionais. (C × L × A) Medidas 2,00x70x90 Cuba pra lavagen 31x48x20 Espaço bar 1,57x32x20 Espaço bebidas em baixo 2,00x10x15 Espaço bebidas em cima 57x13x10.",
+   "specs": {
+    "Medidas (C × L × A)": "2,00x70x90",
+    "Tensão": "220V"
+   }
+  },
+  {
+   "id": "processador-de-alimentos-acompanha-7-laminas-1-disco-dispens",
+   "name": "Processador de alimentos acompanha 7 lâminas 1 disco dispensador",
+   "brand": "Skysmsen",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-099.jpg"
+   ],
+   "price": 6870.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Processador de alimentos acompanha 7 lâminas 1 disco dispensador Bivolt 110/220 volts Marca SKYSMSEN modelo PA7 PRO Novo sem uso garantia de 06 meses pela fábrica.",
+   "specs": {
+    "Tensão": "220V / bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "06 meses pela fábrica"
+   }
+  },
+  {
+   "id": "cortador-de-frios-manual-filizola-junior-lamina-25-cm-cor-ve",
+   "name": "Cortador de frios manual Filizola junior lâmina 25 cm cor vermelho",
+   "brand": "",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-100.jpg"
+   ],
+   "price": 6500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cortador de frios manual Filizola junior lâmina 25 cm cor vermelho reformando peças novas e originais 220 volts pintura automotiva sistema de segurança NR 12 garantia de 3 meses pela loja facilitamos no cartão.",
+   "specs": {
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-de-frios-industrial-manual-220-volts-marca-gural-mo",
+   "name": "Cortador de frios industrial manual 220 volts marca Gural modelo GLP",
+   "brand": "Gural",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-101.jpg"
+   ],
+   "price": 2450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador de frios industrial manual 220 volts marca Gural modelo GLP 330 lâmina 33 cm revisado funcionando perfeitamente garantia de 3 meses pela loja ( obs ) não dá pra amolar pois o cobre lâmina está do de enfeite.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Gural",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-de-frios-industrial-lamina-de-30-cm-marca-gural-mod",
+   "name": "Cortador de frios industrial lâmina de 30 cm marca GURAL modelo",
+   "brand": "Gural",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-102.jpg"
+   ],
+   "price": 2850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador de frios industrial lâmina de 30 cm marca GURAL modelo GLP-300 revisado funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Marca": "Gural",
+    "Garantia": "3 meses"
+   }
+  },
+  {
+   "id": "cortador-de-frios-industrial-220-volts-lamina-30-cm-marca-be",
+   "name": "Cortador de frios industrial 220 volts lâmina 30 cm marca BERMAR",
+   "brand": "Bermar",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-103.jpg"
+   ],
+   "price": 3800.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador de frios industrial 220 volts lâmina 30 cm marca BERMAR usado funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Bermar",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-de-frios-automatico-lamina-de-30-cm-marca-skysmsen",
+   "name": "Cortador de frios automático lâmina de 30 cm marca SKYSMSEN",
+   "brand": "Skysmsen",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-104.jpg"
+   ],
+   "price": 5500.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador de frios automático lâmina de 30 cm marca SKYSMSEN funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Marca": "Skysmsen",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-de-frios-manual-220-volts-lamina-de-30-cm-marca-pri",
+   "name": "Cortador de frios manual 220 volts lâmina de 30 cm marca Prix",
+   "brand": "Prix",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-105.jpg"
+   ],
+   "price": 6450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador de frios manual 220 volts lâmina de 30 cm marca Prix Funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Prix",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-de-frios-automatico-manual-ele-possui-a-flexibilida",
+   "name": "Cortador de frios Automático & manual ele possui a flexibilidade",
+   "brand": "Toledo",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-106.jpg"
+   ],
+   "price": 18900.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "Cortador de frios Automático & manual ele possui a flexibilidade de operar das duas formas, dependendo da preferência do operador marca TOLEDO modelo PRIX UNI 350GCOM Lâmina 35 cm Usado no estado de novo funcionando perfeitamente garantia de 3 meses pela loja quem conhece sabe a qualidade Lâmina: 350 mm de diâmetro. Construção: Feito em alumínio anodizado e aço inoxidável para evitar oxidação e facilitar a limpeza. https://wa.me/c/5511984599584.",
+   "specs": {
+    "Marca": "Toledo",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cutter-industrial-220-v-marca-fire",
+   "name": "Cutter industrial 220 V marca Fire",
+   "brand": "Fire",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-107.jpg"
+   ],
+   "price": 3500.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cutter industrial 220 V marca Fire funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Marca": "Fire",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-picador-de-legumes-industrial",
+   "name": "Cortador / picador de legumes industrial",
+   "brand": "",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-108.jpg"
+   ],
+   "price": 300.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador / picador de legumes industrial usado funcionando perfeitamente.",
+   "specs": {}
+  },
+  {
+   "id": "disco-fatiador-3-mm-diametro-203-mm-modelo-e3-novo-sem-uso",
+   "name": "Disco fatiador 3 mm Diâmetro 203 mm Modelo E3 novo sem uso",
+   "brand": "",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-109.jpg"
+   ],
+   "price": 700.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Disco fatiador 3 mm Diâmetro 203 mm Modelo E3 novo sem uso pra processadores da SKYSMSEN temos a pronta entrega a unidade Disco fatiador Fatias de diversas expressuras para cenoura, batata, aipim, pepino, tomate, calabresa, banana, laranja, cebola, repolho, couve, e muito mais.",
+   "specs": {}
+  },
+  {
+   "id": "cortador-de-frios-manual-filizola-101s-lamina-30-cm-cor-cinz",
+   "name": "Cortador de frios manual Filizola 101S lâmina 30 cm cor cinza",
+   "brand": "",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-110.jpg"
+   ],
+   "price": 7500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cortador de frios manual Filizola 101S lâmina 30 cm cor cinza reformando peças novas e originais 220 volts pintura automotiva sistema de segurança NR 12 garantia de 3 meses pela loja facilitamos no cartão.",
+   "specs": {
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cortador-de-frios-industrial-220-volts-marca-filizola-modelo",
+   "name": "Cortador de frios industrial 220 volts marca FILIZOLA modelo 101s",
+   "brand": "Filizola",
+   "sector": "cortadores",
+   "images": [
+    "img/produtos/rsc-produto-111.jpg"
+   ],
+   "price": 4650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cortador de frios industrial 220 volts marca FILIZOLA modelo 101s lâmina de 30 cm com sistema de segurança NR12 usado em ótimo estado.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Filizola"
+   }
+  },
+  {
+   "id": "fogao-42x48x80-1-boca-novo-de-ferro-queimandor-duplo",
+   "name": "Fogão 42x48x80 1 boca novo de ferro queimandor duplo",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-112.jpg"
+   ],
+   "price": 450.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 1 boca novo queimandor duplo baixa pressão gás GLP novo garantia de 6 meses pela fábrica marca cristal aço Medidas 42x48x80.",
+   "specs": {
+    "Medidas (C × L × A)": "42x48x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-75x50x80-2-bocas-novo-inox-1-queimador-simples-1-queim",
+   "name": "Fogão 75x50x80 .2 bocas novo inox 1 queimador simples 1 queimador",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-113.jpg"
+   ],
+   "price": 1060.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de inox 2 bocas novo 1 queimador simples 1 queimador duplo grelha 30x30 baixa pressão gás GLP novo garantia de 6 meses pela fábrica marca cristal aço Medidas 75x50x80.",
+   "specs": {
+    "Medidas (C × L × A)": "75x50x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-80x51x81-2-bocas-industrial-de-ferro-simples-alta-pres",
+   "name": "Fogão 80x51x81 . 2 bocas industrial de ferro simples alta pressão",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-114.jpg"
+   ],
+   "price": 600.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 2 bocas simples alta pressão grelha 30x30 perfil 7 marca cristal aço novo garantia de 6 meses pela fábrica (C × L × A). Medidas 80x51x81.",
+   "specs": {
+    "Medidas (C × L × A)": "80x51x81",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-75x50x80-2-bocas-ferro-novo-1-queimador-simples-1-quei",
+   "name": "Fogão 75x50x80 2 bocas ferro novo 1 queimador simples 1 queimador",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-115.jpg"
+   ],
+   "price": 680.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 2 bocas novo 1 queimador simples 1 queimador duplo grelha 30x30 baixa pressão gás GLP novo garantia de 6 meses pela fábrica marca cristal aço Medidas 75x50x80.",
+   "specs": {
+    "Medidas (C × L × A)": "75x50x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-1-10x48x80-3-bocas-de-ferro-novo",
+   "name": "Fogão 1,10x48x80. 3 bocas de ferro novo",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-116.jpg"
+   ],
+   "price": 870.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 3 bocas novo 1 queimador duplo 2 queimadores simples grelha 30x30 garantia de 6 meses pela fábrica baixa pressão gás GLP novo garantia de 6 meses pela fábrica marca cristal aço Medidas 1,10x48x80 Boca 30x30.",
+   "specs": {
+    "Medidas (C × L × A)": "1,10x48x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-74x83x80-4-bocas-inox-com-forno-novo-2queimadores-dupl",
+   "name": "Fogão 74x83x80 . 4 bocas inox com forno novo 2queimadores duplos",
+   "brand": "Crista",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-117.jpg"
+   ],
+   "price": 2450.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de inox 4 bocas com forno novo 2queimadores duplos 2queimadores simples grelha 30x30 garantia de 6 meses pela fábrica marca crista aço Medidas 74x83x80.",
+   "specs": {
+    "Medidas (C × L × A)": "74x83x80",
+    "Marca": "Crista",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-74x83x80-4-bocas-inox-novo-2queimadores-duplos-2queima",
+   "name": "Fogão 74x83x80 . 4 bocas inox novo 2queimadores duplos 2queimadores",
+   "brand": "Crista",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-118.jpg"
+   ],
+   "price": 1500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de inox 4 bocas novo 2queimadores duplos 2queimadores simples grelha 30x30 garantia de 6 meses pela fábrica marca crista aço Medidas 74x83x80.",
+   "specs": {
+    "Medidas (C × L × A)": "74x83x80",
+    "Marca": "Crista",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-80x88x80-4-bocas-industrial-de-ferro-simples-alta-pres",
+   "name": "Fogão 80x88x80 4 bocas industrial de ferro simples alta pressão",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-119.jpg"
+   ],
+   "price": 900.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 4 bocas simples alta pressão grelha 30x30 perfil 7 marca cristal aço novo garantia de 6 meses pela fábrica (C × L × A). Medidas 80x88x80.",
+   "specs": {
+    "Medidas (C × L × A)": "80x88x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-74x83x80-4-bocas-ferro-com-forno-novo-2queimadores-dup",
+   "name": "Fogão 74x83x80. 4 bocas ferro com forno novo 2queimadores duplos",
+   "brand": "",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-120.jpg"
+   ],
+   "price": 1745.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 4 bocas com forno novo 2queimadores duplos 2queimadores simples grelha 30x30 garantia de 6 meses pela fábrica Medidas 74x83x80.",
+   "specs": {
+    "Medidas (C × L × A)": "74x83x80",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-74x83x80-ferro-4-bocas-novo-2queimadores-duplos-2queim",
+   "name": "Fogão 74x83x80. ferro 4 bocas novo 2queimadores duplos 2queimadores",
+   "brand": "",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-121.jpg"
+   ],
+   "price": 1050.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 4 bocas novo 2queimadores duplos 2queimadores simples grelha 30x30 garantia de 6 meses pela fábrica Medidas 74x83x80.",
+   "specs": {
+    "Medidas (C × L × A)": "74x83x80",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-1-10x82-5x80-6-bocas-inox-com-forno-novo-3-queimadores",
+   "name": "Fogão 1,10x82,5x80 6 bocas inox com forno novo 3 queimadores duplos",
+   "brand": "",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-122.jpg"
+   ],
+   "price": 3200.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de inox 6 bocas com forno novo 3 queimadores duplos 3 queimadores simples grelha 30x30 Medidas 1,10x82,5x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,10x82,5x80"
+   }
+  },
+  {
+   "id": "fogao-1-10x82-5x80-6-bocas-inox-novo",
+   "name": "Fogão 1,10x82,5x80. 6 bocas inox novo",
+   "brand": "",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-123.jpg"
+   ],
+   "price": 2640.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de inox 6 bocas novo 3 queimadores duplos 3 queimadores simples grelha 30x30 Medidas 1,10x82,5x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,10x82,5x80"
+   }
+  },
+  {
+   "id": "fogao-1-10x82-5x80-6-bocas-ferro-com-forno-novo-3-queimadore",
+   "name": "Fogão 1,10x82,5x80. 6 bocas ferro com forno novo 3 queimadores duplos",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-124.jpg"
+   ],
+   "price": 2250.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 6 bocas com forno novo 3 queimadores duplos 3 queimadores simples grelha 30x30 marca cristal aço Medidas 1,10x82,5x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,10x82,5x80",
+    "Marca": "Cristal"
+   }
+  },
+  {
+   "id": "fogao-1-10x82-5x80-6-bocas-ferro-novo-3-queimadores-duplos",
+   "name": "Fogão 1,10x82,5x80 6 bocas ferro novo 3 queimadores duplos",
+   "brand": "",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-125.jpg"
+   ],
+   "price": 1450.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 6 bocas novo 3 queimadores duplos 3 queimadores simples grelha 30x30 Medidas 1,10x82,5x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,10x82,5x80"
+   }
+  },
+  {
+   "id": "fogao-1-50x90x80-8-bocas-inox-novo-4-queimadores-duplos",
+   "name": "Fogão 1,50x90x80. 8 bocas inox novo 4 queimadores duplos",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-126.jpg"
+   ],
+   "price": 3200.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de inox 8 bocas novo 4 queimadores duplos 4 queimadores simples grelha 30x30 baixa pressão gás GLP novo garantia de 6 meses pela fábrica marca cristal aço Medidas 1,50x90x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x90x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-1-50x90x80-8-bocas-ferro-com-2-fornos-4-queimadores-du",
+   "name": "Fogão 1,50x90x80. 8 bocas ferro com 2 fornos 4 queimadores duplos",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-127.jpg"
+   ],
+   "price": 3400.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 8 bocas com 2 fornos 4 queimadores duplos 4 queimadores simples grelha 30x30 baixa pressão gás GLP Marca cristal aço Linha standard perfil 70mm Novo garantia de 6 meses pela fábrica Medidas 1,50x90x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x90x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-1-50x90x80-8-bocas-ferro-com-1-forno-4-queimadores-dup",
+   "name": "Fogão 1,50x90x80 8 bocas ferro com 1 forno 4 queimadores duplos",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-128.jpg"
+   ],
+   "price": 2700.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 8 bocas com 1 forno 4 queimadores duplos 4 queimadores simples grelha 30x30 baixa pressão gás GLP Marca cristal aço Linha standard perfil 70mm Novo garantia de 6 meses pela fábrica Medidas 1,50x90x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x90x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-1-50x90x80-8-bocas-ferro-4-queimadores-duplos-4-queima",
+   "name": "Fogão 1,50x90x80. 8 bocas ferro 4 queimadores duplos 4 queimadores",
+   "brand": "Cristal",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-129.jpg"
+   ],
+   "price": 2300.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial de ferro 8 bocas 4 queimadores duplos 4 queimadores simples grelha 30x30 baixa pressão gás GLP Marca cristal aço Linha standard perfil 70mm Novo garantia de 6 meses pela fábrica Medidas 1,50x90x80.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x90x80",
+    "Marca": "Cristal",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "fogao-1-50x1-15x85-6-bocas-inox-304-boca-40x40-novo-sem-uso-",
+   "name": "Fogão 1,50x1,15x85. 6 bocas inox 304 boca 40x40 novo sem uso Sendo os",
+   "brand": "",
+   "sector": "fogoes",
+   "images": [
+    "img/produtos/rsc-produto-130.jpg"
+   ],
+   "price": 7800.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fogão industrial 6 bocas aço inox 304 boca 40x40 novo sem uso Sendo os 6 queimadores duplos Com paneleiro em baixo Gás GLP Medidas 1,50x1,15x85.",
+   "specs": {
+    "Medidas (C × L × A)": "1,50x1,15x85"
+   }
+  },
+  {
+   "id": "fritadeira-eletrica-agua-e-oleo-24-litros-220-volts-marca-sk",
+   "name": "Fritadeira elétrica água e óleo 24 litros 220 volts marca skysmen",
+   "brand": "Skysmen",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-131.jpg"
+   ],
+   "price": 3400.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira elétrica água e óleo 24 litros 220 volts marca skysmen ( nova ) garantia de 6 meses pela fábrica (C × L × A) Medidas 53x56x97 **Descrição* 24 litros de óleo , 14 litros de água e 1 kg de sal grosso Escorredor para apoio de cesto Cesto redondo de 35 cm Controle de temperatura por termostato Lâmpada indicadora da resistência ligada.",
+   "specs": {
+    "Medidas (C × L × A)": "53x56x97",
+    "Tensão": "220V",
+    "Marca": "Skysmen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "24 litros"
+   }
+  },
+  {
+   "id": "fritadeira-industrial-eletrica-220-volts-agua-e-oleo-40-litr",
+   "name": "Fritadeira industrial elétrica 220 volts água e óleo 40 litros sendo",
+   "brand": "Metalcubas",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-132.jpg"
+   ],
+   "price": 2900.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira industrial elétrica 220 volts água e óleo 40 litros sendo 24 litros de óleo 14 litros de água sal grosso 500 gramas potência 5000W consumo 3.5kw/h marca METALCUBAS nova sem uso garantia de 6 meses pela fábrica (C × L × A) Medidas 38x38x92.",
+   "specs": {
+    "Medidas (C × L × A)": "38x38x92",
+    "Tensão": "220V",
+    "Marca": "Metalcubas",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "40 litros"
+   }
+  },
+  {
+   "id": "fritadeira-industrial-eletrica-220-volts-25-litros-potencia-",
+   "name": "Fritadeira industrial elétrica 220 volts 25 litros potência 8000W",
+   "brand": "Metalcubas",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-133.jpg"
+   ],
+   "price": 3290.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira industrial elétrica 220 volts 25 litros potência 8000W consumo 5.5kw/h marca. METALCUBAS nova sem uso garantia de 6 meses pela fábrica (C × L × A) Medidas 44x54x99 Zona Fria: O sistema de zona fria evita que resíduos de alimentos queimem no fundo do tanque, prolongando a vida útil do óleo e mantendo o sabor dos alimentos.Operação: Conta com termostato ajustável para controle de temperatura, termostato de segurança e lâmpada piloto indicador de funcionamento.",
+   "specs": {
+    "Medidas (C × L × A)": "44x54x99",
+    "Tensão": "220V",
+    "Marca": "Metalcubas",
+    "Garantia": "6 meses",
+    "Capacidade": "25 litros"
+   }
+  },
+  {
+   "id": "fritadeira-eletrica-220-v-13-litros-marca-fire-potencia-5000",
+   "name": "Fritadeira elétrica 220 V 13 litros marca Fire potência 5000W nova",
+   "brand": "Fire",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-134.jpg"
+   ],
+   "price": 2420.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira elétrica 220 V 13 litros marca Fire potência 5000W nova sem uso acompanha 2 cesto garantia de 3 meses pela fábrica Medidas 36x41x30.",
+   "specs": {
+    "Medidas (C × L × A)": "36x41x30",
+    "Marca": "Fire",
+    "Garantia": "3 meses pela fábrica",
+    "Capacidade": "13 litros"
+   }
+  },
+  {
+   "id": "fritadeira-36x41x30-eletrica-zona-fria-220-v-13-litros-de-ol",
+   "name": "Fritadeira 36x41x30 elétrica zona fria 220 V 13 litros de óleo",
+   "brand": "Fire",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-135.jpg"
+   ],
+   "price": 2420.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira elétrica zona fria 220 V 13 litros de óleo marca Fire potência 5000W ( nova ) sem uso 1 cuba acompanha 2 cesto garantia de 3 meses pela fábrica (C × L × A) Medidas 36x41x30.",
+   "specs": {
+    "Medidas (C × L × A)": "36x41x30",
+    "Marca": "Fire",
+    "Garantia": "3 meses pela fábrica",
+    "Capacidade": "13 litros"
+   }
+  },
+  {
+   "id": "fritadeira-eletrica-10-litros-sendo-5-litros-cada-cuba-110-v",
+   "name": "Fritadeira elétrica 10 litros sendo 5 litros cada cuba 110 volts",
+   "brand": "",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-136.jpg"
+   ],
+   "price": 550.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Fritadeira elétrica 10 litros sendo 5 litros cada cuba 110 volts funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "110V",
+    "Capacidade": "10 litros"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "fritadeira-40x75x89-vulcan-modelo-lg-300-23-litros-industria",
+   "name": "Fritadeira 40x75x89 vulcan modelo LG 300. 23 litros industrial gás GLP",
+   "brand": "",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-137.jpg"
+   ],
+   "price": 13600.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira vulcan modelo LG 300. 23 litros industrial gás GLP ( nova ) sem uso garantia de 1 ano pela fábrica (C × L × A) Medidas 40x75x89 Altura total 1,14 Especificações Técnicas GeraisCapacidade de Óleo: 20 a 23 litros.Capacidade de Produção: Até 30 kg de batata (pré-frita congelada) por hora.Potência Calorífica: 90.000 BTU/h distribuídos por 3 queimadores de alta potência com defletores internos.Temperatura de Operação: De 93°C a 205°C, controlada por dois termostatos (operação e segurança).Tempo de Aquecimento: Aproximadamente 17 minutos para atingir a temperatura de trabalho.Cestos: Acompanha 2 cestos robustos em aço inox com pegador emborrachado/PVC (capacidade de ~1 kg por cesto).",
+   "specs": {
+    "Medidas (C × L × A)": "40x75x89",
+    "Capacidade": "23 litros"
+   }
+  },
+  {
+   "id": "fritadeira-40x75x89-vulcan-modelo-lg-400-de-23-a-28-litros-i",
+   "name": "Fritadeira 40x75x89 vulcan modelo LG 400 de 23 a 28 litros industrial",
+   "brand": "",
+   "sector": "fritadeiras",
+   "images": [
+    "img/produtos/rsc-produto-138.jpg"
+   ],
+   "price": 16500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Fritadeira vulcan modelo LG 400 de 23 a 28 litros industrial gás GLP ( nova ) sem uso garantia de 1 ano pela fábrica (C × L × A) Medidas 40x75x89 Altura total 1,14 Descrição Capacidade de Óleo: 23 a 28 litros.Potência Calorífica: 120.000 BTU/h, distribuídos por 4 tubos queimadores trocadores de calor.Capacidade de Produção: Até 40 kg de batata (pré-frita congelada) por hora.Acessórios inclusos: Acompanha 2 cestos de fritura médios com cabos revestidos em PVC (com capacidade de 1,3 kg por cesto).Tipo de Gás: Disponível tanto em configurações para GLP (consumo aproximado de 2,8 kg/h) quanto para Gás Natural (GN) (consumo de 3,3 m³/h).Diferencial de Sistema: Conta com o sistema de zona fria no fundo do tanque. Esse mecanismo evita que os resíduos de alimentos carbonizem, o que ajuda a prolongar significativamente a vida útil e a qualidade do óleo.",
+   "specs": {
+    "Medidas (C × L × A)": "40x75x89",
+    "Capacidade": "28 litros"
+   }
+  },
+  {
+   "id": "forno-1-00x59x2-05-industrial-da-marca-perfecta-curitiba-220",
+   "name": "Forno 1,00x59x2,05 industrial da marca PERFECTA CURITIBA 220 volts",
+   "brand": "Perfecta",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-139.jpg"
+   ],
+   "price": 15000.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Forno industrial da marca PERFECTA CURITIBA 220 volts projetado para o padrão Subway.Finalidade: Ideal para assar pães, bolos e biscoitos em padarias, lanchonetes e lojas de conveniência.Recursos: Possui visor de vidro na porta, controle de temperatura suporta múltiplas assadeiras usado completo com as assadeira igual mostra nas fotos revisado garantia de 3 meses pela loja Medidas (C × L × A) Assadeiras 43x32 1,00x59x2,05.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x59x2,05",
+    "Tensão": "220V",
+    "Marca": "Perfecta",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "forno-esteira-1-20x1-03x47-industrial-eletrico-220-volts-nov",
+   "name": "Forno esteira 1,20x1,03x47 industrial elétrico 220 volts novo sem uso",
+   "brand": "Vuze",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-140.jpg"
+   ],
+   "price": 32500.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Forno esteira industrial elétrico 220 volts novo sem uso marca vuze ideal para pizzarias e outros (C × L × A) Medidas 1,20x1,03x47 Esteira 1,42x53 R$ 32.500.",
+   "specs": {
+    "Medidas (C × L × A)": "1,20x1,03x47",
+    "Tensão": "220V",
+    "Marca": "Vuze"
+   }
+  },
+  {
+   "id": "forno-eletrico-50x30x34-220-volts-38-litros-marca-philco",
+   "name": "Forno elétrico 50x30x34. 220 volts 38 litros marca PHILCO",
+   "brand": "Philco",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-141.jpg"
+   ],
+   "price": 450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Forno elétrico 220 volts 38 litros marca PHILCO usado em ótimo estado funcionando perfeitamente Medidas 50x30x34.",
+   "specs": {
+    "Medidas (C × L × A)": "50x30x34",
+    "Tensão": "220V",
+    "Marca": "Philco",
+    "Capacidade": "38 litros"
+   }
+  },
+  {
+   "id": "forno-60x43x37-salamandra-gratinador-1-camera-eletrico-220-v",
+   "name": "Forno 60x43x37. salamandra Gratinador 1 câmera elétrico 220 volts",
+   "brand": "Fire",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-142.jpg"
+   ],
+   "price": 4150.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Forno salamandra Gratinador 1 câmera elétrico 220 volts marca FIRE novo sem uso garantia de 03 meses pela fábrica Medidas 60x43x37.",
+   "specs": {
+    "Medidas (C × L × A)": "60x43x37",
+    "Tensão": "220V",
+    "Marca": "Fire",
+    "Garantia": "03 meses pela fábrica"
+   }
+  },
+  {
+   "id": "microondas-32-litros-220-volts-marca-consul",
+   "name": "Microondas 32 litros 220 volts marca Consul",
+   "brand": "Consul",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-143.jpg"
+   ],
+   "price": 380.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Microondas 32 litros 220 volts marca Consul usado funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Consul",
+    "Capacidade": "32 litros"
+   }
+  },
+  {
+   "id": "microondas-110-volts-marca-panasonic",
+   "name": "Microondas 110 volts marca panasonic",
+   "brand": "Panasonic",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-144.jpg"
+   ],
+   "price": 380.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Microondas 110 volts marca panasonic funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "110V",
+    "Marca": "Panasonic"
+   }
+  },
+  {
+   "id": "microondas-110-volts-marca-panasonic-145",
+   "name": "Microondas 110 volts marca PANASONIC",
+   "brand": "Panasonic",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-145.jpg"
+   ],
+   "price": 380.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Microondas 110 volts marca PANASONIC Revisado funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "110V",
+    "Marca": "Panasonic"
+   }
+  },
+  {
+   "id": "microondas-110-volts-20-litros-marca-philco",
+   "name": "Microondas 110 volts 20 litros marca PHILCO",
+   "brand": "Philco",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-146.jpg"
+   ],
+   "price": 380.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Microondas 110 volts 20 litros marca PHILCO Revisado funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "110V",
+    "Marca": "Philco",
+    "Capacidade": "20 litros"
+   }
+  },
+  {
+   "id": "microondas-110-volts-marca-philco",
+   "name": "Microondas 110 volts marca Philco",
+   "brand": "Philco",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-147.jpg"
+   ],
+   "price": 350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Microondas 110 volts marca Philco usado funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "110V",
+    "Marca": "Philco"
+   }
+  },
+  {
+   "id": "conservador-40x58x16-de-batatas-fritas-eletrico-1-cuba-220v",
+   "name": "Conservador 40x58x16 de Batatas Fritas Elétrico 1 Cuba 220V",
+   "brand": "Fire",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-148.jpg"
+   ],
+   "price": 1630.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Conservador de Batatas Fritas Elétrico 1 Cuba 220V marca FIRE novo sem uso garantia de 3 meses pela fábrica Utilizado para manter aquecidas as frituras, tais como: batata, polenta, mandioca e salgados em geral. Fabricado em aço inox escovado Utiliza lâmpadas de infra-vermelho para secagem Medidas 40x58x16 Altura total 70.",
+   "specs": {
+    "Medidas (C × L × A)": "40x58x16",
+    "Marca": "Fire",
+    "Garantia": "3 meses pela fábrica"
+   }
+  },
+  {
+   "id": "conservador-40x59x69-de-batatas-fritas-eletrico-2-cuba-220v",
+   "name": "Conservador 40x59x69 de Batatas Fritas Elétrico 2 Cuba 220V",
+   "brand": "Fire",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-149.jpg"
+   ],
+   "price": 1885.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Conservador de Batatas Fritas Elétrico 2 Cuba 220V marca FIRE modelo CB/2C novo sem uso garantia de 3 meses pela fábrica Utilizado para manter aquecidas as frituras, tais como: batata, polenta, mandioca e salgados em geral. Fabricado em aço inox escovado Utiliza lâmpadas de infra-vermelho para secagem Potência 500w Medidas 40x59x69 Área útil 23x36 Peso 11,6.",
+   "specs": {
+    "Medidas (C × L × A)": "40x59x69",
+    "Marca": "Fire",
+    "Garantia": "3 meses pela fábrica"
+   }
+  },
+  {
+   "id": "conservador-de-batatas-fritas-eletrico-1-cuba-220v-marca-fir",
+   "name": "Conservador de Batatas Fritas Elétrico 1 Cuba 220V marca FIRE",
+   "brand": "Fire",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-150.jpg"
+   ],
+   "price": 1300.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Conservador de Batatas Fritas Elétrico 1 Cuba 220V marca FIRE Utilizado para manter aquecidas as frituras, tais como: batata, polenta, mandioca e salgados em geral. Fabricado em aço inox escovado Utiliza lâmpadas de infra-vermelho para secagem.",
+   "specs": {
+    "Marca": "Fire"
+   }
+  },
+  {
+   "id": "microondas-220-volts-marca-eletrolux",
+   "name": "Microondas 220 volts marca Eletrolux",
+   "brand": "Eletrolux",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-151.jpg"
+   ],
+   "price": 350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Microondas 220 volts marca Eletrolux usado bem usadinho mais funcionando perfeitamente.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Eletrolux"
+   }
+  },
+  {
+   "id": "forno-salamandra-eletrico-220-volts-3000w-novo",
+   "name": "Forno Salamandra elétrico 220 volts 3000W novo",
+   "brand": "Metalcubas",
+   "sector": "fornos",
+   "images": [
+    "img/produtos/rsc-produto-152.jpg"
+   ],
+   "price": 2000.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Forno Salamandra elétrico 220 volts 3000W novo garantia de 6 meses pela fábrica marca METALCUBAS modelo FSE 45 (C × L × A) Medidas 57x45x38 Descrição forno destinado a gratinar alimentos através de uma grande descarga de calor gerado por uma resistência elétrica.controle e feito por um termostato de 50° a 300°.",
+   "specs": {
+    "Medidas (C × L × A)": "57x45x38",
+    "Tensão": "220V",
+    "Marca": "Metalcubas",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "seladora-de-embalagens-e-marmitas-220-volts-da-marca-papello",
+   "name": "Seladora de embalagens e marmitas 220 volts da marca Papello, ideal",
+   "brand": "Papello",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-153.jpg"
+   ],
+   "price": 2500.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Seladora de embalagens e marmitas 220 volts da marca Papello, ideal para o comércio e serviços de delivery.( Usada ) Em ótimo estado funcionando perfeitamente testamos na hora.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Papello"
+   }
+  },
+  {
+   "id": "seladora-42x50x45-industrial-2-barras-de-selagem-220-volts",
+   "name": "Seladora 42x50x45 industrial 2 barras de selagem 220 volts",
+   "brand": "",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-154.jpg"
+   ],
+   "price": 8999.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Seladora industrial 2 barras de selagem 220 volts marca soluções a vácuo modelo sv350 ( usada ) revisada funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 42x50x45 Barra de selagem 36x2.",
+   "specs": {
+    "Medidas (C × L × A)": "42x50x45",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "seladora-48x51x43-a-vacuo-industrial-1-barra-de-selagem-marc",
+   "name": "Seladora 48x51x43 a vácuo industrial 1 barra de selagem marca SELOVAC",
+   "brand": "Selovac",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-155.jpg"
+   ],
+   "price": 10450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Seladora a vácuo industrial 1 barra de selagem marca SELOVAC modelo 200S usada funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 48x51x43 Barra de selagem 42x2.",
+   "specs": {
+    "Medidas (C × L × A)": "48x51x43",
+    "Marca": "Selovac",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "seladora-33x40x33-a-vacuo-nova-sem-uso-220-volts-acompanha-o",
+   "name": "Seladora 33x40x33 a vácuo nova sem uso 220 volts acompanha o kit",
+   "brand": "",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-156.jpg"
+   ],
+   "price": 5200.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Seladora a vácuo nova sem uso 220 volts acompanha o kit completo garantia de 3 meses Medidas 33x40x33 Câmera 28x28 Barra de selagem 27cm.",
+   "specs": {
+    "Medidas (C × L × A)": "33x40x33",
+    "Tensão": "220V",
+    "Garantia": "3 meses"
+   }
+  },
+  {
+   "id": "seladora-a-vacuo-nova",
+   "name": "Seladora a vácuo nova",
+   "brand": "Selovac",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-157.jpg"
+   ],
+   "price": 1340.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Seladora a vácuo nova garantia de 1 ano pela fábrica 220 volts marca selovac modelo LNS600 Barra de selagem 300m Potência 110w Medidas 400mm x 160mm x 105mm Barra de selagem 300 mm.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Selovac"
+   }
+  },
+  {
+   "id": "seladora-portatil-220-volts",
+   "name": "Seladora portátil 220 volts",
+   "brand": "",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-158.jpg"
+   ],
+   "price": 300.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Seladora portátil 220 volts funcionando perfeitamente testamos na hora ela não faz o Vácuo só está selando (C × L × A) Medidas 36x14x8 cm.",
+   "specs": {
+    "Medidas (C × L × A)": "36x14x8",
+    "Tensão": "220V"
+   }
+  },
+  {
+   "id": "seladora-48x51x50-industrial-1-barra-de-selagem-marca-selova",
+   "name": "Seladora 48x51x50. industrial 1 barra de selagem marca selovac modelo",
+   "brand": "Selovac",
+   "sector": "seladoras",
+   "images": [
+    "img/produtos/rsc-produto-159.jpg"
+   ],
+   "price": 12850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Seladora industrial 1 barra de selagem marca selovac modelo 200S ( usada ) garantia de 3 meses pela loja está funcionando perfeitamente (C × L × A) Medidas 48x51x50 Barra de selagem 42x2.",
+   "specs": {
+    "Medidas (C × L × A)": "48x51x50",
+    "Marca": "Selovac",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balanca-industrial-etiquetadora-marca-toledo-modelo-prix-4-u",
+   "name": "Balança industrial etiquetadora marca Toledo modelo Prix 4 uno Max",
+   "brand": "Toledo",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-160.jpg"
+   ],
+   "price": 3850.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balança industrial etiquetadora marca Toledo modelo Prix 4 uno Max 15 kg ( Usada ) Em ótimo estado Revisada funcionando perfeitamente garantia de 3 meses pela loja Ano 11/2014.",
+   "specs": {
+    "Marca": "Toledo",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balanca-industrial-etiquetadora-marca-filizola-modelo-platin",
+   "name": "Balança industrial etiquetadora marca Filizola modelo platina",
+   "brand": "Filizola",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-161.jpg"
+   ],
+   "price": 2600.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Balança industrial etiquetadora marca Filizola modelo platina 220 volts funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Filizola",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balanca-industrial-etiquetadora-marca-toledo-modelo-prix-4-u-162",
+   "name": "Balança industrial etiquetadora marca Toledo Modelo Prix 4 uno Max",
+   "brand": "Toledo",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-162.jpg"
+   ],
+   "price": 7520.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balança industrial etiquetadora marca Toledo Modelo Prix 4 uno Max 32 kg nova sem uso garantia de 6 meses pela fábrica.",
+   "specs": {
+    "Marca": "Toledo",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "balanca-etiquetadora-com-wi-fi-bivolt-marca-toledo-modelo-pr",
+   "name": "Balança etiquetadora com wi_fi bivolt marca Toledo modelo Prix",
+   "brand": "Toledo",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-163.jpg"
+   ],
+   "price": 9000.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balança etiquetadora com wi_fi bivolt marca Toledo modelo Prix 6 TOUCH-A Max 32 kg nova sem uso Com garantia de 3 meses pela loja Tecnologia: Conta com computador interno, tela touchscreen colorida de 10,4 polegadas e impressora integrada para etiquetas. MÊS/Ano 12/2017.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Toledo",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "balanca-comercial-digital-prix-nova-sem-uso-max-30-kg",
+   "name": "Balança comercial Digital Prix nova sem uso Max 30 kg",
+   "brand": "",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-164.jpg"
+   ],
+   "price": 2350.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balança comercial Digital Prix nova sem uso Max 30 kg garantia de 3 meses pela loja.",
+   "specs": {
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "impressora-termica-de-etiquetas-marca-toledo-modelo-prix-it4",
+   "name": "Impressora térmica de etiquetas marca Toledo modelo Prix IT400M.",
+   "brand": "Toledo",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-165.jpg"
+   ],
+   "price": 1860.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "impressora térmica de etiquetas marca Toledo modelo Prix IT400M. Finalidade: Ideal para rotulagem de produtos, etiquetas de preços e tabelas nutricionais. Velocidade: Possui velocidade máxima de impressão de 150 mm/s. Capacidade: Conta com memória interna para armazenar layouts e fontes. acompanha um kit de cabos essencial para sua operação. kit.",
+   "specs": {
+    "Marca": "Toledo"
+   }
+  },
+  {
+   "id": "balanca-a-prova-d-agua-prix-modelo-bc200w-32kg-bateria-800-h",
+   "name": "Balança À Prova D'água Prix modelo Bc200w/ 32kg Bateria 800 Horas",
+   "brand": "",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-166.jpg"
+   ],
+   "price": 1470.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balança À Prova D'água Prix modelo Bc200w/ 32kg Bateria 800 Horas Toledo balança nova sem uso garantia de 6 meses A bc200w é a balança PRIX à prova d’água da Toledo do Brasil. Desenvolvida especialmente para aplicações comerciais para ser utilizada na venda de produtos por peso, podendo ser empregada em operações de venda direta, combinando exatidão, rapidez, facilidade de operação e baixa manutenção. PRINCIPAIS CARACTERÍSTICAS: À PROVA D’ÁGUA: Com grau de proteção IPX7 é possível higienizar a sua balança do jeito que você sempre quis! PREÇO/KG E PREÇO/TOTAL: Possui funcionalidades que atendem às necessidades do mercado, principalmente em peixarias, açougues, departamentos de FLV e feiras livre. BATERIA INTERNA: Até 800 horas para trabalhar em locais sem disposição de rede elétrica ou em caso de falta de energia. BACKLIGHT: Display com backlight com desligamento automático que prolonga a vida útil da bateria enquanto a balança não estiver em operação. DISPLAY: Construído de cristal líquido com 32 dígitos no total e com indicação luminosa para zero, peso líquido, pré empacotamento, peso estável e nível de bateria. ESPECIFICAÇÕES TÉCNICAS: Capacidade de pesagem: 32 kg Faixa de 0,01 a 32,000 kg = divisão de 10 gramas Capacidade máxima de pesagem: 32 kg Capacidade mínima de pesagem: 0,2 kg e=d=: 0,01 kg Número de incrementos: 3.200 Tara máxima: 9,990 kg Dimensões do prato: 280 x 220 mm Classe de exatidão: III Gabinete: Plástico ABS Sub prato: Plástico ABS Prato: Aço Inox AISI 304 Adaptador de parede: Entrada: 100-240Vca 50-60Hz / Saída: 6Vcc – 500mA Comunicação: Não possui INMETRO: Aprovada pela portaria 236 / 94 Grau de proteção: IPX7 DISPLAY: LCD - Display de cristal líquido com 32 dígitos e backlight na azul claro DRENOS: + de 15 drenos para escoamento da água ALIMENTAÇÃO ELÉTRICA: Tipo: Fonte adaptadora multivoltagem Tensão de entrada: 100 a 240 VCA Tensão de saída: + 6 VCC Corrente de saída: 500 mA Frequência: 50 / 60 Hz A balança ideal para locais que precisam de lavagem ou higienização.",
+   "specs": {
+    "Garantia": "6 meses"
+   }
+  },
+  {
+   "id": "balanca-marca-toledo-modelo-prix-3fit-15-kg-c-bateria-aprova",
+   "name": "Balança marca Toledo modelo Prix 3fit 15 kg C/bateria aprovada",
+   "brand": "Toledo",
+   "sector": "balancas",
+   "images": [
+    "img/produtos/rsc-produto-167.jpg"
+   ],
+   "price": 1150.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Balança marca Toledo modelo Prix 3fit 15 kg C/bateria aprovada Inmetro original bivolt nova sem uso Garantia de 1 ano pela fábrica.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Toledo"
+   }
+  },
+  {
+   "id": "masseira-basculante-25-kg-industrial-bivolt-automatico-marca",
+   "name": "Masseira basculante 25 kg industrial bivolt automático marca G.PANIZ,",
+   "brand": "",
+   "sector": "masseiras",
+   "images": [
+    "img/produtos/rsc-produto-168.jpg"
+   ],
+   "price": 7650.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Masseira basculante 25 kg industrial bivolt automático marca G.PANIZ, nova garantia de 6 meses pela fábrica parcelamos em 10x sem juros.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "modeladora-de-pizza-industrial-220-volts-da-marca-grano-mode",
+   "name": "Modeladora de pizza industrial 220 volts da marca Grano modelo MDP",
+   "brand": "Grano",
+   "sector": "masseiras",
+   "images": [
+    "img/produtos/rsc-produto-169.jpg"
+   ],
+   "price": 6250.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "modeladora de pizza industrial 220 volts da marca Grano modelo MDP 390 Descrição Este equipamento é utilizado em pizzarias e cozinhas profissionais para abrir e modelar discos de massa de forma rápida e padronizada. Função: Modela discos de massa de pizza a frio, mantendo a qualidade e o sabor como se fossem preparados manualmente. Eficiência: Capaz de produzir centenas de discos de pizza por hora, aumentando significativamente a agilidade na produção. Estrutura: Possui construção robusta em aço inox ou aço carbono com pintura eletrostática, dependendo do modelo específico, o que garante durabilidade e higiene.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Grano"
+   }
+  },
+  {
+   "id": "amaciador-de-carne-de-inox-220-volts-marca-skysmsen-novo-sem",
+   "name": "Amaciador de carne de inox 220 volts marca SKYSMSEN novo sem uso",
+   "brand": "Skysmsen",
+   "sector": "moedores",
+   "images": [
+    "img/produtos/rsc-produto-170.jpg"
+   ],
+   "price": 4340.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Amaciador de carne de inox 220 volts marca SKYSMSEN novo sem uso garantia de 06 meses pela fábrica.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Skysmsen",
+    "Garantia": "06 meses pela fábrica"
+   }
+  },
+  {
+   "id": "moedor-de-carne-boca-22-220-volts-marca-skysmsen-modelo-psee",
+   "name": "Moedor de carne boca 22 220 volts marca SKYSMSEN modelo PSEE-22-N",
+   "brand": "Skysmsen",
+   "sector": "moedores",
+   "images": [
+    "img/produtos/rsc-produto-171.jpg"
+   ],
+   "price": 2750.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Moedor de carne boca 22 220 volts marca SKYSMSEN modelo PSEE-22-N usado em ótimo estado funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Skysmsen",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "moedor-de-carne-boca-22-220-volts-marca-skysmsen-modelo-ps-2",
+   "name": "Moedor de carne boca 22 220 volts marca SKYSMSEN modelo PS-22",
+   "brand": "Skysmsen",
+   "sector": "moedores",
+   "images": [
+    "img/produtos/rsc-produto-172.jpg"
+   ],
+   "price": 3050.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Moedor de carne boca 22 220 volts marca SKYSMSEN modelo PS-22- Funcionando perfeitamente garantia de 3 meses pela loja.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Skysmsen",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "cacarola-pro-extra-forte-marca-eirilar-nova-sem-uso",
+   "name": "Caçarola pro extra forte marca Eirilar nova sem uso",
+   "brand": "Eirilar",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-173.jpg"
+   ],
+   "price": 100.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Caçarola pro extra forte marca Eirilar nova sem uso temos a pronta entrega N°20. 3,300 litros R$ 100,00 N°32. 12 litros R$ 200,00 N°34. 14 litros R$ 220,00 N°36 16,3 litros R$ 280,00 N°38. 18 litros R$ 310,00 N°40. 20 litros R$ 345,00 N°45. 30 litros R$ 395,00 N°50. 40 litros R$ 475,00 N°60. 60 litros R$ 775,00.",
+   "specs": {
+    "Marca": "Eirilar",
+    "Capacidade": "3,300 litros"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "panela-de-pressao-industrial-marca-eirilar-nova-sem-uso",
+   "name": "Panela De Pressão Industrial Marca Eirilar nova sem uso",
+   "brand": "Eirilar",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-174.jpg"
+   ],
+   "price": 510.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Panela De Pressão Industrial Marca Eirilar nova sem uso 13 Litros com cabo R$ 510,00 18 Litros com cabo R$ 500,00 18 Litros com Alça R$ 715,00 22 Litros com cabo R$ 575,00 22 Litros com Alça R$ 540,00 25 Litros com Alça R$ 825,00.",
+   "specs": {
+    "Marca": "Eirilar",
+    "Capacidade": "13 litros"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "tabela-de-cacarola-e-caldeirao-novo-aparti-de-45-reais",
+   "name": "Tabela de caçarola e caldeirão novo Aparti de 45 reais",
+   "brand": "",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-175.jpg"
+   ],
+   "price": 45.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Caçarola & caldeirões linha standard composição alumínio Caçarola Numeração. Valor N° 32................ .R$ 130,00 N° 34................. R$ 140,00 N° 36..................R$ 155,00 N° 38..................R$ 164,50,00 N° 20..................R$ 70,00 N°24...................R$85,00 Caçarola & caldeirões linha standard composição alumínio Caldeirão Numeração. Valor N° 20....6L..........R$ 100,00 N° 22..............R$ 115,00 N° 26..............R$ 125,00 N° 30........18,3L...R$140,00 N° 32......23,7L........R$ 160,00 N° 36......31 L....... R$ 210,00 N° 38..............R$. 270,00 N° 40..............R$ 290,00 Linha hotel N° 50..............R$ 588,00 N° 55....…........R$ 630,00.",
+   "specs": {},
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "tacho-linha-hotel",
+   "name": "Tacho linha hotel",
+   "brand": "",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-176.jpg"
+   ],
+   "price": 75.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Tacho linha hotel N 35. R$ 75,00 N40. R$ 95,00.",
+   "specs": {},
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "escorredor-macarrao-pro-de-aluminio-marca-eirilar-novo-sem-u",
+   "name": "Escorredor macarrão pro de alumínio marca Eirilar Novo sem uso",
+   "brand": "Eirilar",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-177.jpg"
+   ],
+   "price": 110.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Escorredor macarrão pro de alumínio marca Eirilar Novo sem uso temos a pronta entrega N°35. 10 litros R$ 110,00 N°40. 18 litros R$ 127,00 N°45 22 litros R$ 152,00 N°50 30 litros R$ 196,00.",
+   "specs": {
+    "Marca": "Eirilar",
+    "Capacidade": "10 litros"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "bule-linha-hotel-novo",
+   "name": "Bule linha hotel novo",
+   "brand": "",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-178.jpg"
+   ],
+   "price": 80.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Bule linha hotel novo 2 L R$ $80,00 3 L R$ 100,00 5 L R$ 132,50 6 L R$ 150,00.",
+   "specs": {},
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "cubas-gastronomicas-gn-1-1-20cm-de-altura-de-inox-nova",
+   "name": "Cubas gastronômicas/GN 1/1 20cm de altura de inox nova",
+   "brand": "Gurmet",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-179.jpg"
+   ],
+   "price": 270.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cubas gastronômicas/GN 1/1 20cm de altura de inox nova temos a pronta entrega Marca GURMET MIX (C × L × A) Medidas Gn1/1 53x32,5x20cm un.",
+   "specs": {
+    "Medidas (C × L × A)": "53x32,",
+    "Marca": "Gurmet"
+   }
+  },
+  {
+   "id": "cubas-gastronomicas-gn-1-1-15-cm-de-altura-de-inox-nova",
+   "name": "Cubas gastronômicas/GN 1/1 15 cm de altura de inox nova",
+   "brand": "Gurmet",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-180.jpg"
+   ],
+   "price": 150.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cubas gastronômicas/GN 1/1 15 cm de altura de inox nova temos a pronta entrega Marca GURMET MIX Medidas 53x32x10 cm 1/1 10 cm R$ 150,00 medidas 53x32x15 cm 1/1 15 cm R$ 165,00.",
+   "specs": {
+    "Medidas (C × L × A)": "53x32x10",
+    "Marca": "Gurmet"
+   },
+   "online": false,
+   "note": "Disponível em mais de uma medida — veja os valores na descrição e fale com a loja."
+  },
+  {
+   "id": "cubas-gastronomicas-gn-1-2-10-cm-de-altura-de-inox-nova",
+   "name": "Cubas gastronômicas/GN 1/2 10 cm de altura de inox nova",
+   "brand": "Gurmet",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-181.jpg"
+   ],
+   "price": 85.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cubas gastronômicas/GN 1/2 10 cm de altura de inox nova temos a pronta entrega Marca GURMET MIX (C × L × A) Medidas 32,5x26,5x10 cm un.",
+   "specs": {
+    "Medidas (C × L × A)": "32,5x26,5x10",
+    "Marca": "Gurmet"
+   }
+  },
+  {
+   "id": "cubas-gastronomicas-com-tampa-gn-1-2-10-cm-de-altura-de-inox",
+   "name": "Cubas gastronômicas com tampa /GN 1/2 10 cm de altura de inox nova",
+   "brand": "Gurmet",
+   "sector": "utensilios",
+   "images": [
+    "img/produtos/rsc-produto-182.jpg"
+   ],
+   "price": 100.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cubas gastronômicas com tampa /GN 1/2 10 cm de altura de inox nova temos a pronta entrega Marca GURMET MIX (C × L × A) Medidas 32,5x26,5x10 cm Kit cuba + tampa por cada.",
+   "specs": {
+    "Medidas (C × L × A)": "32,5x26,5x10",
+    "Marca": "Gurmet"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "espremedor-de-frutas-extrator-de-sucos-de-inox-marca-skysmse",
+   "name": "Espremedor de frutas/ Extrator de sucos de inox Marca SKYSMSEN modelo",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-183.jpg"
+   ],
+   "price": 720.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Espremedor de frutas/ Extrator de sucos de inox Marca SKYSMSEN modelo EX Bivolt Novo garantia de 6 meses pela fábrica A força que vc precisa um equipamento durável, potente e silencioso para o dia a dia no seu negócio Motor de 0,25 HP-CV.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica"
+   }
+  },
+  {
+   "id": "liquidificador-10-litros-industrial-marca-skysmsen-bivolt-10",
+   "name": "Liquidificador 10 Litros industrial marca SKYSMSEN Bivolt 10 litros",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-184.jpg"
+   ],
+   "price": 1650.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador industrial marca SKYSMSEN Bivolt 10 litros baixa rotação novo sem uso garantia de 6 meses pela fábrica.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "10 litros"
+   }
+  },
+  {
+   "id": "liquidificador-6-litros-industrial-marca-skysmsen-220-volts-",
+   "name": "Liquidificador 6 Litros industrial marca SKYSMSEN 220 volts 06 litros",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-185.jpg"
+   ],
+   "price": 1600.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador industrial marca SKYSMSEN 220 volts 06 litros baixa rotação novo sem uso garantia de 6meses pela fábrica.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Skysmsen",
+    "Garantia": "6meses pela fábrica",
+    "Capacidade": "6 litros"
+   }
+  },
+  {
+   "id": "liquidificador-6-litros-industrial-baixa-rotacao-marca-skysm",
+   "name": "Liquidificador 6 Litros industrial baixa rotação marca SKYSMSEN",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-186.jpg"
+   ],
+   "price": 1600.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador 6 Litros industrial baixa rotação marca SKYSMSEN bivolt 110/220 volts ( novo ) sem uso garantia de 6 meses pela fábrica Descrição : melhor desempenho Melhor desempenho ideal para bolos, sopas, sorvetes e pasta. Seu tradicional motor de indução entrega robustez, durabilidade e o alto torque necessário para os preparos mais pesados.",
+   "specs": {
+    "Tensão": "220V / bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "6 litros"
+   }
+  },
+  {
+   "id": "liquidificador-4-litros-industrial-marca-skysmsen-bivolt-04-",
+   "name": "Liquidificador 4 Litros industrial marca SKYSMSEN bivolt 04 litros",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-187.jpg"
+   ],
+   "price": 1570.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador industrial marca SKYSMSEN bivolt 04 litros baixa rotação novo sem uso garantia de 6meses pela fábrica.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "4 litros"
+   }
+  },
+  {
+   "id": "liquidificador-4-litros-industrial-baixa-rotacao-marca-skysm",
+   "name": "Liquidificador 4 Litros industrial baixa rotação marca SKYSMSEN",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-188.jpg"
+   ],
+   "price": 1570.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador 4 Litros industrial baixa rotação marca SKYSMSEN bivolt 110/220 volts ( novo ) sem uso garantia de 6 meses pela fábrica Descrição : melhor desempenho Melhor desempenho ideal para bolos, sopas, sorvetes e pasta. Seu tradicional motor de indução entrega robustez, durabilidade e o alto torque necessário para os preparos mais pesados.",
+   "specs": {
+    "Tensão": "220V / bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "4 litros"
+   }
+  },
+  {
+   "id": "liquidificador-4-litros-industrial-baixa-rotacao-marca-spolu",
+   "name": "Liquidificador 4 Litros industrial baixa rotação marca SPOLU BIVOLT",
+   "brand": "Spolu",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-189.jpg"
+   ],
+   "price": 950.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador industrial 4 litros baixa rotação marca SPOLU BIVOLT 110/220v Potência 700W novo garantia de 6 meses pela fábrica.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Spolu",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "4 litros"
+   }
+  },
+  {
+   "id": "liquidificador-3-litros-industrial-marca-skysmsen-bivolt-03-",
+   "name": "Liquidificador 3 Litros industrial marca SKYSMSEN bivolt 03 litros",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-190.jpg"
+   ],
+   "price": 1450.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador industrial marca SKYSMSEN bivolt 03 litros baixa rotação novo sem uso garantia de 6 meses pela fábrica.",
+   "specs": {
+    "Tensão": "Bivolt",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "3 litros"
+   }
+  },
+  {
+   "id": "liquidificador-1-5-litros-de-inox-industrial-1-5-litros-copo",
+   "name": "Liquidificador 1.5 Litros de inox industrial 1.5 litros copo de inox",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-191.jpg"
+   ],
+   "price": 755.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador de inox industrial 1.5 litros copo de inox alta rotação Marca SKYSMSEN Modelo LT1.5 Potência do motor 900w 220 volts novo sem uso garantia de 6 meses pela fábrica temos a pronta entrega.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "1.5 litros"
+   }
+  },
+  {
+   "id": "liquidificador-1-5-litros-de-inox-industrial-copo-de-plastic",
+   "name": "Liquidificador 1.5 Litros de inox industrial copo de plástico alta",
+   "brand": "Skysmsen",
+   "sector": "liquidificadores",
+   "images": [
+    "img/produtos/rsc-produto-192.jpg"
+   ],
+   "price": 620.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Liquidificador de inox industrial 1.5 litros copo de plástico alta rotação Marca SKYSMSEN Modelo LT1.5 Potência do motor 900w 220 volts novo sem uso garantia de 6 meses pela fábrica temos a pronta entrega.",
+   "specs": {
+    "Tensão": "220V",
+    "Marca": "Skysmsen",
+    "Garantia": "6 meses pela fábrica",
+    "Capacidade": "1.5 litros"
+   }
+  },
+  {
+   "id": "copo-para-whisky-de-cristal-novo-sem-uso-temos-2-jogos-dispo",
+   "name": "Copo para whisky de cristal novo sem uso Temos 2 jogos disponível",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-193.jpg"
+   ],
+   "price": 150.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Copo para whisky de cristal novo sem uso Temos 2 jogos disponível cada jogo 6 copos Novo sem uso cada jogo.",
+   "specs": {},
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "pote-de-vidro-italiano-da-marca-bormioli-rocco",
+   "name": "Pote de vidro italiano da marca Bormioli Rocco",
+   "brand": "Bormioli",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-194.jpg"
+   ],
+   "price": 10.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "pote de vidro italiano da marca Bormioli Rocco, tenho 18 unidades (Obs) Não tem tampa (C × L × A) Medidas 7x7x15 cm cada.",
+   "specs": {
+    "Medidas (C × L × A)": "7x7x15",
+    "Marca": "Bormioli"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "caneca-de-caveira-de-vidro-para-chopp-cerveja-e-outros-temos",
+   "name": "Caneca de caveira de vidro para chopp,cerveja e outros Temos o kit",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-195.jpg"
+   ],
+   "price": 100.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Caneca de caveira de vidro para chopp,cerveja e outros Temos o kit com 6 un kit.",
+   "specs": {}
+  },
+  {
+   "id": "gamela-mineira-de-madeira",
+   "name": "Gamela mineira de madeira",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-196.jpg"
+   ],
+   "price": 70.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "gamela mineira de madeira usada em ótimo estado (C × L × A) Medidas 60x42x10 cm.",
+   "specs": {
+    "Medidas (C × L × A)": "60x42x10"
+   }
+  },
+  {
+   "id": "pratos-de-sobremesa-de-porcelana-alguns-estao-novo-na-caixa-",
+   "name": "Pratos de sobremesa de porcelana alguns estão novo na caixa outros",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-197.jpg"
+   ],
+   "price": 8.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pratos de sobremesa de porcelana alguns estão novo na caixa outros usados bem conservados Tenho 113unidades disponíveis (C × L × A) Medidas 19x19 cada.",
+   "specs": {
+    "Medidas (C × L × A)": "19x19"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "pratos-sousplat-de-acrilico",
+   "name": "Pratos sousplat de acrílico",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-198.jpg"
+   ],
+   "price": 20.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Pratos sousplat de acrílico em ótimo estado tenho 9 unidades disponíveis (C × L × A) Medidas 32,5x32,5x2 cm lote com 9 un.",
+   "specs": {
+    "Medidas (C × L × A)": "32,5x32,5x2"
+   }
+  },
+  {
+   "id": "travessas-ovais-de-aco-inox",
+   "name": "Travessas ovais de aço inox",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-199.jpg"
+   ],
+   "price": 10.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Travessas ovais de aço inox, tenho 1 unidade disponíveis comumente conhecidas como baixelas. Elas são amplamente utilizadas em buffets, restaurantes ou ambientes domésticos para servir porções de alimentos como carnes, saladas e arroz, (C × L × A) Medidas 35x24.",
+   "specs": {
+    "Medidas (C × L × A)": "35x24"
+   }
+  },
+  {
+   "id": "quadro-decorativo-medidas-30x25",
+   "name": "Quadro decorativo Medidas 30x25",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-200.jpg"
+   ],
+   "price": 25.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Quadro decorativo Medidas 30x25.",
+   "specs": {
+    "Medidas (C × L × A)": "30x25"
+   }
+  },
+  {
+   "id": "marmitas-de-aluminio-redondas",
+   "name": "Marmitas de alumínio redondas",
+   "brand": "",
+   "sector": "loucas",
+   "images": [
+    "img/produtos/rsc-produto-201.jpg"
+   ],
+   "price": 15.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Marmitas de alumínio redondas tenho 2 tamanho diferente 14 da maior 28 unidades da menor usadas em ótimo estado Medidas (C × L × A) 14 unidade maior 14,5x14,5x7 28 unidades menor 12,5x12,5x7 cada.",
+   "specs": {
+    "Medidas (C × L × A)": "14,5x14,5x7"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "jogo-de-mesa-com-cadeira-temos-6-jogos-disponivel-cada-jogo-",
+   "name": "Jogo de mesa com cadeira temos 6 jogos disponível cada jogo acompanha",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-202.jpg"
+   ],
+   "price": 500.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Jogo de mesa com cadeira temos 6 jogos disponível cada jogo acompanha 1 mesa 2 cadeiras usadas em ótimo estado como mostra as fotos (C × L × A) Medidas 70x70x76 Cadeira 43x43x44 até o acento cada jogo.",
+   "specs": {
+    "Medidas (C × L × A)": "70x70x76"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "jogos-de-mesa-com-cadeiras",
+   "name": "Jogos de mesa com cadeiras",
+   "brand": "Franco",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-203.jpg"
+   ],
+   "price": 450.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Jogos de mesa com cadeiras tenho 2 jogos disponível cada jogo acompanha 1 mesa 2 cadeiras marca FRANCO & BACHOT (Usadas ) (C × L × A) Medidas 60x60x78 cada jogo.",
+   "specs": {
+    "Medidas (C × L × A)": "60x60x78",
+    "Marca": "Franco"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "jogos-de-mesas-e-cadeiras-novas-sem-uso-bem-reforcado-otimo",
+   "name": "Jogos de mesas e cadeiras novas sem uso bem reforçado ótimo",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-204.jpg"
+   ],
+   "price": 550.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Jogos de mesas e cadeiras novas sem uso bem reforçado ótimo acabamento cada jogo contém 1 mesa 2 cadeiras Medidas 70x70 cada jogo.",
+   "specs": {
+    "Medidas (C × L × A)": "70x70"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "cadeiras-com-acento-estofado",
+   "name": "Cadeiras com acento estofado",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-205.jpg"
+   ],
+   "price": 70.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cadeiras com acento estofado tenho 15 vermelha 2 preta todas usadas bem usadas cada.",
+   "specs": {},
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "cadeira-de-alimentacao-infantil-de-madeira",
+   "name": "Cadeira de alimentação infantil de madeira",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-206.jpg"
+   ],
+   "price": 200.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cadeira de alimentação infantil de madeira usada em ótimo estado como mostra as fotos tenho 1 unidade disponível (C × L × A) Medidas 34x30x62 até o acento 1 unidade.",
+   "specs": {
+    "Medidas (C × L × A)": "34x30x62"
+   }
+  },
+  {
+   "id": "cadeira-usada",
+   "name": "Cadeira usada",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-207.jpg"
+   ],
+   "price": 50.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cadeira usada.",
+   "specs": {}
+  },
+  {
+   "id": "banco-banqueta-30x30x55-todo-de-inox-nova-sem-uso",
+   "name": "Banco/Banqueta 30x30x55 todo de inox nova sem uso",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-208.jpg"
+   ],
+   "price": 250.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Banco/Banqueta todo de inox nova sem uso temos a pronta entrega Medidas 30x30x55.",
+   "specs": {
+    "Medidas (C × L × A)": "30x30x55"
+   }
+  },
+  {
+   "id": "mesa-de-madeira-abre-e-fecha",
+   "name": "Mesa de madeira abre e fecha",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-209.jpg"
+   ],
+   "price": 80.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa de madeira abre e fecha usada tenho 1 unidade (Obs) Somente a mesa como podem ver nas fotos (C × L × A) Medidas 70x70x76.",
+   "specs": {
+    "Medidas (C × L × A)": "70x70x76"
+   }
+  },
+  {
+   "id": "mesa-de-madeira",
+   "name": "Mesa de madeira",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-210.jpg"
+   ],
+   "price": 100.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa de madeira usada tenho 1 unidade (Obs) Somente a mesa como podem ver nas fotos (C × L × A) Medidas 70x70x71 1 unidade.",
+   "specs": {
+    "Medidas (C × L × A)": "70x70x71"
+   }
+  },
+  {
+   "id": "mesa-passa-pratos-temos-2-unidades-disponivel",
+   "name": "Mesa Passa pratos temos 2 unidades disponível",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-211.jpg"
+   ],
+   "price": 250.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Mesa Passa pratos temos 2 unidades disponível usadas de madeira (C × L × A) Medidas 70x36x78 cada.",
+   "specs": {
+    "Medidas (C × L × A)": "70x36x78"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "cadeira-alta-infantil-temos-2-unidades-disponiveis",
+   "name": "Cadeira alta Infantil temos 2 unidades disponíveis",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-212.jpg"
+   ],
+   "price": 180.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cadeira alta Infantil temos 2 unidades disponíveis usada em ótimo estado (C × L × A) Medidas 36x37x,57 até o acento cada.",
+   "specs": {
+    "Medidas (C × L × A)": "36x37x,57"
+   },
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "cadeira-abre-e-fecha",
+   "name": "Cadeira abre e fecha",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-213.jpg"
+   ],
+   "price": 100.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Cadeira abre e fecha no estado de nova tenho 1 unidade.",
+   "specs": {}
+  },
+  {
+   "id": "jogo-de-mesa-com-4-cadeiras",
+   "name": "Jogo de mesa com 4 cadeiras",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-214.jpg"
+   ],
+   "price": 500.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Jogo de mesa com 4 cadeiras tenho 8 jogos disponível cada jogo acompanha 1 mesa 4 cadeiras usadas em ótimo estado mesa de ferro tampo de vidro cadeiras com acento estofado cada jogo.",
+   "specs": {},
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "cadeira-de-escritorio-com-rodizio",
+   "name": "Cadeira de escritório com rodízio",
+   "brand": "",
+   "sector": "mesas-cadeiras",
+   "images": [
+    "img/produtos/rsc-produto-215.jpg"
+   ],
+   "price": 100.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Cadeira de escritório com rodízio usada em ótimo estado tenho 2 unidades disponíveis cada.",
+   "specs": {},
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "banho-maria-industrial-220-volts",
+   "name": "Banho Maria industrial 220 volts",
+   "brand": "",
+   "sector": "buffet",
+   "images": [
+    "img/produtos/rsc-produto-216.jpg"
+   ],
+   "price": 2200.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Banho Maria industrial 220 volts usado funcionando perfeitamente todo no aço inox Uso: É essencial em sistemas de self-service, buffets e cozinhas industriais para conservação térmica. (C × L × A) Medidas 1,00x75x87 Área útil 90x60x15.",
+   "specs": {
+    "Medidas (C × L × A)": "1,00x75x87",
+    "Tensão": "220V"
+   }
+  },
+  {
+   "id": "banho-maria-industrial-eletrico-220-volts",
+   "name": "Banho Maria industrial elétrico 220 volts",
+   "brand": "",
+   "sector": "buffet",
+   "images": [
+    "img/produtos/rsc-produto-217.jpg"
+   ],
+   "price": 1350.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Banho Maria industrial elétrico 220 volts funcionando perfeitamente garantia de 3 meses pela loja (C × L × A) Medidas 70x65x86.",
+   "specs": {
+    "Medidas (C × L × A)": "70x65x86",
+    "Tensão": "220V",
+    "Garantia": "3 meses pela loja"
+   }
+  },
+  {
+   "id": "banho-maria-com-12-cubas-todo-no-aco-inox",
+   "name": "Banho Maria com 12 cubas todo no aço inox",
+   "brand": "",
+   "sector": "buffet",
+   "images": [
+    "img/produtos/rsc-produto-218.jpg"
+   ],
+   "price": 1650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Banho Maria com 12 cubas todo no aço inox usado em ótimo estado funcionando perfeitamente (C × L × A) Medidas 80x59x20 Cuba 17x18x10cm.",
+   "specs": {
+    "Medidas (C × L × A)": "80x59x20"
+   }
+  },
+  {
+   "id": "dutos-sobre-encomenda",
+   "name": "Dutos sobre encomenda",
+   "brand": "",
+   "sector": "coifas",
+   "images": [
+    "img/produtos/rsc-produto-219.jpg"
+   ],
+   "price": 1344.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Dutos sobre encomenda fazemos no tamanho que vc deseja fazemos no inox 304 inox 430 e no galvernizado Esses da foto são 4 metros de duto sendo 1 metro cada (01) Curva de 40/90° Valor pra essa medida Galvernizado R$ 1.344,00 Inox 430. R$ 3.360,00 Inox 304. R$ 4.590,00 Chama no WhatsApp e faça um orçamento na medida que vc precisa será um prazer atendê-lo (a).",
+   "specs": {},
+   "online": false,
+   "note": "Preço por unidade."
+  },
+  {
+   "id": "exaustor-industrial-de-40-cm-bivolt-novo-sem-uso",
+   "name": "Exaustor industrial de 40 cm bivolt novo sem uso",
+   "brand": "Qualitas",
+   "sector": "coifas",
+   "images": [
+    "img/produtos/rsc-produto-220.jpg"
+   ],
+   "price": 1650.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Exaustor industrial de 40 cm bivolt novo sem uso temos a pronta entrega Marca QUALITAS (C × L × A) Medidas 40x40 1.650,00.",
+   "specs": {
+    "Medidas (C × L × A)": "40x40",
+    "Tensão": "Bivolt",
+    "Marca": "Qualitas"
+   }
+  },
+  {
+   "id": "coifa-3-20x1-00x45-grande-industrial-estado-de-novo-toda-no-",
+   "name": "Coifa 3,20x1,00x45 grande industrial estado de novo toda no aço inox",
+   "brand": "",
+   "sector": "coifas",
+   "images": [
+    "img/produtos/rsc-produto-221.jpg"
+   ],
+   "price": 7350.0,
+   "condition": "Seminovo",
+   "stock": 1,
+   "desc": "Coifa grande industrial estado de novo toda no aço inox usada em ótimo estado (C × L × A) Medidas 3,20x1,00x45 Boca 50x50x30.",
+   "specs": {
+    "Medidas (C × L × A)": "3,20x1,00x45"
+   }
+  },
+  {
+   "id": "coifa-2-70x1-20x51-industrial-toda-no-aco-inox",
+   "name": "Coifa 2,70x1,20x51 industrial toda no aço inox",
+   "brand": "",
+   "sector": "coifas",
+   "images": [
+    "img/produtos/rsc-produto-222.jpg"
+   ],
+   "price": 6650.0,
+   "condition": "Usado",
+   "stock": 1,
+   "desc": "Coifa 2,70x1,20x51 industrial toda no aço inox ( usada) em ótimo estado (C × L × A) Medidas 2,70x1,20x51 Saída 38x40.",
+   "specs": {
+    "Medidas (C × L × A)": "2,70x1,20x51"
+   }
+  },
+  {
+   "id": "escorreror-de-inox-para-copos-e-utensilios",
+   "name": "Escorreror de inox para copos e utensílios",
+   "brand": "",
+   "sector": "escorredores",
+   "images": [
+    "img/produtos/rsc-produto-223.jpg"
+   ],
+   "price": 230.0,
+   "condition": "Novo",
+   "stock": 1,
+   "desc": "Escorreror de inox para copos e utensílios no estado de novo Medidas 80x76x6,5.",
+   "specs": {
+    "Medidas (C × L × A)": "80x76x6,5"
+   }
+  }
+ ]
 }

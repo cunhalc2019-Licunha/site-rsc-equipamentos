@@ -93,21 +93,24 @@ function viewHome() {
     <div class="fade">
       <span class="eyebrow">Loja online · Compra e venda</span>
       <h1>Equipamentos <span class="grad-text">profissionais</span> para a sua cozinha industrial</h1>
-      <p class="lead">Refrigeração, cocção e açougue. Escolha pelo setor, pague com PIX, cartão ou boleto e retire na loja ou receba no seu negócio.</p>
+      <p class="lead">Equipamentos novos e usados revisados: refrigeração, inox, cocção, fatiadores, utensílios e muito mais. Escolha pelo setor e retire na loja ou receba no seu negócio.</p>
       <div class="hero-ctas">
         <a href="#/loja" class="btn btn-primary">Comprar agora ${icon("arrow")}</a>
         <a href="#" class="btn btn-ghost" data-wa="Olá! Estou procurando um equipamento. Podem me ajudar?">${icon("wa", 20, "color:var(--green)")} Falar com vendedor</a>
       </div>
       <div class="stats">
-        <div><b class="grad-text">${CFG.maxInstallments}x</b><span>no cartão de crédito</span></div>
-        <div><b class="grad-text">até 13%</b><span>de desconto no PIX</span></div>
-        <div><b class="grad-text">3 meses</b><span>de garantia da loja*</span></div>
+        <div><b class="grad-text">${DATA.products.length}+</b><span>equipamentos no catálogo</span></div>
+        <div><b class="grad-text">${DATA.sectors.length}</b><span>setores</span></div>
+        <div><b class="grad-text">3 meses</b><span>de garantia nos usados*</span></div>
       </div>
     </div>
     <div class="hero-media fade">
-      <div class="tile tall"><img src="img/cervejeira.jpg" alt="Cervejeira Slim Gelopar"></div>
-      <div class="tile"><img src="img/balcao.jpg" alt="Balcão refrigerado inox"></div>
-      <div class="tile"><img src="img/broiler.jpg" alt="Broiler Macom"></div>
+      ${(() => {
+        const pick = (slug, skip) => DATA.products.find(p => p.sector === slug && p !== skip) || DATA.products.find(p => p !== skip);
+        const a = pick("geladeiras"), b = pick("fogoes", a), c = pick("cortadores", b);
+        return [[a, "tile tall"], [b, "tile"], [c, "tile"]].filter(([p]) => p)
+          .map(([p, cls]) => `<a class="${cls}" href="#/produto/${p.id}"><img src="${p.images[0]}" alt="${p.name}"></a>`).join("");
+      })()}
       <div class="hero-badge"><img src="img/logo.png" alt=""><div><b>Compra 100% segura</b><span>Pagamento via Mercado Pago</span></div></div>
     </div>
   </div></section>
@@ -196,7 +199,10 @@ function mountShop({ slug = null, offers = false } = {}) {
 
 function viewProduct(id) {
   const p = product(id);
-  if (!p) return viewNotFound();
+  if (!p) return `<div class="container"><div class="done fail"><div class="big">${icon("x", 38)}</div><h1>Produto indisponível</h1>
+    <p>Este equipamento foi vendido ou está reservado por outro cliente no momento. Fale com a gente: chegam novos itens toda semana.</p>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap"><a href="#/loja" class="btn btn-primary">Ver produtos disponíveis</a>
+    <a href="#" class="btn btn-ghost" data-wa="Olá! Vi um produto no site que está indisponível. Vocês têm algum similar?">${icon("wa", 20, "color:var(--green)")} Procurar similar</a></div></div></div>`;
   const s = sector(p.sector);
   const methods = allowedMethods(p);
   const buy = soldOut(p) ? `
@@ -290,6 +296,8 @@ function viewCart() {
       <div class="sum-row total"><span>Total</span><b>${brl(subtotal)}</b></div>
       ${pix !== null && pix < subtotal ? `<div class="sum-row"><span>${icon("pix", 16, "vertical-align:-3px;color:var(--orange)")} No PIX</span><span class="disc">${brl(pix)}</span></div>` : ""}
       ${!methods.includes("card") ? `<div class="alert" style="margin-top:12px">${icon("info", 18)} Um ou mais itens têm preço promocional válido somente no PIX.</div>` : ""}
+      ${deadlineWarning()}
+      <p class="muted" style="font-size:.8rem;margin-top:10px">Os itens do carrinho ainda <b>não</b> estão reservados. A reserva começa quando você confirma o pedido.</p>
       <a href="#/checkout" class="btn btn-primary btn-block" style="margin-top:18px">${icon("lock", 18)} Finalizar compra</a>
       <a href="#/loja" class="btn btn-ghost btn-block" style="margin-top:10px">Continuar comprando</a>
     </aside>
@@ -344,7 +352,9 @@ function viewCheckout() {
           return `<label class="opt ${ok && k === methods[0] ? "on" : ""} ${ok ? "" : "off"}"><input type="radio" name="method" value="${k}" ${ok && k === methods[0] ? "checked" : ""} ${ok ? "" : "disabled"}>
             <span class="fi" style="width:40px;height:40px">${icon(m.icon)}</span><div class="t"><b>${m.label}</b><small>${ok ? m.sub : "Indisponível para itens em promoção à vista"}</small></div><span class="tag" data-mtotal="${k}"></span></label>`;
         }).join("")}</div>
-        <div class="secure">${icon("lock", 16)} ${CFG.paymentProvider === "mercadopago" ? "Você será redirecionado ao ambiente seguro do Mercado Pago para concluir o pagamento." : "Ao confirmar, seu pedido é enviado à equipe RSC pelo WhatsApp para finalizar o pagamento."}</div>
+        <div class="secure">${icon("lock", 16)} ${backendOrders()
+          ? "Ao confirmar, seu pedido é registrado e os itens ficam reservados para você. A equipe RSC envia as instruções de pagamento pelo WhatsApp (o pagamento online será habilitado em breve)."
+          : "Ao confirmar, seu pedido é enviado à equipe RSC pelo WhatsApp para finalizar o pagamento."}</div>
       </div>
     </div>
 
@@ -356,9 +366,10 @@ function viewCheckout() {
       <div class="sum-row"><span>Entrega</span><span id="sShip">Grátis</span></div>
       <div class="sum-row total"><span>Total</span><b id="sTotal"></b></div>
       <div class="muted" id="sInst" style="font-size:.85rem;text-align:right"></div>
-      <button class="btn btn-primary btn-block" style="margin-top:18px" id="payBtn" type="submit">${icon("lock", 18)} <span>Pagar agora</span></button>
+      ${deadlineWarning()}
+      <button class="btn btn-primary btn-block" style="margin-top:18px" id="payBtn" type="submit">${icon("lock", 18)} <span>Confirmar pedido</span></button>
       <div class="alert" id="coErr" style="margin-top:12px;display:none"></div>
-      ${CFG.paymentProvider !== "mercadopago" ? `<div class="alert" style="margin-top:12px">${icon("info", 18)} <span><b>Modo demonstração:</b> o pagamento online ainda não está ativado. O pedido será enviado ao WhatsApp da loja.</span></div>` : ""}
+      ${backendOrders() ? "" : `<div class="alert" style="margin-top:12px">${icon("info", 18)} <span><b>Modo demonstração:</b> o pedido será enviado ao WhatsApp da loja.</span></div>`}
     </aside>
   </form>`;
 }
@@ -381,7 +392,6 @@ function mountCheckout() {
     $("#sTotal").textContent = brl(total);
     $("#sInst").textContent = method === "card" ? `ou até ${CFG.maxInstallments}x de ${brl(total / CFG.maxInstallments)}*` : "";
     Object.keys(METHODS).forEach(m => { const el = $(`[data-mtotal="${m}"]`); if (el && !$(`input[value="${m}"]`, form).disabled) el.textContent = brl(totals(m)); });
-    $("#payBtn span").textContent = method === "pix" ? "Pagar com PIX" : method === "card" ? "Pagar com cartão" : "Gerar boleto";
   };
   form.addEventListener("change", refresh);
   refresh();
@@ -432,17 +442,24 @@ function mountCheckout() {
 
     const btn = $("#payBtn"); btn.disabled = true;
 
-    if (CFG.paymentProvider === "mercadopago") {
+    // Pedido real no backend: ele recalcula preços, confere a disponibilidade e reserva os itens.
+    if (backendOrders()) {
       try {
-        const res = await fetch(CFG.checkoutEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(order) });
-        const data = await res.json();
-        if (!res.ok || !data.init_point) throw new Error(data.error || "Falha ao iniciar pagamento");
-        sessionStorage.setItem("rsc-last-order", data.order_id || "");
-        location.href = data.init_point;
-      } catch (ex) {
+        const res = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+          items: order.items.map(i => ({ id: i.id, quantity: i.qty })), method: order.method, delivery: order.delivery,
+          customer: { name: fd.name, email: fd.email, phone: fd.phone, document: fd.doc }, address: order.buyer.address,
+        }) });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          if (data.code === "UNAVAILABLE") { err.innerHTML = `${icon("info", 18)} <span>${data.error} Remova o item do carrinho para continuar.</span>`; }
+          else err.innerHTML = `${icon("info", 18)} <span>${data.error || "Não foi possível registrar o pedido."}</span>`;
+          err.style.display = "flex"; btn.disabled = false; return;
+        }
+        cart = {}; saveCart();
+        location.hash = `#/pedido/${data.order.token}`;
+      } catch {
         btn.disabled = false;
-        err.innerHTML = `${icon("info", 18)} Não foi possível iniciar o pagamento (${ex.message}). Tente novamente ou finalize pelo WhatsApp.`;
-        err.style.display = "flex";
+        err.innerHTML = `${icon("info", 18)} Falha de conexão. Tente novamente.`; err.style.display = "flex";
       }
       return;
     }
@@ -465,6 +482,51 @@ function mountCheckout() {
     sessionStorage.setItem("rsc-last-order", id);
     location.hash = "#/pedido/enviado";
   });
+}
+
+// Aviso obrigatório no carrinho e no checkout (prazo vem do backend; padrão 24h).
+function deadlineWarning() {
+  const h = DATA.reservationHours || 24;
+  return `<div class="alert deadline" style="margin-top:14px">${icon("clock", 18)}<span><b>ATENÇÃO AO PRAZO DE PAGAMENTO</b><br>
+    Após confirmar seu pedido, o produto ficará reservado por até ${h} horas. Se o pagamento não for confirmado dentro desse período,
+    a reserva poderá expirar e o produto voltará a ficar disponível para compra.</span></div>`;
+}
+const backendOrders = () => DATA.source === "api";
+const dtBR = s => new Date(s).toLocaleString("pt-BR", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
+// Acompanhamento do pedido (link com token secreto).
+function viewOrderTrack() {
+  return `${pageHead("Seu pedido", [["Pedido"]], "", stepsBar(2))}<div class="container"><div class="done fade" id="track"><p class="muted">Carregando pedido…</p></div></div>`;
+}
+async function mountOrderTrack(token) {
+  const box = $("#track");
+  try {
+    const r = await fetch(`/api/orders/${encodeURIComponent(token)}`, { cache: "no-store" });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Pedido não encontrado.");
+    const o = d.order;
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+    const waiting = o.status === "aguardando_pagamento";
+    box.innerHTML = `
+      <div class="big">${icon(waiting ? "clock" : o.status === "pago" || o.status === "concluido" ? "check" : "info", 40)}</div>
+      <h1>Pedido #${o.number}</h1>
+      <p style="margin-bottom:6px">Status: <b style="color:var(--text)">${esc(o.statusLabel)}</b> · Pagamento: <b style="color:var(--text)">${esc(o.payment_status)}</b></p>
+      ${waiting && o.reserved_until ? `<div class="alert deadline" style="text-align:left;margin:18px 0">${icon("clock", 18)}<span><b>ATENÇÃO AO PRAZO DE PAGAMENTO</b><br>
+        Seus itens estão reservados até <b>${dtBR(o.reserved_until)}</b>. Se o pagamento não for confirmado até lá, a reserva poderá expirar e o produto voltará a ficar disponível para compra.</span></div>` : ""}
+      <div class="panel" style="text-align:left;margin-top:14px">
+        ${o.items.map(i => `<div class="sum-row"><span>${i.quantity}× ${esc(i.name)} <small class="muted">(${esc(i.sku)})</small></span><span>${brl(i.total_cents / 100)}</span></div>`).join("")}
+        ${o.discount_cents ? `<div class="sum-row"><span>Desconto</span><span class="disc">− ${brl(o.discount_cents / 100)}</span></div>` : ""}
+        <div class="sum-row total"><span>Total</span><b>${brl(o.total_cents / 100)}</b></div>
+      </div>
+      ${waiting ? `<p style="margin-top:16px">Guarde este link para acompanhar o pedido. Para pagar, fale com a equipe RSC — o pagamento online será habilitado em breve.</p>` : ""}
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+        ${waiting ? `<a href="#" class="btn btn-wa" data-wa="Olá! Fiz o pedido #${o.number} no site (${brl(o.total_cents / 100)}). Como faço o pagamento?">${icon("wa")} Combinar pagamento</a>` : ""}
+        <a href="#/loja" class="btn btn-ghost">Continuar comprando</a>
+      </div>`;
+  } catch (e) {
+    box.classList.add("fail");
+    box.innerHTML = `<div class="big">${icon("x", 38)}</div><h1>Pedido não encontrado</h1><p>${e.message}</p>`;
+  }
 }
 
 function viewOrder(status) {
@@ -539,7 +601,10 @@ function route() {
     case "produto": html = viewProduct(b); mount = () => mountProduct(b); nav = "loja"; break;
     case "carrinho": html = viewCart(); mount = mountCart; break;
     case "checkout": html = viewCheckout(); mount = mountCheckout; nav = "carrinho"; break;
-    case "pedido": html = viewOrder(b); break;
+    case "pedido":
+      if (b && b.length > 15) { html = viewOrderTrack(); mount = () => mountOrderTrack(b); }
+      else html = viewOrder(b);
+      break;
     case "vender": html = `${pageHead("Venda seu equipamento", [["Venda seu equipamento"]], "Compramos equipamentos para cozinhas industriais, refrigeração e açougue.")}<div style="padding-top:60px"></div>${sellBlock()}`; break;
     case "contato": html = `${pageHead("Contato e loja física", [["Contato"]], "Atendimento presencial e pelo WhatsApp.")}<div style="padding-top:40px"></div>${contactBlock()}`; break;
     default: html = viewNotFound();
@@ -575,9 +640,9 @@ const escapeDeep = v => typeof v === "string" ? v.replace(/[&<>"']/g, c => ({ "&
 async function loadCatalog() {
   try {
     const r = await fetch("/api/catalog", { cache: "no-cache", headers: { Accept: "application/json" } });
-    if (r.ok) { const d = await r.json(); if (d.configured) return d; }
+    if (r.ok) { const d = await r.json(); if (d.configured) return { ...d, source: "api" }; }
   } catch {}
-  return (await fetch("data/products.json")).json();
+  return { ...(await (await fetch("data/products.json")).json()), source: "static" };
 }
 
 loadCatalog().then(escapeDeep).then(d => {

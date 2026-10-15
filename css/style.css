@@ -303,3 +303,28 @@ footer{border-top:1px solid var(--line);padding:56px 0 30px;background:var(--bg-
 .menu a.adm-link{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;margin:-6px 0;border:1.5px solid var(--line);border-radius:999px;color:var(--text);font-size:.85rem;letter-spacing:1px}
 .menu a.adm-link:hover{border-color:var(--orange);color:var(--orange)}
 @media (max-width:1020px){.menu.open a.adm-link{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;padding:16px 20px}}
+
+/* ===== Catálogo com fotos de fundo branco (produto inteiro visível, sem corte) ===== */
+.tile img{object-fit:contain;padding:12px}
+.card-media{aspect-ratio:1/1}
+.card-media img{object-fit:contain}
+.gallery-main{aspect-ratio:1/1}
+.gallery-main img{object-fit:contain}
+.thumbs img{object-fit:contain}
+.card h3{font-size:1.3rem;line-height:1.08;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Setores: cartões compactos (são 20 setores) */
+.sectors{grid-template-columns:repeat(4,1fr);gap:18px}
+.sector-card{aspect-ratio:auto;flex-direction:column;align-items:stretch;background:var(--card)}
+.sector-card::before{display:none}
+.sector-card img{position:static;z-index:auto;width:100%;height:auto;aspect-ratio:1/.8;object-fit:contain;background:#fff;padding:14px}
+.sector-card .in{padding:16px 18px 18px}
+.sector-card h3{font-size:1.45rem}
+.sector-card p{font-size:.82rem;color:var(--muted);margin:4px 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sector-card .go span:last-child{width:34px;height:34px}
+@media (max-width:1020px){.sectors{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:640px){.sectors{grid-template-columns:repeat(2,1fr);gap:12px}.sector-card h3{font-size:1.15rem}.sector-card .in{padding:12px}}
+
+/* Aviso de prazo da reserva (carrinho, checkout e acompanhamento) */
+.alert.deadline{background:rgba(247,148,29,.12);border-color:rgba(247,148,29,.55);color:#fde3bf;align-items:flex-start;line-height:1.45}
+.alert.deadline b{color:#ffb35c;letter-spacing:.3px}

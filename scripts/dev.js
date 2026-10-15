@@ -40,16 +40,21 @@ http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   let p = decodeURIComponent(url.pathname);
   try {
+    // Igual ao vercel.json: /api/* → api/router.js  e  /admin/* (sem extensão) → admin/index.html
     if (p.startsWith("/api/")) {
-      const file = path.join(ROOT, p.replace(/\/$/, "") + ".js");
-      if (!file.startsWith(path.join(ROOT, "api")) || path.basename(file).startsWith("_") || p.includes("/_") || !existsSync(file)) {
-        res.statusCode = 404; return res.end("Not found");
-      }
       helpers(res);
+      url.searchParams.set("__path", p.slice(5));
+      req.url = `/api/router?${url.searchParams}`;
       req.query = Object.fromEntries(url.searchParams);
       req.body = await readBody(req);
-      const mod = await import(pathToFileURL(file).href);
+      const mod = await import(pathToFileURL(path.join(ROOT, "api", "router.js")).href);
       return await mod.default(req, res);
+    }
+    if (p.startsWith("/admin/") && !path.extname(p)) p = "/admin/index.html";
+    if (p.startsWith("/uploads/") && process.env.UPLOAD_DIR) {
+      const file = path.join(process.env.UPLOAD_DIR, p.slice("/uploads/".length));
+      const s = await stat(file).catch(() => null);
+      if (s?.isFile()) { res.setHeader("Content-Type", TYPES[path.extname(file).toLowerCase()] || "application/octet-stream"); return res.end(await readFile(file)); }
     }
     if (p.endsWith("/")) p += "index.html";
     const file = path.join(ROOT, p);
