@@ -10,7 +10,11 @@ let driverPromise;
 let migrated;
 
 async function createDriver() {
-  const url = process.env.DATABASE_URL;
+  // Aceita DATABASE_URL ou o mesmo nome com prefixo criado pela integração Neon/Vercel (ex.: database_DATABASE_URL).
+  const url = process.env.DATABASE_URL
+    || Object.entries(process.env).find(([k, v]) => v && /(^|_)DATABASE_URL$/i.test(k))?.[1]
+    || process.env.POSTGRES_URL
+    || Object.entries(process.env).find(([k, v]) => v && /(^|_)POSTGRES_URL$/i.test(k))?.[1];
   if (!url) throw new HttpError(503, "Banco de dados não configurado: crie o banco (Vercel → Storage → Neon) para gerar a variável DATABASE_URL e faça Redeploy.");
 
   if (url.startsWith("pglite:")) {
