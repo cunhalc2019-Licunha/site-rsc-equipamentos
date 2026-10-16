@@ -3,6 +3,7 @@
 // Desenvolvimento/testes sem Postgres instalado: DATABASE_URL=pglite:./.data/db  ou  pglite:memory
 import { readFileSync, readdirSync, mkdirSync } from "node:fs";
 import path from "node:path";
+import { HttpError } from "./http.js";
 
 const MIGRATIONS_DIR = path.join(process.cwd(), "api", "_lib", "migrations");
 let driverPromise;
@@ -10,7 +11,7 @@ let migrated;
 
 async function createDriver() {
   const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL não configurada");
+  if (!url) throw new HttpError(503, "Banco de dados não configurado: crie o banco (Vercel → Storage → Neon) para gerar a variável DATABASE_URL e faça Redeploy.");
 
   if (url.startsWith("pglite:")) {
     const { PGlite } = await import("@electric-sql/pglite");
