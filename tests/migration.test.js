@@ -37,5 +37,5 @@ test("banco da fase 1 é migrado preservando produtos, preços e movimentações
     { type: "venda_fisica", quantity: 1, physical_delta: -1, physical_before: 1, physical_after: 0 },
   ]);
   const versions = (await pg.query("SELECT version FROM schema_migrations ORDER BY version")).rows.map(r => r.version);
-  assert.deepEqual(versions, ["001_base", "002_fase2"]);
+  assert.deepEqual(versions, ["001_base", "002_fase2", "003_setup_por_email"]);
 });

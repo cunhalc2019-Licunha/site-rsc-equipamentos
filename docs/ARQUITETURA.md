@@ -27,7 +27,7 @@ O navegador **nunca** define preço, total, estoque, status de pagamento, loja o
 
 ## 2. Banco de dados
 
-Migrations: `001_base.sql` (fase 1) e `002_fase2.sql`. Aplicadas automaticamente no primeiro acesso ao banco, em ordem,
+Migrations: `001_base.sql` (fase 1), `002_fase2.sql` e `003_setup_por_email.sql`. Aplicadas automaticamente no primeiro acesso ao banco, em ordem,
 dentro de transação com `pg_advisory_xact_lock` (duas instâncias não aplicam a mesma migration). Tabela `schema_migrations`.
 
 | Tabela | Conteúdo |
@@ -119,7 +119,8 @@ estoque: produtos, fotos e entradas; vendedor: venda física e pedidos).
 
 ## 7. Autenticação e segurança
 
-- Primeiro acesso: `/admin/setup`, só sem nenhum usuário e com `ADMIN_SETUP_TOKEN`. Nenhuma senha padrão no código.
+- Primeiro acesso: `/admin/setup`, só sem nenhum usuário. Apenas o e-mail definido em `OWNER_EMAIL` recebe um código de 6 dígitos;
+  a conta do proprietário só é criada após a confirmação do código (já com e-mail verificado). Nenhuma senha padrão no código.
 - Cadastro: **somente por convite** (`/admin/register?invite=…`). Ninguém ganha acesso à loja apenas se cadastrando.
 - E-mail confirmado por código de 6 dígitos: 10 min de validade, 5 tentativas, uso único, reenvio após 60 s, máx. 5 por hora; códigos guardados como HMAC.
 - Login: 5 falhas em 15 min bloqueiam (por e-mail ou IP); mensagens neutras (não revelam e-mails cadastrados).
@@ -142,7 +143,7 @@ Nenhuma rota permite aprovar pagamento manualmente; o provedor `teste` só é ac
 | Variável | Obrigatória | Para quê |
 |---|---|---|
 | `DATABASE_URL` | sim | PostgreSQL (Neon/Supabase/outro). Local: `pglite:./.data/db` |
-| `ADMIN_SETUP_TOKEN` | sim (1º acesso) | código para criar o proprietário |
+| `OWNER_EMAIL` | sim (1º acesso) | e-mail do proprietário — único autorizado a fazer o primeiro acesso |
 | `AUTH_SECRET` | sim em produção | segredo (≥16 caracteres) para os códigos por e-mail |
 | `RESEND_API_KEY`, `EMAIL_FROM` | sim em produção | envio de e-mails (domínio verificado no Resend) |
 | `BLOB_READ_WRITE_TOKEN` | sim em produção | fotos (Vercel Blob) |

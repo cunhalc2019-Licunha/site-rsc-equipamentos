@@ -169,6 +169,43 @@ export async function consumeCode(userId, purpose, code) {
   return true;
 }
 
+// ---------- Primeiro acesso por e-mail (antes de existir qualquer usuário) ----------
+// Só o e-mail definido em OWNER_EMAIL pode receber o código; a conta é criada após a confirmação.
+export const ownerEmail = () => String(process.env.OWNER_EMAIL || "").trim().toLowerCase();
+
+export async function issueSetupCode(email, req) {
+  const q = await db();
+  if (req) await rateLimit(`setup-code-ip:${clientIp(req)}`, 10, 3600);
+  const [last] = await q.query("SELECT created_at FROM setup_codes WHERE email = $1 ORDER BY created_at DESC LIMIT 1", [email]);
+  if (last && Date.now() - new Date(last.created_at) < CODE_RESEND_SEC * 1000)
+    fail(429, `Aguarde ${CODE_RESEND_SEC} segundos para pedir um novo código.`, { code: "RESEND_COOLDOWN" });
+  const [{ n }] = await q.query("SELECT count(*)::int AS n FROM setup_codes WHERE email = $1 AND created_at > now() - interval '1 hour'", [email]);
+  if (n >= CODE_MAX_PER_HOUR) fail(429, "Limite de códigos atingido. Tente novamente em 1 hora.");
+  const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
+  await q.query("UPDATE setup_codes SET consumed_at = now() WHERE email = $1 AND consumed_at IS NULL", [email]);
+  await q.query("INSERT INTO setup_codes (email, code_hash, expires_at) VALUES ($1, $2, now() + make_interval(mins => $3))",
+    [email, codeHash("setup", email, code), CODE_TTL_MIN]);
+  await sendEmail({ to: email, subject: "Código do primeiro acesso — painel RSC Equipamentos",
+    text: `Use o código abaixo para criar a conta de proprietário do painel da RSC Equipamentos.\n\nCódigo: ${code}\n\nEle vale por ${CODE_TTL_MIN} minutos e só pode ser usado uma vez.\nSe você não pediu este código, ignore este e-mail.` });
+}
+
+// Confere o código dentro da transação do primeiro acesso (t). Devolve null se ok ou [status, msg, code].
+export async function checkSetupCode(t, email, code) {
+  if (!/^\d{6}$/.test(String(code || ""))) return [422, "Informe o código de 6 dígitos.", "CODE_FORMAT"];
+  const [c] = await t.query(
+    "SELECT id, code_hash, expires_at, attempts FROM setup_codes WHERE email = $1 AND consumed_at IS NULL ORDER BY created_at DESC LIMIT 1 FOR UPDATE", [email]);
+  if (!c) return [400, "Nenhum código válido. Peça um novo código.", "NO_CODE"];
+  if (new Date(c.expires_at) < new Date()) return [400, "Código expirado. Peça um novo código.", "CODE_EXPIRED"];
+  if (c.attempts >= CODE_MAX_ATTEMPTS) return [429, "Limite de tentativas atingido. Peça um novo código.", "CODE_LOCKED"];
+  if (!timingSafeEqual(Buffer.from(c.code_hash), Buffer.from(codeHash("setup", email, String(code))))) {
+    await t.query("UPDATE setup_codes SET attempts = attempts + 1 WHERE id = $1", [c.id]);
+    const left = CODE_MAX_ATTEMPTS - c.attempts - 1;
+    return [400, left > 0 ? `Código incorreto. Restam ${left} tentativa(s).` : "Código incorreto. Limite atingido — peça um novo código.", "CODE_INVALID"];
+  }
+  await t.query("UPDATE setup_codes SET consumed_at = now() WHERE id = $1", [c.id]);
+  return null;
+}
+
 // ---------- Auditoria ----------
 export async function audit(ctx, action, entity, entityId, data, req, t = null) {
   const q = t || await db();

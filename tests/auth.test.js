@@ -3,12 +3,18 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { call, setupOwner, lastCode, db, outbox } from "./helpers.js";
 
-test("primeiro acesso: exige código do servidor e só funciona uma vez", async () => {
-  const bad = await call("POST", "/api/auth/setup", { body: { setupToken: "errado", storeName: "X", name: "X", email: "x@x.test", password: "senha-segura-123" } });
-  assert.equal(bad.status, 403);
+test("primeiro acesso: só o e-mail do proprietário recebe código; conta criada só após confirmar; uma vez só", async () => {
+  const intruso = await call("POST", "/api/auth/setup/send-code", { body: { email: "intruso@x.test" } });
+  assert.equal(intruso.status, 403, "e-mail diferente de OWNER_EMAIL não recebe código");
+  const semCodigo = await call("POST", "/api/auth/setup", { body: { email: "dono@rsc.test", code: "123456", storeName: "X", name: "X", password: "senha-segura-123" } });
+  assert.equal(semCodigo.status, 400, "sem código enviado, nada é criado");
+  const [{ n }] = await (await db()).query("SELECT count(*)::int AS n FROM users");
+  assert.equal(n, 0, "nenhuma conta criada antes da confirmação");
   const { jar } = await setupOwner();
-  assert.ok(jar.cookie, "sessão criada após verificar o e-mail");
-  const again = await call("POST", "/api/auth/setup", { body: { setupToken: "codigo-setup-teste", storeName: "X", name: "X", email: "y@y.test", password: "senha-segura-123" } });
+  assert.ok(jar.cookie, "sessão criada após confirmar o código");
+  const [u] = await (await db()).query("SELECT role, email_verified_at FROM users WHERE email = 'dono@rsc.test'");
+  assert.equal(u.role, "owner"); assert.ok(u.email_verified_at, "e-mail já confirmado pelo código");
+  const again = await call("POST", "/api/auth/setup/send-code", { body: { email: "dono@rsc.test" } });
   assert.equal(again.status, 409);
   const status = await call("GET", "/api/auth/setup-status");
   assert.equal(status.body.needsSetup, false);

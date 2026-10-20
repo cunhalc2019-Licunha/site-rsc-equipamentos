@@ -7,7 +7,7 @@ process.env.NODE_ENV = "test";
 process.env.DATABASE_URL = "pglite:memory";
 process.env.EMAIL_TRANSPORT = "memory";
 process.env.AUTH_SECRET = "segredo-de-teste-com-mais-de-16";
-process.env.ADMIN_SETUP_TOKEN = "codigo-setup-teste";
+process.env.OWNER_EMAIL = "dono@rsc.test";
 process.env.CRON_SECRET = "cron-teste";
 process.env.UPLOAD_DIR = path.join(os.tmpdir(), "rsc-test-uploads");
 
@@ -46,11 +46,11 @@ export function lastCode(email) {
 
 // Cria a loja + dono (e-mail confirmado) e devolve o "jar" com a sessão.
 export async function setupOwner({ importCatalog = false, email = "dono@rsc.test", password = "senha-segura-123" } = {}) {
-  const r = await call("POST", "/api/auth/setup", { body: { setupToken: "codigo-setup-teste", storeName: "RSC Teste", name: "Dono", email, password, importCatalog } });
-  if (r.status !== 200) throw new Error("setup falhou: " + JSON.stringify(r.body));
+  const s = await call("POST", "/api/auth/setup/send-code", { body: { email } });
+  if (s.status !== 200) throw new Error("envio do código falhou: " + JSON.stringify(s.body));
   const jar = {};
-  const v = await call("POST", "/api/auth/verify-email", { body: { email, code: lastCode(email) }, jar });
-  if (v.status !== 200) throw new Error("verify falhou: " + JSON.stringify(v.body));
+  const r = await call("POST", "/api/auth/setup", { jar, body: { email, code: lastCode(email), storeName: "RSC Teste", name: "Dono", password, importCatalog } });
+  if (r.status !== 200) throw new Error("setup falhou: " + JSON.stringify(r.body));
   return { jar, email, password };
 }
 

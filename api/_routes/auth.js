@@ -1,12 +1,13 @@
 // Rotas de autenticação: primeiro acesso, login, verificação de e-mail, convites, recuperação de senha.
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { randomBytes, timingSafeEqual, createHash } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { db } from "../_lib/db.js";
 import { body, fail, clientIp, origin } from "../_lib/http.js";
 import {
   hashPassword, verifyPassword, validatePassword, createSession, destroySession, requireUser,
   assertNotLocked, issueCode, consumeCode, audit, sha256, can, PERMISSIONS,
+  ownerEmail, issueSetupCode, checkSetupCode,
 } from "../_lib/auth.js";
 import { rateLimit } from "../_lib/rate.js";
 import { text, email as parseEmail, slugify } from "../_lib/validate.js";
@@ -15,10 +16,6 @@ import { sendEmail } from "../_lib/email.js";
 import { ENTRY_ORIGINS, ADJUST_REASONS } from "../_lib/stock.js";
 import { settingsOf, getStore } from "../_lib/store.js";
 
-const sameSecret = (a, b) => {
-  const h = s => createHash("sha256").update(String(s)).digest();
-  return timingSafeEqual(h(a), h(b));
-};
 // Resposta igual tenha ou não o e-mail cadastrado (não revela contas existentes).
 const DUMMY = "scrypt$AAAAAAAAAAAAAAAAAAAAAA==$" + Buffer.alloc(64).toString("base64");
 const userByEmail = async email => (await (await db()).query(
@@ -54,38 +51,55 @@ async function importCatalog(t, ctx) {
 export default [
   ["GET", "/auth/setup-status", async () => {
     const [{ n }] = await (await db()).query("SELECT count(*)::int AS n FROM users");
-    return { needsSetup: n === 0 };
+    return { needsSetup: n === 0, ownerConfigured: !!ownerEmail() };
   }],
 
-  // Primeiro acesso: só funciona sem nenhum usuário e com o código ADMIN_SETUP_TOKEN do servidor.
-  ["POST", "/auth/setup", async req => {
+  // Primeiro acesso — passo 1: envia o código ao e-mail do dono.
+  // Só o e-mail definido na variável OWNER_EMAIL do servidor é aceito (ninguém mais vira dono da loja).
+  ["POST", "/auth/setup/send-code", async req => {
+    const owner = ownerEmail();
+    if (!owner) fail(503, "Configure a variável OWNER_EMAIL (e-mail do proprietário) no servidor antes do primeiro acesso.");
+    const [{ n }] = await (await db()).query("SELECT count(*)::int AS n FROM users");
+    if (n > 0) fail(409, "O painel já foi configurado. Faça login.");
+    const mail = parseEmail(body(req).email);
+    await rateLimit(`setup-ip:${clientIp(req)}`, 20, 3600);
+    if (mail !== owner) fail(403, "Este e-mail não está autorizado como proprietário desta loja.");
+    await issueSetupCode(mail, req);
+    return { ok: true, message: `Enviamos um código para ${mail}.` };
+  }],
+
+  // Primeiro acesso — passo 2: confere o código e só então cria a loja e o dono (já com e-mail confirmado).
+  ["POST", "/auth/setup", async (req, res) => {
     const b = body(req);
-    await rateLimit(`setup:${clientIp(req)}`, 10, 3600);
-    const expected = process.env.ADMIN_SETUP_TOKEN;
-    if (!expected) fail(503, "Configure a variável ADMIN_SETUP_TOKEN no servidor antes do primeiro acesso.");
-    if (!sameSecret(b.setupToken || "", expected)) fail(403, "Código de configuração incorreto.");
+    await rateLimit(`setup:${clientIp(req)}`, 30, 3600);
+    const owner = ownerEmail();
+    if (!owner) fail(503, "Configure a variável OWNER_EMAIL (e-mail do proprietário) no servidor antes do primeiro acesso.");
+    const mail = parseEmail(b.email);
+    if (mail !== owner) fail(403, "Este e-mail não está autorizado como proprietário desta loja.");
     const storeName = text(b.storeName, "Nome da loja", { required: true, max: 80 });
     const name = text(b.name, "Seu nome", { required: true, max: 80 });
-    const mail = parseEmail(b.email);
     validatePassword(b.password);
     const passwordHash = await hashPassword(b.password);
 
-    const ctx = await (await db()).tx(async t => {
+    const r = await (await db()).tx(async t => {
       await t.query("LOCK TABLE users IN EXCLUSIVE MODE");
       const [{ n }] = await t.query("SELECT count(*)::int AS n FROM users");
-      if (n > 0) fail(409, "O painel já foi configurado. Faça login.");
+      if (n > 0) return { err: [409, "O painel já foi configurado. Faça login.", "ALREADY_SETUP"] };
+      const err = await checkSetupCode(t, mail, String(b.code || "").trim());
+      if (err) return { err }; // a transação confirma o incremento de tentativas
       const [store] = await t.query("INSERT INTO stores (name, slug) VALUES ($1, $2) RETURNING id", [storeName, slugify(storeName)]);
       const [user] = await t.query(
-        "INSERT INTO users (store_id, name, email, password_hash, role) VALUES ($1,$2,$3,$4,'owner') RETURNING id",
+        "INSERT INTO users (store_id, name, email, password_hash, role, email_verified_at, last_login_at) VALUES ($1,$2,$3,$4,'owner',now(),now()) RETURNING id",
         [store.id, name, mail, passwordHash]);
       const c = { storeId: store.id, user: { id: user.id } };
       if (b.importCatalog) await importCatalog(t, c);
       else await t.query("INSERT INTO categories (store_id, name, slug, position) VALUES ($1,'Geral','geral',0)", [store.id]);
-      return c;
+      return { ctx: c };
     });
-    await audit(ctx, "setup", "store", ctx.storeId, { importCatalog: !!b.importCatalog }, req);
-    await issueCode({ id: ctx.user.id, email: mail }, "verify_email", req);
-    return { ok: true, next: "verify-email", email: mail };
+    if (r.err) fail(r.err[0], r.err[1], { code: r.err[2] });
+    await audit(r.ctx, "setup", "store", r.ctx.storeId, { importCatalog: !!b.importCatalog }, req);
+    await createSession(req, res, r.ctx.user.id);
+    return { ok: true };
   }],
 
   ["POST", "/auth/login", async (req, res) => {

@@ -27,7 +27,7 @@ Requer Node.js 20+.
 
 ```bash
 npm install
-cp .env.example .env        # defina ADMIN_SETUP_TOKEN e AUTH_SECRET
+cp .env.example .env        # defina OWNER_EMAIL e AUTH_SECRET
 npm run dev                 # site: http://localhost:3000   painel: http://localhost:3000/admin/
 npm test                    # roda os testes automatizados
 ```
@@ -42,11 +42,11 @@ e os **códigos de e-mail aparecem no terminal** do `npm run dev`.
 3. *Storage* → **Neon (Postgres)** → cria `DATABASE_URL`. *Storage* → **Blob** → cria `BLOB_READ_WRITE_TOKEN`.
 4. Crie uma conta no **Resend** (resend.com), verifique o domínio da loja e gere uma API key.
 5. *Settings → Environment Variables*:
-   - `ADMIN_SETUP_TOKEN` — código secreto do primeiro acesso
+   - `OWNER_EMAIL` — e-mail do proprietário (só ele pode fazer o primeiro acesso)
    - `AUTH_SECRET` — texto aleatório longo (32+ caracteres)
    - `CRON_SECRET` — texto aleatório longo
    - `RESEND_API_KEY` e `EMAIL_FROM` (ex.: `RSC Equipamentos <nao-responda@seudominio.com.br>`)
-6. *Redeploy*. Acesse `/admin/` → **Primeiro acesso** → confirme o e-mail com o código recebido.
+6. *Redeploy*. Acesse `/admin/` → **Primeiro acesso** → digite o `OWNER_EMAIL`, receba o código por e-mail e crie sua senha.
 7. Convide a equipe em **Usuários e permissões**.
 
 ## Enviar para o GitHub (manual)

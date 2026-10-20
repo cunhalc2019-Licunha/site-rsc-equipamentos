@@ -139,28 +139,46 @@ function pageLogin() {
   };
 }
 
+// Primeiro acesso em 2 passos: (1) e-mail do proprietário → código enviado; (2) código + dados → conta criada.
 function pageSetup() {
   authBox("Primeiro acesso", "Crie a conta do proprietário da loja. Esta tela só funciona uma vez.", `
-    <form id="f" class="form" novalidate>
-      <div class="f"><label>Código de configuração</label><input name="setupToken" type="password" required><span class="help">Valor da variável ADMIN_SETUP_TOKEN do servidor.</span></div>
+    <form id="f1" class="form" novalidate>
+      <div class="f"><label>E-mail do proprietário</label><input name="email" type="email" autocomplete="username" required>
+        <span class="help">Enviaremos um código de 6 dígitos para este e-mail.</span></div>
+      <button class="btn btn-primary btn-block" type="submit">Enviar código</button>
+    </form>
+    <form id="f2" class="form" novalidate style="display:none">
+      <p class="muted-sm" id="sentTo"></p>
+      <div class="f"><label>Código recebido por e-mail</label><input name="code" class="codein" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></div>
       <div class="f"><label>Nome da loja</label><input name="storeName" value="RSC Equipamentos" required></div>
       <div class="f"><label>Seu nome</label><input name="name" autocomplete="name" required></div>
-      <div class="f"><label>E-mail (receberá um código de confirmação)</label><input name="email" type="email" autocomplete="username" required></div>
-      <div class="f"><label>Senha (mínimo 10 caracteres)</label><input name="password" type="password" autocomplete="new-password" required></div>
+      <div class="f"><label>Crie uma senha para o painel (mínimo 10 caracteres)</label><input name="password" type="password" autocomplete="new-password" required></div>
       <div class="f"><label>Confirmar senha</label><input name="password2" type="password" autocomplete="new-password" required></div>
       <label class="check" style="color:var(--text)"><input type="checkbox" name="importCatalog" checked> Importar o catálogo atual do site (≈220 produtos, 20 setores)</label>
-      <button class="btn btn-primary btn-block" type="submit">Criar conta</button>
-      <div class="alert" id="err" style="display:none"></div>
-    </form>`);
-  $("#f").onsubmit = async e => {
-    e.preventDefault(); const f = e.target, btn = $("button", f); errBox("");
-    if (f.password.value !== f.password2.value) return errBox("As senhas não conferem.");
-    btn.disabled = true; btn.textContent = "Criando… (a importação pode levar alguns segundos)";
+      <button class="btn btn-primary btn-block" type="submit">Criar conta e entrar</button>
+      <button class="btn btn-ghost btn-block" type="button" id="resend">Reenviar código</button>
+    </form>
+    <div class="alert" id="err" style="display:none;margin-top:12px"></div>`);
+  let email = "";
+  const send = async () => {
+    errBox("");
+    try { const r = await api("auth/setup/send-code", { method: "POST", body: { email } }); toast(r.message);
+      $("#f1").style.display = "none"; $("#f2").style.display = "grid"; $("#sentTo").textContent = `Código enviado para ${email}. Ele vale por 10 minutos.`; $("#f2").code.focus(); }
+    catch (err) { errBox(err.message); }
+  };
+  $("#f1").onsubmit = e => { e.preventDefault(); email = e.target.email.value.trim().toLowerCase(); send(); };
+  $("#resend").onclick = send;
+  const f2 = $("#f2");
+  f2.code.oninput = () => { f2.code.value = f2.code.value.replace(/\D/g, "").slice(0, 6); };
+  f2.onsubmit = async e => {
+    e.preventDefault(); errBox("");
+    if (f2.password.value !== f2.password2.value) return errBox("As senhas não conferem.");
+    const btn = $("button[type=submit]", f2); btn.disabled = true; btn.textContent = "Criando… (a importação pode levar alguns segundos)";
     try {
-      const r = await api("auth/setup", { method: "POST", body: { setupToken: f.setupToken.value, storeName: f.storeName.value,
-        name: f.name.value, email: f.email.value, password: f.password.value, importCatalog: f.importCatalog.checked } });
-      go(`/admin/verify-email?email=${encodeURIComponent(r.email)}`, true);
-    } catch (err) { errBox(err.message); btn.disabled = false; btn.textContent = "Criar conta"; }
+      await api("auth/setup", { method: "POST", body: { email, code: f2.code.value, storeName: f2.storeName.value,
+        name: f2.name.value, password: f2.password.value, importCatalog: f2.importCatalog.checked } });
+      await loadMe(); toast("Conta criada!"); go("/admin/dashboard", true);
+    } catch (err) { errBox(err.message); btn.disabled = false; btn.textContent = "Criar conta e entrar"; }
   };
 }
 
