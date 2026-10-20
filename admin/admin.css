@@ -173,3 +173,4 @@ a.kpi:hover{border-color:var(--orange)}
 .tbl .thumb{min-width:54px;flex:none}
 .tbl td:has(> b){min-width:220px}
 .tbl{min-width:900px}
+.auth .form > .btn,.auth .form > .check,.auth .form > p{grid-column:1/-1}
