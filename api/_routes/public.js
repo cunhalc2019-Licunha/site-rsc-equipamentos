@@ -5,6 +5,7 @@ import { body, fail, clientIp } from "../_lib/http.js";
 import { rateLimit } from "../_lib/rate.js";
 import { text, email as parseEmail } from "../_lib/validate.js";
 import { resolvePublicStore, settingsOf } from "../_lib/store.js";
+import { quoteShipping } from "../_lib/shipping.js";
 import { createOnlineOrder, expireReservations } from "../_lib/orders.js";
 
 const CONDITION = { novo: "Novo", seminovo: "Seminovo", usado_revisado: "Usado revisado" };
@@ -105,16 +106,28 @@ export default [
       if (!p) fail(404, "Produto não encontrado.", { code: "UNAVAILABLE", productId: it.id });
       items.push({ productId: p.id, quantity: qty });
     }
-    const order = await q.tx(t => createOnlineOrder(t, store.id, { items, customer, method, delivery, address }));
-    return { order: { number: order.number, token: order.public_token, reservedUntil: order.reserved_until, totalCents: order.total_cents } };
+    // Frete recalculado aqui pelo CEP (fora da transação, pois consulta APIs externas). O navegador não informa valor.
+    const shipping = delivery === "entrega" ? await quoteShipping(store.settings, address.cep) : null;
+    const order = await q.tx(t => createOnlineOrder(t, store.id, { items, customer, method, delivery, address, shipping }));
+    return { order: { number: order.number, token: order.public_token, reservedUntil: order.reserved_until,
+      totalCents: order.total_cents, shippingCents: order.shipping_cents } };
   }],
 
   // Acompanhamento do pedido pelo cliente (link com token secreto, sem login).
+  // Cotação de frete pelo CEP (entrega própria). Só informativa: o pedido recalcula no servidor.
+  ["GET", "/shipping/quote", async req => {
+    const store = await resolvePublicStore(req);
+    if (!store) fail(503, "Loja ainda não configurada.");
+    await rateLimit(`frete:${clientIp(req)}`, 60, 3600, "Muitas consultas de frete. Aguarde alguns minutos.");
+    const qte = await quoteShipping(store.settings, req.query.cep);
+    return { quote: { cep: qte.cep, cents: qte.cents, label: qte.label, distanceKm: qte.distanceKm, city: qte.city, uf: qte.uf } };
+  }],
+
   ["GET", "/orders/:token", async req => {
     const q = await db();
     const [o] = await q.query(
       `SELECT o.id, o.number, o.status, o.payment_status, o.payment_method, o.delivery, o.total_cents, o.discount_cents,
-              o.subtotal_cents, o.reserved_until, o.created_at
+              o.subtotal_cents, o.shipping_cents, o.shipping_info, o.reserved_until, o.created_at
          FROM orders o WHERE o.public_token = $1 AND o.channel = 'online'`, [req.params.token]);
     if (!o) fail(404, "Pedido não encontrado.");
     const items = await q.query("SELECT name, sku, quantity, unit_price_cents, total_cents FROM order_items WHERE order_id = $1", [o.id]);

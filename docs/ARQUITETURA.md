@@ -160,3 +160,19 @@ dashboard · migração de banco da fase 1.
 
 **Limitação conhecida dos testes:** o PGlite executa transações em série; o teste de concorrência valida a regra (uma reserva, um 409),
 mas não exercita paralelismo real de conexões. Em produção a proteção vem do `SELECT … FOR UPDATE` + CHECKs do PostgreSQL.
+
+## 10. Frete — entrega própria (api/_lib/shipping.js)
+
+Calculado **no servidor** pelo CEP do cliente e **somado ao total do pedido** (`orders.shipping_cents` + `shipping_info`).
+Origem: a loja (Rod. Anchieta, 1138 — lat −23.6155, lng −46.6014). Faixas, aplicadas nesta ordem (editáveis em **Configurações → Frete**):
+
+| Faixa | Padrão |
+|---|---|
+| Até 7 km em linha reta | R$ 50,00 |
+| Cidades do ABC (Santo André, São Bernardo, São Caetano, Diadema, Mauá, Ribeirão Pires, Rio Grande da Serra) | R$ 100,00 |
+| Até 110 km em linha reta | R$ 250,00 |
+| Acima de 110 km | km rodoviário estimado (km reta × 1,3) × R$ 1,75, nunca menos que R$ 250,00 |
+
+Coordenadas do CEP: AwesomeAPI → BrasilAPI v2 → OpenStreetMap (cidade), com cache na tabela `cep_cache`.
+Rotas: `GET /api/shipping/quote?cep=` (informativa, com limite de uso) e `POST /api/orders` (recalcula o frete; ignora qualquer valor enviado pelo navegador).
+Retirada na loja = frete zero.

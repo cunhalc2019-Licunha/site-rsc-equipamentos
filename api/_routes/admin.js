@@ -6,11 +6,12 @@ import path from "node:path";
 import { db } from "../_lib/db.js";
 import { body, fail } from "../_lib/http.js";
 import { requireUser, audit, can } from "../_lib/auth.js";
-import { text, int, bool, uuid, oneOf, email as parseEmail, slugify } from "../_lib/validate.js";
+import { text, int, num, bool, uuid, oneOf, email as parseEmail, slugify } from "../_lib/validate.js";
 import { parseProduct, parseEntry, createProduct, updateProduct, setProductState, listProducts, getProduct, stockEntry } from "../_lib/products.js";
 import { lockInventory, move, ADJUST_REASONS } from "../_lib/stock.js";
 import { physicalSale, cancelOrder, advanceOrder, expireReservations } from "../_lib/orders.js";
 import { getStore, settingsOf } from "../_lib/store.js";
+import { shippingSettings } from "../_lib/shipping.js";
 import { sendInvite } from "./auth.js";
 
 const tx = async fn => (await db()).tx(fn);
@@ -347,18 +348,33 @@ export default [
   ["GET", "/admin/settings", async (req, res) => {
     const ctx = await requireUser(req, res, "catalog.read");
     const s = await getStore(ctx.storeId);
-    return { store: { name: s.name, domain: s.domain }, settings: settingsOf(s) };
+    return { store: { name: s.name, domain: s.domain }, settings: { ...settingsOf(s), shipping: shippingSettings(s.settings) } };
   }],
   ["PUT", "/admin/settings", async (req, res) => {
     const ctx = await requireUser(req, res, "settings.write");
     const b = body(req);
     const name = text(b.name, "Nome da loja", { required: true, max: 80 });
+    const current = await getStore(ctx.storeId);
+    const cur = shippingSettings(current.settings);
+    const f = b.shipping || {};
+    const money = (v, label) => int(v, label, { required: true, min: 0, max: 10_000_000 });
+    const shipping = {
+      ...cur,
+      near: { km: num(f.nearKm, "Raio próximo (km)", { min: 0, max: 100 }), cents: money(f.nearCents, "Frete do raio próximo") },
+      abc: { ...cur.abc, cents: money(f.abcCents, "Frete do ABC") },
+      region: { km: num(f.regionKm, "Raio regional (km)", { min: 1, max: 1000 }), cents: money(f.regionCents, "Frete regional") },
+      perKmCents: int(f.perKmCents, "Valor por km", { required: true, min: 0, max: 100000 }),
+      roadFactor: num(f.roadFactor, "Fator rodoviário", { min: 1, max: 3 }),
+    };
+    if (shipping.region.km <= shipping.near.km) fail(422, "O raio regional deve ser maior que o raio próximo.");
     const settings = {
+      ...(current.settings || {}),
       reservationHours: int(b.reservationHours, "Prazo da reserva (horas)", { required: true, min: 1, max: 168 }),
       lowStockThreshold: int(b.lowStockThreshold, "Estoque baixo", { required: true, min: 0, max: 1000 }),
       whatsapp: (text(b.whatsapp, "WhatsApp", { max: 20 }) || "").replace(/\D/g, ""),
+      shipping,
     };
-    const before = settingsOf(await getStore(ctx.storeId));
+    const before = { ...settingsOf(current), shipping: cur };
     await q("UPDATE stores SET name = $2, settings = $3 WHERE id = $1", [ctx.storeId, name, JSON.stringify(settings)]);
     await audit(ctx, "settings.update", "store", ctx.storeId, { before, after: settings, name }, req);
     return { ok: true };

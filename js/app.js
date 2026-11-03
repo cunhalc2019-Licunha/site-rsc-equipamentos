@@ -118,7 +118,7 @@ function viewHome() {
   <div class="features"><div class="container">
     <div class="feature"><div class="fi">${icon("lock")}</div><div><b>Pagamento seguro</b><span>PIX, cartão e boleto</span></div></div>
     <div class="feature"><div class="fi">${icon("shield")}</div><div><b>Garantia RSC</b><span>Equipamentos revisados</span></div></div>
-    <div class="feature"><div class="fi">${icon("truck")}</div><div><b>Retire ou receba</b><span>Retirada grátis na loja</span></div></div>
+    <div class="feature"><div class="fi">${icon("truck")}</div><div><b>Entrega própria</b><span>Frete calculado pelo CEP</span></div></div>
     <div class="feature"><div class="fi">${icon("swap")}</div><div><b>Compra e venda</b><span>Avaliamos seu equipamento</span></div></div>
   </div></div>
 
@@ -333,8 +333,9 @@ function viewCheckout() {
       <div class="panel"><h3><i>2</i> Entrega</h3>
         <div class="opts">
           <label class="opt on"><input type="radio" name="delivery" value="retirada" checked><div class="t"><b>Retirar na loja</b><small>Rod. Anchieta, 1138 — Vila Moinho Velho, São Paulo/SP</small></div><span class="tag">GRÁTIS</span></label>
-          <label class="opt"><input type="radio" name="delivery" value="entrega"><div class="t"><b>Entrega no meu endereço</b><small>Frete calculado pela equipe e combinado pelo WhatsApp após a compra</small></div><span class="tag" style="color:var(--muted)">A COMBINAR</span></label>
+          <label class="opt"><input type="radio" name="delivery" value="entrega"><div class="t"><b>Entrega no meu endereço</b><small>${backendOrders() ? "Entrega própria da RSC — frete calculado pelo CEP e somado ao total" : "Frete calculado pela equipe e combinado pelo WhatsApp após a compra"}</small></div><span class="tag" style="color:var(--muted)">${backendOrders() ? "PELO CEP" : "A COMBINAR"}</span></label>
         </div>
+        <div id="shipBox" style="margin-top:14px"></div>
         <div class="form" id="addr" style="margin-top:18px;display:none">
           <div class="f s2"><label>CEP *</label><input name="cep" inputmode="numeric" data-mask="cep" autocomplete="postal-code"></div>
           <div class="f s4"><label>Endereço *</label><input name="street" autocomplete="address-line1"></div>
@@ -379,6 +380,9 @@ function mountCheckout() {
   const lines = cartLines();
   const totals = method => lines.reduce((t, l) => t + unitPrice(l.p, method) * l.qty, 0);
   const subtotal = lines.reduce((t, l) => t + l.p.price * l.qty, 0);
+  // Frete da entrega própria: cotado pelo CEP no servidor (o pedido recalcula — o valor daqui é só exibição).
+  let ship = null, shipCep = "", shipMsg = "";
+  const shipValue = () => form.delivery.value === "entrega" && ship ? ship.cents / 100 : 0;
 
   const refresh = () => {
     const method = form.method.value;
@@ -386,13 +390,34 @@ function mountCheckout() {
     $$(".opt", form).forEach(o => o.classList.toggle("on", $("input", o).checked));
     $("#addr").style.display = delivery === "entrega" ? "grid" : "none";
     lines.forEach(l => { $(`[data-line="${l.p.id}"]`).textContent = brl(unitPrice(l.p, method) * l.qty); });
-    const total = totals(method);
-    $("#sDisc").textContent = total < subtotal ? `− ${brl(subtotal - total)}` : "—";
-    $("#sShip").textContent = delivery === "entrega" ? "A combinar" : "Grátis";
+    const total = totals(method) + shipValue();
+    $("#sDisc").textContent = totals(method) < subtotal ? `− ${brl(subtotal - totals(method))}` : "—";
+    $("#sShip").innerHTML = delivery !== "entrega" ? "Grátis (retirada)"
+      : ship ? `${brl(ship.cents / 100)}<br><small class="muted">${ship.label} · ${ship.city}/${ship.uf}</small>`
+      : backendOrders() ? `<small class="muted">${shipMsg || "Informe o CEP"}</small>` : "A combinar";
     $("#sTotal").textContent = brl(total);
     $("#sInst").textContent = method === "card" ? `ou até ${CFG.maxInstallments}x de ${brl(total / CFG.maxInstallments)}*` : "";
-    Object.keys(METHODS).forEach(m => { const el = $(`[data-mtotal="${m}"]`); if (el && !$(`input[value="${m}"]`, form).disabled) el.textContent = brl(totals(m)); });
+    Object.keys(METHODS).forEach(m => { const el = $(`[data-mtotal="${m}"]`); if (el && !$(`input[value="${m}"]`, form).disabled) el.textContent = brl(totals(m) + shipValue()); });
+    const sb = $("#shipBox");
+    if (sb) sb.innerHTML = delivery === "entrega" && backendOrders()
+      ? (ship ? `<div class="alert" style="display:flex;color:var(--green);border-color:rgba(37,211,102,.4);background:rgba(37,211,102,.08)">${icon("truck", 18)}<span>Frete para <b>${ship.city}/${ship.uf}</b>: <b>${brl(ship.cents / 100)}</b> — ${ship.label}. O valor é somado ao total do pedido.</span></div>`
+        : shipMsg ? `<div class="alert" style="display:flex">${icon("info", 18)}<span>${shipMsg}</span></div>` : "") : "";
   };
+
+  async function quote(cep) {
+    if (!backendOrders()) return;
+    if (cep === shipCep && ship) return;
+    shipCep = cep; ship = null; shipMsg = "Calculando frete…"; refresh();
+    try {
+      const r = await fetch(`/api/shipping/quote?cep=${cep}`, { cache: "no-store" });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || "Não foi possível calcular o frete.");
+      if (shipCep !== cep) return;
+      const e = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+      ship = { ...d.quote, city: e(d.quote.city), uf: e(d.quote.uf), label: e(d.quote.label) }; shipMsg = "";
+    } catch (ex) { ship = null; shipMsg = ex.message; }
+    refresh();
+  }
   form.addEventListener("change", refresh);
   refresh();
 
@@ -409,7 +434,8 @@ function mountCheckout() {
   // busca de CEP (ViaCEP)
   form.cep.addEventListener("input", async () => {
     const cep = form.cep.value.replace(/\D/g, "");
-    if (cep.length !== 8) return;
+    if (cep.length !== 8) { if (ship || shipMsg) { ship = null; shipCep = ""; shipMsg = ""; refresh(); } return; }
+    quote(cep);
     try {
       const r = await (await fetch(`https://viacep.com.br/ws/${cep}/json/`)).json();
       if (r.erro) return;
@@ -425,6 +451,11 @@ function mountCheckout() {
     const need = ["name", "doc", "email", "phone"];
     if (form.delivery.value === "entrega") need.push("cep", "street", "number", "district", "city", "uf");
     let bad = need.filter(n => !form[n].value.trim());
+    if (form.delivery.value === "entrega" && backendOrders() && !ship && !bad.includes("cep")) {
+      err.innerHTML = `${icon("info", 18)} <span>${shipMsg && shipMsg !== "Calculando frete…" ? shipMsg : "Aguarde o cálculo do frete pelo CEP."}</span>`; err.style.display = "flex";
+      if (!shipMsg) quote(form.cep.value.replace(/\D/g, ""));
+      return;
+    }
     const docLen = form.doc.value.replace(/\D/g, "").length;
     if (docLen && docLen !== 11 && docLen !== 14) bad.push("doc");
     if (form.email.value && !/^\S+@\S+\.\S+$/.test(form.email.value)) bad.push("email");
@@ -516,6 +547,7 @@ async function mountOrderTrack(token) {
       <div class="panel" style="text-align:left;margin-top:14px">
         ${o.items.map(i => `<div class="sum-row"><span>${i.quantity}× ${esc(i.name)} <small class="muted">(${esc(i.sku)})</small></span><span>${brl(i.total_cents / 100)}</span></div>`).join("")}
         ${o.discount_cents ? `<div class="sum-row"><span>Desconto</span><span class="disc">− ${brl(o.discount_cents / 100)}</span></div>` : ""}
+        ${o.delivery === "entrega" ? `<div class="sum-row"><span>Frete (entrega própria)${o.shipping_info ? ` <small class="muted">— ${esc(o.shipping_info.city)}/${esc(o.shipping_info.uf)}</small>` : ""}</span><span>${brl(o.shipping_cents / 100)}</span></div>` : ""}
         <div class="sum-row total"><span>Total</span><b>${brl(o.total_cents / 100)}</b></div>
       </div>
       ${waiting ? `<p style="margin-top:16px">Guarde este link para acompanhar o pedido. Para pagar, fale com a equipe RSC — o pagamento online será habilitado em breve.</p>` : ""}

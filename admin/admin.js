@@ -794,6 +794,7 @@ async function pageOrder(id) {
         <tbody>${o.items.map(i => `<tr><td><a href="/admin/products/${i.product_id}" data-link>${esc(i.name)}</a></td><td>${esc(i.sku)}</td><td class="num">${i.quantity}</td><td class="num">${brl(i.unit_price_cents)}</td><td class="num">${brl(i.total_cents)}</td></tr>`).join("")}</tbody></table>
         <div class="sum-row" style="margin-top:10px"><span>Subtotal</span><span>${brl(o.subtotal_cents)}</span></div>
         ${o.discount_cents ? `<div class="sum-row"><span>Desconto (${esc(o.payment_method)})</span><span class="disc">− ${brl(o.discount_cents)}</span></div>` : ""}
+        ${o.delivery === "entrega" ? `<div class="sum-row"><span>Frete — entrega própria${o.shipping_info ? `<br><small class="muted">${esc(o.shipping_info.label)} · ${esc(o.shipping_info.city)}/${esc(o.shipping_info.uf)} · ${esc(o.shipping_info.distanceKm)} km</small>` : ""}</span><span>${brl(o.shipping_cents)}</span></div>` : ""}
         <div class="sum-row total"><span>Total</span><b>${brl(o.total_cents)}</b></div></section>
       ${o.reservations.length ? `<section class="panel"><h3>Reservas</h3><table class="tbl" style="min-width:0;margin-top:10px"><tbody>${o.reservations.map(r => `<tr><td>${esc(r.name)}</td><td class="num">${r.quantity} un.</td><td><span class="chip ${r.status}">${RES[r.status]}</span></td><td>${r.status === "ativa" ? `vence ${dt(r.expires_at)} ${left(r.expires_at)}` : `<small class="muted">${dt(r.released_at)} · ${esc(r.release_reason || "")}</small>`}</td></tr>`).join("")}</tbody></table></section>` : ""}
       <section class="panel"><h3>Movimentações ligadas ao pedido</h3><table class="tbl" style="min-width:0;margin-top:10px"><tbody>${o.movements.map(m => `<tr><td>${dt(m.created_at)}</td><td>${esc(MOVE[m.type])}</td><td>${esc(m.product_name)}</td><td class="num">${m.physical_delta ? `físico ${m.physical_before}→${m.physical_after}` : `reservado ${m.reserved_before}→${m.reserved_after}`}</td></tr>`).join("") || `<tr><td class="muted">Nenhuma.</td></tr>`}</tbody></table></section>
@@ -867,6 +868,15 @@ async function pageSettings() {
       <div class="f s3"><label>Prazo da reserva (horas)</label><input name="reservationHours" type="number" min="1" max="168"></div>
       <div class="f s3"><label>Aviso de estoque baixo (≤)</label><input name="lowStockThreshold" type="number" min="0" max="1000"></div>
       <div class="f"><label>WhatsApp da loja</label><input name="whatsapp" maxlength="20"></div>
+      <h3 style="grid-column:span 6;font-size:1.2rem;margin-top:10px">Frete — entrega própria</h3>
+      <p class="muted-sm" style="grid-column:span 6">Calculado pelo CEP do cliente a partir da loja (Rod. Anchieta). As faixas são aplicadas nesta ordem.</p>
+      <div class="f s3"><label>1. Raio próximo (km)</label><input name="nearKm" type="number" min="0" step="0.5"></div>
+      <div class="f s3"><label>Valor do raio próximo</label><div class="prefix"><span>R$</span><input name="nearCents" class="money" inputmode="numeric"></div></div>
+      <div class="f s6" style="grid-column:span 6"><label>2. Todo o ABC (Santo André, São Bernardo, São Caetano, Diadema, Mauá, Ribeirão Pires, Rio Grande da Serra)</label><div class="prefix"><span>R$</span><input name="abcCents" class="money" inputmode="numeric"></div></div>
+      <div class="f s3"><label>3. Raio regional (km)</label><input name="regionKm" type="number" min="1" step="1"></div>
+      <div class="f s3"><label>Valor do raio regional</label><div class="prefix"><span>R$</span><input name="regionCents" class="money" inputmode="numeric"></div></div>
+      <div class="f s3"><label>4. Demais regiões: valor por km rodoviário</label><div class="prefix"><span>R$</span><input name="perKmCents" class="money" inputmode="numeric"></div></div>
+      <div class="f s3"><label>Fator rodoviário (km reta × fator)</label><input name="roadFactor" type="number" min="1" max="3" step="0.05"></div>
       ${edit ? `<button class="btn btn-primary btn-block" style="grid-column:span 6" type="submit">Salvar</button>` : ""}</fieldset></form></section>
     <section class="panel"><h3>Categorias</h3><div id="cats" style="margin-top:10px"></div>
       ${catEdit ? `<form id="cf" class="form" novalidate style="margin-top:14px"><div class="f s4"><label id="cl">Nova categoria</label><input name="name" maxlength="60"></div><div class="f s2"><label>Ordem</label><input name="position" type="number" min="0" value="0"></div>
@@ -875,7 +885,13 @@ async function pageSettings() {
   try {
     const { store, settings } = await api("admin/settings");
     const f = $("#sf"); f.name.value = store.name; f.reservationHours.value = settings.reservationHours; f.lowStockThreshold.value = settings.lowStockThreshold; f.whatsapp.value = settings.whatsapp || "";
-    f.onsubmit = async e => { e.preventDefault(); try { await api("admin/settings", { method: "PUT", body: { name: f.name.value, reservationHours: Number(f.reservationHours.value), lowStockThreshold: Number(f.lowStockThreshold.value), whatsapp: f.whatsapp.value } }); toast("Configurações salvas."); await loadMe(); } catch (err) { toast(err.message, false); } };
+    const sh = settings.shipping;
+    f.nearKm.value = sh.near.km; f.nearCents.value = moneyStr(sh.near.cents); f.abcCents.value = moneyStr(sh.abc.cents);
+    f.regionKm.value = sh.region.km; f.regionCents.value = moneyStr(sh.region.cents); f.perKmCents.value = moneyStr(sh.perKmCents); f.roadFactor.value = sh.roadFactor;
+    $$(".money", f).forEach(i => i.addEventListener("input", () => { const c = moneyCents(i.value); i.value = c == null ? "" : moneyStr(c); }));
+    f.onsubmit = async e => { e.preventDefault(); try { await api("admin/settings", { method: "PUT", body: { name: f.name.value, reservationHours: Number(f.reservationHours.value), lowStockThreshold: Number(f.lowStockThreshold.value), whatsapp: f.whatsapp.value,
+      shipping: { nearKm: f.nearKm.value, nearCents: moneyCents(f.nearCents.value) ?? 0, abcCents: moneyCents(f.abcCents.value) ?? 0, regionKm: f.regionKm.value,
+        regionCents: moneyCents(f.regionCents.value) ?? 0, perKmCents: moneyCents(f.perKmCents.value) ?? 0, roadFactor: f.roadFactor.value } } }); toast("Configurações salvas."); await loadMe(); } catch (err) { toast(err.message, false); } };
   } catch (err) { toast(err.message, false); }
   let editing = null;
   const loadCats = async () => {

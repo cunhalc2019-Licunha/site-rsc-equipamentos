@@ -26,7 +26,8 @@ async function upsertCustomer(t, storeId, c) {
 
 // Checkout online: cria o pedido e RESERVA o estoque por N horas (padrão 24h), de forma transacional.
 // items: [{ productId, quantity }]
-export async function createOnlineOrder(t, storeId, { items, customer, method, delivery, address }) {
+// shipping = cotação do frete calculada no servidor (quoteShipping) ANTES da transação — nunca vem do navegador.
+export async function createOnlineOrder(t, storeId, { items, customer, method, delivery, address, shipping = null }) {
   const store = await getStore(storeId, t);
   const hours = settingsOf(store).reservationHours;
   const merged = {};
@@ -54,15 +55,19 @@ export async function createOnlineOrder(t, storeId, { items, customer, method, d
   const number = await nextNumber(t, storeId, "order");
   const lines = prods.map(p => ({ p, q: merged[p.id], unit: unitPrice(p, method), full: p.promo_price_cents || p.price_cents }));
   const subtotal = lines.reduce((s, l) => s + l.full * l.q, 0);
-  const total = lines.reduce((s, l) => s + l.unit * l.q, 0);
+  const itemsTotal = lines.reduce((s, l) => s + l.unit * l.q, 0);
+  if (delivery === "entrega" && !shipping) fail(422, "Calcule o frete pelo CEP para entrega.");
+  const shippingCents = delivery === "entrega" ? shipping.cents : 0;
+  const total = itemsTotal + shippingCents; // frete somado ao valor dos equipamentos
   const token = randomBytes(18).toString("base64url");
 
   const [order] = await t.query(
     `INSERT INTO orders (store_id, number, channel, customer_id, status, payment_status, payment_method, delivery, address,
-        subtotal_cents, discount_cents, total_cents, reserved_until, public_token)
-     VALUES ($1,$2,'online',$3,'aguardando_pagamento','pendente',$4,$5,$6,$7,$8,$9, now() + make_interval(hours => $10), $11)
-     RETURNING id, number, reserved_until, public_token, total_cents`,
-    [storeId, number, customerId, method, delivery, address ? JSON.stringify(address) : null, subtotal, subtotal - total, total, hours, token]);
+        subtotal_cents, discount_cents, shipping_cents, shipping_info, total_cents, reserved_until, public_token)
+     VALUES ($1,$2,'online',$3,'aguardando_pagamento','pendente',$4,$5,$6,$7,$8,$9,$10,$11, now() + make_interval(hours => $12), $13)
+     RETURNING id, number, reserved_until, public_token, total_cents, shipping_cents`,
+    [storeId, number, customerId, method, delivery, address ? JSON.stringify(address) : null, subtotal, subtotal - itemsTotal,
+     shippingCents, delivery === "entrega" ? JSON.stringify(shipping) : null, total, hours, token]);
 
   for (const l of lines) {
     const [item] = await t.query(
