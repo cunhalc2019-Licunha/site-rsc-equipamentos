@@ -220,6 +220,7 @@ function viewProduct(id) {
         <button class="btn btn-primary" id="buyNow">${icon("lock", 18)} Comprar agora</button>
       </div>
       <button class="btn btn-ghost btn-block" id="addCart">${icon("cart", 18)} Adicionar ao carrinho</button>
+      ${shipCalcBox()}
       ${p.note ? `<div class="note">${icon("info", 16)} ${p.note}</div>` : ""}
     </div>` : `
     <div class="buybox">
@@ -255,12 +256,61 @@ function viewProduct(id) {
   </div>`;
 }
 
+// ---------- Caixinha "Calcular frete" (produto e carrinho) ----------
+const savedCep = () => { try { return localStorage.getItem("rsc-cep") || ""; } catch { return ""; } };
+const saveCep = c => { try { localStorage.setItem("rsc-cep", c); } catch {} };
+const fmtCep = v => v.replace(/\D/g, "").slice(0, 8).replace(/^(\d{5})(\d)/, "$1-$2");
+const escTxt = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+async function fetchQuote(cep) {
+  const r = await fetch(`/api/shipping/quote?cep=${cep}`, { cache: "no-store" });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || "Não foi possível calcular o frete.");
+  return d.quote;
+}
+
+function shipCalcBox() {
+  return `<div class="shipcalc">
+    <label>${icon("truck", 18, "vertical-align:-4px;color:var(--orange)")} Calcular frete</label>
+    <div class="shipcalc-row"><input id="scCep" inputmode="numeric" placeholder="00000-000" maxlength="9" value="${fmtCep(savedCep())}" aria-label="CEP">
+      <button type="button" class="btn btn-ghost" id="scBtn">Calcular</button></div>
+    <div id="scRes" class="shipcalc-res"></div>
+    <a class="shipcalc-help" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP</a>
+  </div>`;
+}
+
+// baseFn: devolve o valor dos produtos (R$) para mostrar "Total com frete".
+function mountShipCalc(baseFn, onQuote) {
+  const input = $("#scCep"), btn = $("#scBtn"), res = $("#scRes");
+  if (!input) return;
+  let last = null;
+  const show = () => {
+    if (!last) return;
+    res.innerHTML = `<div class="sum-row"><span>Frete <small class="muted">· ${escTxt(last.city)}/${escTxt(last.uf)}</small></span><b>${brl(last.cents / 100)}</b></div>
+      <div class="sum-row"><span>Total com frete</span><b class="grad-text" style="font-size:1.15rem">${brl(baseFn() + last.cents / 100)}</b></div>`;
+  };
+  const calc = async () => {
+    const cep = input.value.replace(/\D/g, "");
+    if (cep.length !== 8) { res.innerHTML = `<small class="shipcalc-err">Digite um CEP com 8 números.</small>`; return; }
+    btn.disabled = true; res.innerHTML = `<small class="muted">Calculando…</small>`;
+    try { last = await fetchQuote(cep); saveCep(cep); show(); onQuote?.(last); }
+    catch (e) { last = null; res.innerHTML = `<small class="shipcalc-err">${escTxt(e.message)}</small>`; }
+    btn.disabled = false;
+  };
+  input.addEventListener("input", () => { input.value = fmtCep(input.value); });
+  input.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); calc(); } });
+  btn.onclick = calc;
+  if (input.value.replace(/\D/g, "").length === 8) calc();
+  return { refresh: show };
+}
+
 function mountProduct(id) {
   const p = product(id); if (!p) return;
   $$(".thumbs button").forEach(b => b.onclick = () => { $$(".thumbs button").forEach(x => x.classList.toggle("on", x === b)); $("#mainImg").src = b.dataset.img; });
   if (!canBuy(p)) return;
   let q = 1;
-  $$("[data-step]").forEach(b => b.onclick = () => { q = Math.max(1, Math.min(p.stock || 99, q + +b.dataset.step)); $("#pq").textContent = q; });
+  const sc = mountShipCalc(() => bestPrice(p) * q);
+  $$("[data-step]").forEach(b => b.onclick = () => { q = Math.max(1, Math.min(p.stock || 99, q + +b.dataset.step)); $("#pq").textContent = q; sc?.refresh(); });
   $("#addCart").onclick = () => addToCart(p.id, q);
   $("#buyNow").onclick = () => { addToCart(p.id, q); location.hash = "#/checkout"; };
 }
@@ -292,8 +342,8 @@ function viewCart() {
     <aside class="panel summary">
       <h3>Resumo</h3>
       <div class="sum-row"><span>Subtotal</span><span>${brl(subtotal)}</span></div>
-      <div class="sum-row"><span>Entrega</span><span class="muted">calculada no checkout</span></div>
-      <div class="sum-row total"><span>Total</span><b>${brl(subtotal)}</b></div>
+      <div class="sum-row total"><span>Total dos produtos</span><b>${brl(subtotal)}</b></div>
+      ${shipCalcBox()}
       ${pix !== null && pix < subtotal ? `<div class="sum-row"><span>${icon("pix", 16, "vertical-align:-3px;color:var(--orange)")} No PIX</span><span class="disc">${brl(pix)}</span></div>` : ""}
       ${!methods.includes("card") ? `<div class="alert" style="margin-top:12px">${icon("info", 18)} Um ou mais itens têm preço promocional válido somente no PIX.</div>` : ""}
       ${deadlineWarning()}
@@ -305,6 +355,7 @@ function viewCart() {
 }
 
 function mountCart() {
+  mountShipCalc(() => cartLines().reduce((t, l) => t + l.p.price * l.qty, 0));
   $$("[data-rm]").forEach(b => b.onclick = () => { delete cart[b.dataset.rm]; saveCart(); route(); });
   $$("[data-cq]").forEach(b => b.onclick = () => {
     const id = b.dataset.cq, p = product(id);
@@ -364,7 +415,7 @@ function viewCheckout() {
       ${lines.map(({ p, qty }) => `<div class="sum-row"><span>${qty}× ${p.name}</span><span data-line="${p.id}"></span></div>`).join("")}
       <div class="sum-row" style="border-top:1px solid var(--line);margin-top:8px;padding-top:12px"><span>Subtotal</span><span>${brl(lines.reduce((t, l) => t + l.p.price * l.qty, 0))}</span></div>
       <div class="sum-row"><span>Desconto</span><span class="disc" id="sDisc"></span></div>
-      <div class="sum-row"><span>Entrega</span><span id="sShip">Grátis</span></div>
+      <div class="sum-row"><span>Frete</span><span id="sShip" style="text-align:right">Grátis</span></div>
       <div class="sum-row total"><span>Total</span><b id="sTotal"></b></div>
       <div class="muted" id="sInst" style="font-size:.85rem;text-align:right"></div>
       ${deadlineWarning()}
@@ -399,9 +450,9 @@ function mountCheckout() {
     $("#sInst").textContent = method === "card" ? `ou até ${CFG.maxInstallments}x de ${brl(total / CFG.maxInstallments)}*` : "";
     Object.keys(METHODS).forEach(m => { const el = $(`[data-mtotal="${m}"]`); if (el && !$(`input[value="${m}"]`, form).disabled) el.textContent = brl(totals(m) + shipValue()); });
     const sb = $("#shipBox");
-    if (sb) sb.innerHTML = delivery === "entrega"
-      ? (ship ? `<div class="alert" style="display:flex;color:var(--green);border-color:rgba(37,211,102,.4);background:rgba(37,211,102,.08)">${icon("truck", 18)}<span>Frete para <b>${ship.city}/${ship.uf}</b>: <b>${brl(ship.cents / 100)}</b> — ${ship.label}. O valor é somado ao total do pedido.</span></div>`
-        : shipMsg ? `<div class="alert" style="display:flex">${icon("info", 18)}<span>${shipMsg}</span></div>` : "") : "";
+    // Sem aviso de valor: o frete aparece só no resumo. Aqui fica apenas a mensagem de erro, se houver.
+    if (sb) sb.innerHTML = delivery === "entrega" && !ship && shipMsg && shipMsg !== "Calculando frete…"
+      ? `<small class="shipcalc-err">${shipMsg}</small>` : "";
   };
 
   async function quote(cep) {
@@ -417,7 +468,7 @@ function mountCheckout() {
     } catch (ex) { ship = null; shipMsg = ex.message; }
     refresh();
   }
-  form.addEventListener("change", refresh);
+  form.addEventListener("change", e => { refresh(); if (e.target.name === "delivery" && form.delivery.value === "entrega" && form.cep.value.replace(/\D/g, "").length === 8) quote(form.cep.value.replace(/\D/g, "")); });
   refresh();
 
   // máscaras
@@ -443,6 +494,9 @@ function mountCheckout() {
       form.number.focus();
     } catch {}
   });
+
+  // CEP já calculado no produto/carrinho: preenche o endereço e o frete automaticamente.
+  if (savedCep() && !form.cep.value) { form.cep.value = fmtCep(savedCep()); form.cep.dispatchEvent(new Event("input")); }
 
   form.addEventListener("submit", async e => {
     e.preventDefault();

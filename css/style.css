@@ -328,3 +328,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 30px;background:var(--bg-
 /* Aviso de prazo da reserva (carrinho, checkout e acompanhamento) */
 .alert.deadline{background:rgba(247,148,29,.12);border-color:rgba(247,148,29,.55);color:#fde3bf;align-items:flex-start;line-height:1.45}
 .alert.deadline b{color:#ffb35c;letter-spacing:.3px}
+
+/* Caixinha "Calcular frete" (produto e carrinho) */
+.shipcalc{margin-top:14px;padding:14px;border:1.5px solid var(--line);border-radius:14px;background:var(--bg-2)}
+.shipcalc label{display:block;font-weight:700;font-size:.92rem;margin-bottom:10px}
+.shipcalc-row{display:flex;gap:8px}
+.shipcalc-row input{flex:1;min-width:0;padding:12px 14px;border-radius:12px;background:var(--card);border:1.5px solid var(--line);outline:none;font-size:1rem;letter-spacing:1px}
+.shipcalc-row input:focus{border-color:var(--orange)}
+.shipcalc-row .btn{padding:12px 18px}
+.shipcalc-res{margin-top:10px}
+.shipcalc-res .sum-row{padding:6px 0}
+.shipcalc-help{display:inline-block;margin-top:6px;font-size:.78rem;color:var(--muted);text-decoration:underline}
+.shipcalc-err{color:#ff8a80;display:block}
