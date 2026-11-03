@@ -116,10 +116,11 @@ export default [
   // Acompanhamento do pedido pelo cliente (link com token secreto, sem login).
   // Cotação de frete pelo CEP (entrega própria). Só informativa: o pedido recalcula no servidor.
   ["GET", "/shipping/quote", async req => {
+    // Funciona mesmo antes do primeiro acesso do painel: sem loja cadastrada, usa a tabela padrão
+    // (origem na Rod. Anchieta, 1138 e as faixas definidas pela RSC).
     const store = await resolvePublicStore(req);
-    if (!store) fail(503, "Loja ainda não configurada.");
     await rateLimit(`frete:${clientIp(req)}`, 60, 3600, "Muitas consultas de frete. Aguarde alguns minutos.");
-    const qte = await quoteShipping(store.settings, req.query.cep);
+    const qte = await quoteShipping(store?.settings || {}, req.query.cep);
     return { quote: { cep: qte.cep, cents: qte.cents, label: qte.label, distanceKm: qte.distanceKm, city: qte.city, uf: qte.uf } };
   }],
 

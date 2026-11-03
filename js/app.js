@@ -333,7 +333,7 @@ function viewCheckout() {
       <div class="panel"><h3><i>2</i> Entrega</h3>
         <div class="opts">
           <label class="opt on"><input type="radio" name="delivery" value="retirada" checked><div class="t"><b>Retirar na loja</b><small>Rod. Anchieta, 1138 — Vila Moinho Velho, São Paulo/SP</small></div><span class="tag">GRÁTIS</span></label>
-          <label class="opt"><input type="radio" name="delivery" value="entrega"><div class="t"><b>Entrega no meu endereço</b><small>${backendOrders() ? "Entrega própria da RSC — frete calculado pelo CEP e somado ao total" : "Frete calculado pela equipe e combinado pelo WhatsApp após a compra"}</small></div><span class="tag" style="color:var(--muted)">${backendOrders() ? "PELO CEP" : "A COMBINAR"}</span></label>
+          <label class="opt"><input type="radio" name="delivery" value="entrega"><div class="t"><b>Entrega no meu endereço</b><small>Entrega própria da RSC — frete calculado pelo CEP e somado ao total</small></div><span class="tag" style="color:var(--muted)">PELO CEP</span></label>
         </div>
         <div id="shipBox" style="margin-top:14px"></div>
         <div class="form" id="addr" style="margin-top:18px;display:none">
@@ -394,18 +394,17 @@ function mountCheckout() {
     $("#sDisc").textContent = totals(method) < subtotal ? `− ${brl(subtotal - totals(method))}` : "—";
     $("#sShip").innerHTML = delivery !== "entrega" ? "Grátis (retirada)"
       : ship ? `${brl(ship.cents / 100)}<br><small class="muted">${ship.label} · ${ship.city}/${ship.uf}</small>`
-      : backendOrders() ? `<small class="muted">${shipMsg || "Informe o CEP"}</small>` : "A combinar";
+      : `<small class="muted">${shipMsg || "Informe o CEP"}</small>`;
     $("#sTotal").textContent = brl(total);
     $("#sInst").textContent = method === "card" ? `ou até ${CFG.maxInstallments}x de ${brl(total / CFG.maxInstallments)}*` : "";
     Object.keys(METHODS).forEach(m => { const el = $(`[data-mtotal="${m}"]`); if (el && !$(`input[value="${m}"]`, form).disabled) el.textContent = brl(totals(m) + shipValue()); });
     const sb = $("#shipBox");
-    if (sb) sb.innerHTML = delivery === "entrega" && backendOrders()
+    if (sb) sb.innerHTML = delivery === "entrega"
       ? (ship ? `<div class="alert" style="display:flex;color:var(--green);border-color:rgba(37,211,102,.4);background:rgba(37,211,102,.08)">${icon("truck", 18)}<span>Frete para <b>${ship.city}/${ship.uf}</b>: <b>${brl(ship.cents / 100)}</b> — ${ship.label}. O valor é somado ao total do pedido.</span></div>`
         : shipMsg ? `<div class="alert" style="display:flex">${icon("info", 18)}<span>${shipMsg}</span></div>` : "") : "";
   };
 
   async function quote(cep) {
-    if (!backendOrders()) return;
     if (cep === shipCep && ship) return;
     shipCep = cep; ship = null; shipMsg = "Calculando frete…"; refresh();
     try {
@@ -451,7 +450,7 @@ function mountCheckout() {
     const need = ["name", "doc", "email", "phone"];
     if (form.delivery.value === "entrega") need.push("cep", "street", "number", "district", "city", "uf");
     let bad = need.filter(n => !form[n].value.trim());
-    if (form.delivery.value === "entrega" && backendOrders() && !ship && !bad.includes("cep")) {
+    if (form.delivery.value === "entrega" && !ship && !bad.includes("cep")) {
       err.innerHTML = `${icon("info", 18)} <span>${shipMsg && shipMsg !== "Calculando frete…" ? shipMsg : "Aguarde o cálculo do frete pelo CEP."}</span>`; err.style.display = "flex";
       if (!shipMsg) quote(form.cep.value.replace(/\D/g, ""));
       return;
@@ -497,14 +496,15 @@ function mountCheckout() {
 
     // Modo demonstração: envia o pedido ao WhatsApp
     const id = "RSC-" + Date.now().toString(36).toUpperCase();
-    const total = totals(fd.method);
+    const frete = fd.delivery === "entrega" && ship ? ship.cents / 100 : 0;
+    const total = totals(fd.method) + frete;
     const a = order.buyer.address;
     const msg = [
       `🛒 *Novo pedido pelo site — ${id}*`, "",
       ...lines.map(l => `• ${l.qty}x ${l.p.name} (${l.p.brand}) — ${brl(unitPrice(l.p, fd.method) * l.qty)}`), "",
       `*Total:* ${brl(total)}`,
       `*Pagamento:* ${METHODS[fd.method].label}`,
-      `*Entrega:* ${fd.delivery === "entrega" ? "Entrega (frete a combinar)" : "Retirada na loja"}`,
+      `*Entrega:* ${fd.delivery === "entrega" ? `Entrega própria — frete ${brl(frete)} (${ship ? ship.label : ""})` : "Retirada na loja"}`,
       a ? `*Endereço:* ${a.street}, ${a.number}${a.comp ? " - " + a.comp : ""} - ${a.district}, ${a.city}/${a.uf} - CEP ${a.cep}` : "", "",
       `*Cliente:* ${fd.name}`, `*CPF/CNPJ:* ${fd.doc}`, `*E-mail:* ${fd.email}`, `*Telefone:* ${fd.phone}`,
     ].filter(x => x !== null).join("\n");
