@@ -193,7 +193,8 @@ function pageSetup() {
     $(".gwrap").setAttribute("hidden", ""); $("#f1").style.display = "none"; $("#f2").style.display = "grid";
     $("#codeField").style.display = "none"; $("#resend").style.display = "none";
     $("#sentTo").textContent = `Conta Google: ${email}. Complete os dados abaixo.`;
-    $("#pwLabel").textContent = "Senha do painel (opcional — sem senha, você entra sempre pelo botão do Google)";
+    // Login só pelo Google: sem senha do painel (o servidor guarda uma senha aleatória que ninguém conhece).
+    $("#pwLabel").closest(".f").remove(); $("#f2").password2.closest(".f").remove();
     $("#f2").name.focus();
   });
   const send = async () => {
@@ -208,12 +209,12 @@ function pageSetup() {
   f2.code.oninput = () => { f2.code.value = f2.code.value.replace(/\D/g, "").slice(0, 6); };
   f2.onsubmit = async e => {
     e.preventDefault(); errBox("");
-    if (f2.password.value !== f2.password2.value) return errBox("As senhas não conferem.");
+    if (!googleCredential && f2.password.value !== f2.password2.value) return errBox("As senhas não conferem.");
     if (!googleCredential && !/^\d{6}$/.test(f2.code.value)) return errBox("Digite o código de 6 dígitos.");
     const btn = $("button[type=submit]", f2); btn.disabled = true; btn.textContent = "Criando… (a importação pode levar alguns segundos)";
     try {
       await api("auth/setup", { method: "POST", body: { email, code: f2.code.value, googleCredential, storeName: f2.storeName.value,
-        name: f2.name.value, password: f2.password.value, importCatalog: f2.importCatalog.checked } });
+        name: f2.name.value, password: googleCredential ? "" : f2.password.value, importCatalog: f2.importCatalog.checked } });
       await loadMe(); toast("Conta criada!"); go("/admin/dashboard", true);
     } catch (err) { errBox(err.message); btn.disabled = false; btn.textContent = "Criar conta e entrar"; }
   };
