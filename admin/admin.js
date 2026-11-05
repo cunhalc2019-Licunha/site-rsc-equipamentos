@@ -186,6 +186,13 @@ function pageSetup() {
     </form>
     <div class="alert" id="err" style="display:none;margin-top:12px"></div>`);
   let email = "", googleCredential = null;
+  // Sem envio de e-mail configurado em produção, o único caminho é o botão do Google: esconde o formulário do código.
+  api("auth/setup-status").then(st => {
+    if (st.googleClientId && st.emailConfigured === false && location.hostname !== "localhost") {
+      $("#f1").style.display = "none"; $(".orline")?.remove();
+      $(".sub").textContent = "Toque em \"Continuar com o Google\" e escolha a conta do proprietário da loja.";
+    }
+  }).catch(() => {});
   googleButton($("#gbtn"), credential => {
     // Conta Google escolhida: não precisa de código. O servidor confere se é o e-mail do proprietário.
     googleCredential = credential; errBox("");

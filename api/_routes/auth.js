@@ -52,7 +52,8 @@ async function importCatalog(t, ctx) {
 export default [
   ["GET", "/auth/setup-status", async () => {
     const [{ n }] = await (await db()).query("SELECT count(*)::int AS n FROM users");
-    return { needsSetup: n === 0, ownerConfigured: !!ownerEmail(), googleClientId: googleClientId() || null };
+    const emailConfigured = !!((process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) || (process.env.RESEND_API_KEY && process.env.EMAIL_FROM));
+    return { needsSetup: n === 0, ownerConfigured: !!ownerEmail(), googleClientId: googleClientId() || null, emailConfigured };
   }],
 
   // Configuração pública do login (ID do cliente Google não é segredo).
