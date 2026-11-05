@@ -989,7 +989,8 @@ async function render() {
     try { await loadMe(); }
     catch (err) {
       if (err.data?.code === "EMAIL_NOT_VERIFIED") return go("/admin/verify-email", true);
-      if (err.status !== 401) root.innerHTML = `<div class="auth"><div class="box"><h1>Painel indisponível</h1><p class="sub">${esc(err.message)}</p></div></div>`;
+      if (err.status === 401) return go("/admin/login", true); // sem sessão (outro navegador ou login expirado)
+      root.innerHTML = `<div class="auth"><div class="box"><h1>Painel indisponível</h1><p class="sub">${esc(err.message)}</p></div></div>`;
       return;
     }
   }
