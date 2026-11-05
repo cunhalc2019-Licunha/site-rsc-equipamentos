@@ -117,16 +117,42 @@ function authBox(title, sub, form, links = "") {
     <div class="brand"><img src="/img/logo.png" alt="" style="width:56px;height:56px"><div><b>RSC</b><small>Equipamentos</small></div></div>
     <h1>${title}</h1><p class="sub">${sub}</p>${form}${links}</div></div>`;
 }
+// Botão oficial "Entrar com Google" (Google Identity Services). Só aparece se o servidor tiver GOOGLE_CLIENT_ID.
+let googleCfg;
+async function googleButton(el, onCredential) {
+  try {
+    googleCfg ??= await api("auth/config");
+    if (!googleCfg.googleClientId || !el) return false;
+    if (!window.google?.accounts?.id) await new Promise((ok, ko) => {
+      const sc = document.createElement("script"); sc.src = "https://accounts.google.com/gsi/client"; sc.async = true;
+      sc.onload = ok; sc.onerror = ko; document.head.appendChild(sc);
+    });
+    google.accounts.id.initialize({ client_id: googleCfg.googleClientId, callback: r => onCredential(r.credential),
+      ux_mode: "popup", auto_select: false, itp_support: true });
+    el.innerHTML = "";
+    google.accounts.id.renderButton(el, { theme: "filled_black", size: "large", shape: "pill", text: "continue_with",
+      width: Math.min(360, el.clientWidth || 320), locale: "pt-BR" });
+    el.closest(".gwrap")?.removeAttribute("hidden");
+    return true;
+  } catch { return false; }
+}
+const googleBlock = `<div class="gwrap" hidden><div id="gbtn" class="gbtn"></div><div class="orline"><span>ou</span></div></div>`;
+
 const errBox = (msg) => { const e = $("#err"); e.textContent = msg; e.style.display = msg ? "flex" : "none"; };
 
 function pageLogin() {
-  authBox("Entrar", "Acesso restrito à equipe da loja.", `
+  authBox("Entrar", "Acesso restrito à equipe da loja.", `${googleBlock}
     <form id="f" class="form" novalidate>
       <div class="f"><label>E-mail</label><input name="email" type="email" autocomplete="username" required></div>
       <div class="f"><label>Senha</label><input name="password" type="password" autocomplete="current-password" required></div>
       <button class="btn btn-primary btn-block" type="submit">Entrar</button>
       <div class="alert" id="err" style="display:none"></div>
     </form>`, `<div class="links"><a href="/admin/forgot-password" data-link>Esqueci minha senha</a><a href="/admin/register" data-link>Tenho um convite</a></div>`);
+  googleButton($("#gbtn"), async credential => {
+    errBox("");
+    try { await api("auth/google", { method: "POST", body: { credential } }); await loadMe(); go("/admin/dashboard", true); }
+    catch (err) { errBox(err.message); }
+  });
   $("#f").onsubmit = async e => {
     e.preventDefault(); const f = e.target, btn = $("button", f); btn.disabled = true; errBox("");
     try {
@@ -141,7 +167,7 @@ function pageLogin() {
 
 // Primeiro acesso em 2 passos: (1) e-mail do proprietário → código enviado; (2) código + dados → conta criada.
 function pageSetup() {
-  authBox("Primeiro acesso", "Crie a conta do proprietário da loja. Esta tela só funciona uma vez.", `
+  authBox("Primeiro acesso", "Crie a conta do proprietário da loja. Esta tela só funciona uma vez.", `${googleBlock}
     <form id="f1" class="form" novalidate>
       <div class="f"><label>E-mail do proprietário</label><input name="email" type="email" autocomplete="username" required>
         <span class="help">Enviaremos um código de 6 dígitos para este e-mail.</span></div>
@@ -149,17 +175,27 @@ function pageSetup() {
     </form>
     <form id="f2" class="form" novalidate style="display:none">
       <p class="muted-sm" id="sentTo"></p>
-      <div class="f"><label>Código recebido por e-mail</label><input name="code" class="codein" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></div>
+      <div class="f" id="codeField"><label>Código recebido por e-mail</label><input name="code" class="codein" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></div>
       <div class="f"><label>Nome da loja</label><input name="storeName" value="RSC Equipamentos" required></div>
       <div class="f"><label>Seu nome</label><input name="name" autocomplete="name" required></div>
-      <div class="f"><label>Crie uma senha para o painel (mínimo 10 caracteres)</label><input name="password" type="password" autocomplete="new-password" required></div>
+      <div class="f"><label id="pwLabel">Crie uma senha para o painel (mínimo 10 caracteres)</label><input name="password" type="password" autocomplete="new-password" required></div>
       <div class="f"><label>Confirmar senha</label><input name="password2" type="password" autocomplete="new-password" required></div>
       <label class="check" style="color:var(--text)"><input type="checkbox" name="importCatalog" checked> Importar o catálogo atual do site (≈220 produtos, 20 setores)</label>
       <button class="btn btn-primary btn-block" type="submit">Criar conta e entrar</button>
       <button class="btn btn-ghost btn-block" type="button" id="resend">Reenviar código</button>
     </form>
     <div class="alert" id="err" style="display:none;margin-top:12px"></div>`);
-  let email = "";
+  let email = "", googleCredential = null;
+  googleButton($("#gbtn"), credential => {
+    // Conta Google escolhida: não precisa de código. O servidor confere se é o e-mail do proprietário.
+    googleCredential = credential; errBox("");
+    try { email = JSON.parse(atob(credential.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))).email || ""; } catch {}
+    $(".gwrap").setAttribute("hidden", ""); $("#f1").style.display = "none"; $("#f2").style.display = "grid";
+    $("#codeField").style.display = "none"; $("#resend").style.display = "none";
+    $("#sentTo").textContent = `Conta Google: ${email}. Complete os dados abaixo.`;
+    $("#pwLabel").textContent = "Senha do painel (opcional — sem senha, você entra sempre pelo botão do Google)";
+    $("#f2").name.focus();
+  });
   const send = async () => {
     errBox("");
     try { const r = await api("auth/setup/send-code", { method: "POST", body: { email } }); toast(r.message);
@@ -173,9 +209,10 @@ function pageSetup() {
   f2.onsubmit = async e => {
     e.preventDefault(); errBox("");
     if (f2.password.value !== f2.password2.value) return errBox("As senhas não conferem.");
+    if (!googleCredential && !/^\d{6}$/.test(f2.code.value)) return errBox("Digite o código de 6 dígitos.");
     const btn = $("button[type=submit]", f2); btn.disabled = true; btn.textContent = "Criando… (a importação pode levar alguns segundos)";
     try {
-      await api("auth/setup", { method: "POST", body: { email, code: f2.code.value, storeName: f2.storeName.value,
+      await api("auth/setup", { method: "POST", body: { email, code: f2.code.value, googleCredential, storeName: f2.storeName.value,
         name: f2.name.value, password: f2.password.value, importCatalog: f2.importCatalog.checked } });
       await loadMe(); toast("Conta criada!"); go("/admin/dashboard", true);
     } catch (err) { errBox(err.message); btn.disabled = false; btn.textContent = "Criar conta e entrar"; }

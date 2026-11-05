@@ -45,6 +45,7 @@ e os **códigos de e-mail aparecem no terminal** do `npm run dev`.
    - `OWNER_EMAIL` — e-mail do proprietário (só ele pode fazer o primeiro acesso)
    - `AUTH_SECRET` — texto aleatório longo (32+ caracteres)
    - `CRON_SECRET` — texto aleatório longo
+   - `GOOGLE_CLIENT_ID` (opcional) — ativa o botão "Entrar com Google" no primeiro acesso e no login
    - `GMAIL_USER` e `GMAIL_APP_PASSWORD` (Gmail da loja + "senha de app" do Google) — ou `RESEND_API_KEY` e `EMAIL_FROM`
 6. *Redeploy*. Acesse `/admin/` → **Primeiro acesso** → digite o `OWNER_EMAIL`, receba o código por e-mail e crie sua senha.
 7. Convide a equipe em **Usuários e permissões**.

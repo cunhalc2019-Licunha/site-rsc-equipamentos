@@ -13,6 +13,7 @@ import { rateLimit } from "../_lib/rate.js";
 import { text, email as parseEmail, slugify } from "../_lib/validate.js";
 import { createProduct } from "../_lib/products.js";
 import { sendEmail } from "../_lib/email.js";
+import { googleClientId, verifyGoogleCredential } from "../_lib/google.js";
 import { ENTRY_ORIGINS, ADJUST_REASONS } from "../_lib/stock.js";
 import { settingsOf, getStore } from "../_lib/store.js";
 
@@ -51,7 +52,12 @@ async function importCatalog(t, ctx) {
 export default [
   ["GET", "/auth/setup-status", async () => {
     const [{ n }] = await (await db()).query("SELECT count(*)::int AS n FROM users");
-    return { needsSetup: n === 0, ownerConfigured: !!ownerEmail() };
+    return { needsSetup: n === 0, ownerConfigured: !!ownerEmail(), googleClientId: googleClientId() || null };
+  }],
+
+  // Configuração pública do login (ID do cliente Google não é segredo).
+  ["GET", "/auth/config", async () => {
+    return { googleClientId: googleClientId() || null };
   }],
 
   // Primeiro acesso — passo 1: envia o código ao e-mail do dono.
@@ -74,18 +80,24 @@ export default [
     await rateLimit(`setup:${clientIp(req)}`, 30, 3600);
     const owner = ownerEmail();
     if (!owner) fail(503, "Configure a variável OWNER_EMAIL (e-mail do proprietário) no servidor antes do primeiro acesso.");
-    const mail = parseEmail(b.email);
-    if (mail !== owner) fail(403, "Este e-mail não está autorizado como proprietário desta loja.");
+    // Duas formas de provar que é o dono: código enviado ao e-mail OU "Entrar com Google" com a conta do OWNER_EMAIL.
+    const google = b.googleCredential ? await verifyGoogleCredential(b.googleCredential) : null;
+    const mail = google ? google.email : parseEmail(b.email);
+    if (mail !== owner) fail(403, google
+      ? `A conta Google ${mail} não está autorizada como proprietária desta loja.`
+      : "Este e-mail não está autorizado como proprietário desta loja.");
     const storeName = text(b.storeName, "Nome da loja", { required: true, max: 80 });
     const name = text(b.name, "Seu nome", { required: true, max: 80 });
-    validatePassword(b.password);
-    const passwordHash = await hashPassword(b.password);
+    // Com Google a senha é opcional (sem senha, o login é só pelo botão do Google).
+    const withPassword = !google || String(b.password || "") !== "";
+    if (withPassword) validatePassword(b.password);
+    const passwordHash = await hashPassword(withPassword ? b.password : randomBytes(32).toString("base64url"));
 
     const r = await (await db()).tx(async t => {
       await t.query("LOCK TABLE users IN EXCLUSIVE MODE");
       const [{ n }] = await t.query("SELECT count(*)::int AS n FROM users");
       if (n > 0) return { err: [409, "O painel já foi configurado. Faça login.", "ALREADY_SETUP"] };
-      const err = await checkSetupCode(t, mail, String(b.code || "").trim());
+      const err = google ? null : await checkSetupCode(t, mail, String(b.code || "").trim());
       if (err) return { err }; // a transação confirma o incremento de tentativas
       const [store] = await t.query("INSERT INTO stores (name, slug) VALUES ($1, $2) RETURNING id", [storeName, slugify(storeName)]);
       const [user] = await t.query(
@@ -97,7 +109,7 @@ export default [
       return { ctx: c };
     });
     if (r.err) fail(r.err[0], r.err[1], { code: r.err[2] });
-    await audit(r.ctx, "setup", "store", r.ctx.storeId, { importCatalog: !!b.importCatalog }, req);
+    await audit(r.ctx, "setup", "store", r.ctx.storeId, { importCatalog: !!b.importCatalog, via: google ? "google" : "codigo" }, req);
     await createSession(req, res, r.ctx.user.id);
     return { ok: true };
   }],
@@ -120,6 +132,21 @@ export default [
     await (await db()).query("UPDATE users SET last_login_at = now() WHERE id = $1", [user.id]);
     await createSession(req, res, user.id);
     await audit({ storeId: user.store_id, user: { id: user.id } }, "login", "user", user.id, null, req);
+    return { ok: true };
+  }],
+
+  // Login com o botão "Entrar com Google": vale para qualquer usuário ativo cujo e-mail seja o da conta Google.
+  ["POST", "/auth/google", async (req, res) => {
+    const ip = clientIp(req);
+    await rateLimit(`google-ip:${ip}`, 30, 900, "Muitas tentativas. Aguarde alguns minutos.");
+    const g = await verifyGoogleCredential(body(req).credential);
+    const user = await userByEmail(g.email);
+    await (await db()).query("INSERT INTO login_attempts (email, ip, success) VALUES ($1, $2, $3)", [g.email, ip, !!user?.active]);
+    if (!user || !user.active) fail(403, `A conta Google ${g.email} não tem acesso a este painel. Peça um convite ao proprietário.`);
+    // o Google já confirmou que o e-mail é dessa pessoa
+    await (await db()).query("UPDATE users SET last_login_at = now(), email_verified_at = COALESCE(email_verified_at, now()) WHERE id = $1", [user.id]);
+    await createSession(req, res, user.id);
+    await audit({ storeId: user.store_id, user: { id: user.id } }, "login", "user", user.id, { via: "google" }, req);
     return { ok: true };
   }],
 

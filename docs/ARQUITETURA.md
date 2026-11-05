@@ -145,6 +145,7 @@ Nenhuma rota permite aprovar pagamento manualmente; o provedor `teste` só é ac
 | `DATABASE_URL` | sim | PostgreSQL (Neon/Supabase/outro). Local: `pglite:./.data/db` |
 | `OWNER_EMAIL` | sim (1º acesso) | e-mail do proprietário — único autorizado a fazer o primeiro acesso |
 | `AUTH_SECRET` | sim em produção | segredo (≥16 caracteres) para os códigos por e-mail |
+| `GOOGLE_CLIENT_ID` | opcional | botão "Entrar com Google" (primeiro acesso do OWNER_EMAIL e login de usuários ativos; token conferido no Google: público = nosso app, e-mail verificado) |
 | `GMAIL_USER`, `GMAIL_APP_PASSWORD` | um dos dois em produção | envio de e-mails pelo Gmail da loja (senha de app do Google) |
 | `RESEND_API_KEY`, `EMAIL_FROM` | alternativa | envio de e-mails pelo Resend (domínio verificado) |
 | `BLOB_READ_WRITE_TOKEN` | sim em produção | fotos (Vercel Blob) |

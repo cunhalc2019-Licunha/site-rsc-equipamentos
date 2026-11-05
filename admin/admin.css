@@ -174,3 +174,9 @@ a.kpi:hover{border-color:var(--orange)}
 .tbl td:has(> b){min-width:220px}
 .tbl{min-width:900px}
 .auth .form > .btn,.auth .form > .check,.auth .form > p{grid-column:1/-1}
+
+/* Entrar com Google */
+.gwrap{margin:4px 0 6px}
+.gbtn{display:flex;justify-content:center;min-height:44px}
+.orline{display:flex;align-items:center;gap:12px;margin:16px 0 4px;color:var(--muted,#9a9a9a);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+.orline::before,.orline::after{content:"";flex:1;height:1px;background:var(--line,#2a2a2a)}
