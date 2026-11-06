@@ -105,7 +105,7 @@ test("painel não tem rota para aprovar pagamento online", async () => {
   const tryPaid = await call("POST", `/api/admin/orders/${id}/advance`, { jar, body: { status: "pago" } });
   assert.equal(tryPaid.status, 422);
   const webhook = await call("POST", "/api/webhooks/mercadopago", { body: { type: "payment" } });
-  assert.equal(webhook.status, 501, "webhook reservado para a etapa 3");
+  assert.equal(webhook.status, 503, "sem MP_ACCESS_TOKEN o webhook não processa nada");
   const cancel = await call("POST", `/api/admin/orders/${id}/cancel`, { jar, body: { reason: "Cliente desistiu" } });
   assert.equal(cancel.status, 200);
   assert.deepEqual(await inv(p.id), { on_hand: 2, reserved: 0, sold: 0 }, "cancelamento libera a reserva");

@@ -404,8 +404,10 @@ function viewCheckout() {
           return `<label class="opt ${ok && k === methods[0] ? "on" : ""} ${ok ? "" : "off"}"><input type="radio" name="method" value="${k}" ${ok && k === methods[0] ? "checked" : ""} ${ok ? "" : "disabled"}>
             <span class="fi" style="width:40px;height:40px">${icon(m.icon)}</span><div class="t"><b>${m.label}</b><small>${ok ? m.sub : "Indisponível para itens em promoção à vista"}</small></div><span class="tag" data-mtotal="${k}"></span></label>`;
         }).join("")}</div>
-        <div class="secure">${icon("lock", 16)} ${backendOrders()
-          ? "Ao confirmar, seu pedido é registrado e os itens ficam reservados para você. A equipe RSC envia as instruções de pagamento pelo WhatsApp (o pagamento online será habilitado em breve)."
+        <div class="secure">${icon("lock", 16)} ${backendOrders() && DATA.onlinePayment
+          ? "Ao confirmar, os itens ficam reservados para você e você vai para o <b>Mercado Pago</b> pagar com segurança. Seus dados de cartão são digitados direto no Mercado Pago — a RSC não tem acesso a eles."
+          : backendOrders()
+          ? "Ao confirmar, seu pedido é registrado e os itens ficam reservados para você. A equipe RSC envia as instruções de pagamento pelo WhatsApp."
           : "Ao confirmar, seu pedido é enviado à equipe RSC pelo WhatsApp para finalizar o pagamento."}</div>
       </div>
     </div>
@@ -419,7 +421,7 @@ function viewCheckout() {
       <div class="sum-row total"><span>Total</span><b id="sTotal"></b></div>
       <div class="muted" id="sInst" style="font-size:.85rem;text-align:right"></div>
       ${deadlineWarning()}
-      <button class="btn btn-primary btn-block" style="margin-top:18px" id="payBtn" type="submit">${icon("lock", 18)} <span>Confirmar pedido</span></button>
+      <button class="btn btn-primary btn-block" style="margin-top:18px" id="payBtn" type="submit">${icon("lock", 18)} <span>${backendOrders() && DATA.onlinePayment ? "Confirmar e ir para o pagamento" : "Confirmar pedido"}</span></button>
       <div class="alert" id="coErr" style="margin-top:12px;display:none"></div>
       ${backendOrders() ? "" : `<div class="alert" style="margin-top:12px">${icon("info", 18)} <span><b>Modo demonstração:</b> o pedido será enviado ao WhatsApp da loja.</span></div>`}
     </aside>
@@ -540,6 +542,7 @@ function mountCheckout() {
           err.style.display = "flex"; btn.disabled = false; return;
         }
         cart = {}; saveCart();
+        if (data.order.paymentUrl) { btn.innerHTML = "Abrindo o Mercado Pago…"; location.href = data.order.paymentUrl; return; }
         location.hash = `#/pedido/${data.order.token}`;
       } catch {
         btn.disabled = false;
@@ -583,8 +586,9 @@ const dtBR = s => new Date(s).toLocaleString("pt-BR", { weekday: "long", day: "2
 function viewOrderTrack() {
   return `${pageHead("Seu pedido", [["Pedido"]], "", stepsBar(2))}<div class="container"><div class="done fade" id="track"><p class="muted">Carregando pedido…</p></div></div>`;
 }
-async function mountOrderTrack(token) {
+async function mountOrderTrack(token, opts = {}) {
   const box = $("#track");
+  if (!box) return;
   try {
     const r = await fetch(`/api/orders/${encodeURIComponent(token)}`, { cache: "no-store" });
     const d = await r.json();
@@ -595,7 +599,7 @@ async function mountOrderTrack(token) {
     box.innerHTML = `
       <div class="big">${icon(waiting ? "clock" : o.status === "pago" || o.status === "concluido" ? "check" : "info", 40)}</div>
       <h1>Pedido #${o.number}</h1>
-      <p style="margin-bottom:6px">Status: <b style="color:var(--text)">${esc(o.statusLabel)}</b> · Pagamento: <b style="color:var(--text)">${esc(o.payment_status)}</b></p>
+      <p style="margin-bottom:6px">Status: <b style="color:var(--text)">${esc(o.statusLabel)}</b> · Pagamento: <b style="color:var(--text)">${esc(o.paymentLabel || o.payment_status)}</b></p>
       ${waiting && o.reserved_until ? `<div class="alert deadline" style="text-align:left;margin:18px 0">${icon("clock", 18)}<span><b>ATENÇÃO AO PRAZO DE PAGAMENTO</b><br>
         Seus itens estão reservados até <b>${dtBR(o.reserved_until)}</b>. Se o pagamento não for confirmado até lá, a reserva poderá expirar e o produto voltará a ficar disponível para compra.</span></div>` : ""}
       <div class="panel" style="text-align:left;margin-top:14px">
@@ -604,11 +608,28 @@ async function mountOrderTrack(token) {
         ${o.delivery === "entrega" ? `<div class="sum-row"><span>Frete (entrega própria)${o.shipping_info ? ` <small class="muted">— ${esc(o.shipping_info.city)}/${esc(o.shipping_info.uf)}</small>` : ""}</span><span>${brl(o.shipping_cents / 100)}</span></div>` : ""}
         <div class="sum-row total"><span>Total</span><b>${brl(o.total_cents / 100)}</b></div>
       </div>
-      ${waiting ? `<p style="margin-top:16px">Guarde este link para acompanhar o pedido. Para pagar, fale com a equipe RSC — o pagamento online será habilitado em breve.</p>` : ""}
+      ${waiting && o.onlinePayment ? `<p style="margin-top:16px">Guarde este link para acompanhar o pedido. ${o.payment_status === "pendente" && o.has_payment_link ? "Se você já pagou por PIX ou boleto, a confirmação aparece aqui automaticamente assim que o Mercado Pago avisar." : ""}</p>`
+        : waiting ? `<p style="margin-top:16px">Guarde este link para acompanhar o pedido. Para pagar, fale com a equipe RSC pelo WhatsApp.</p>` : ""}
+      ${o.payment_status === "recusado" && waiting ? `<div class="alert" style="margin-top:12px">${icon("info", 18)}<span>O pagamento foi recusado. Você pode tentar de novo com outro cartão ou forma de pagamento.</span></div>` : ""}
       <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
-        ${waiting ? `<a href="#" class="btn btn-wa" data-wa="Olá! Fiz o pedido #${o.number} no site (${brl(o.total_cents / 100)}). Como faço o pagamento?">${icon("wa")} Combinar pagamento</a>` : ""}
+        ${waiting && o.onlinePayment ? `<button class="btn btn-primary" id="payNow">${icon("lock", 18)} Pagar agora</button>` : ""}
+        ${waiting ? `<a href="#" class="btn ${o.onlinePayment ? "btn-ghost" : "btn-wa"}" data-wa="Olá! Fiz o pedido #${o.number} no site (${brl(o.total_cents / 100)}). ${o.onlinePayment ? "Tenho uma dúvida sobre o pagamento." : "Como faço o pagamento?"}">${icon("wa")} ${o.onlinePayment ? "Falar com a loja" : "Combinar pagamento"}</a>` : ""}
         <a href="#/loja" class="btn btn-ghost">Continuar comprando</a>
       </div>`;
+    const pay = $("#payNow");
+    if (pay) pay.onclick = async () => {
+      pay.disabled = true; pay.textContent = "Abrindo o Mercado Pago…";
+      try {
+        const r = await fetch(`/api/orders/${encodeURIComponent(token)}/pay`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok || !d.paymentUrl) throw new Error(d.error || "Não foi possível abrir o pagamento.");
+        location.href = d.paymentUrl;
+      } catch (e) { pay.disabled = false; pay.innerHTML = `${icon("lock", 18)} Pagar agora`; alert(e.message); }
+    };
+    // Aguardando pagamento: confere de novo a cada 10 s (PIX costuma confirmar em segundos).
+    clearTimeout(window.__trackTimer);
+    if (waiting && o.onlinePayment && (opts.tries || 0) < 60)
+      window.__trackTimer = setTimeout(() => { if (location.hash === `#/pedido/${token}`) mountOrderTrack(token, { tries: (opts.tries || 0) + 1, quiet: true }); }, 10000);
   } catch (e) {
     box.classList.add("fail");
     box.innerHTML = `<div class="big">${icon("x", 38)}</div><h1>Pedido não encontrado</h1><p>${e.message}</p>`;
@@ -735,8 +756,10 @@ loadCatalog().then(escapeDeep).then(d => {
   DATA = d;
   $("#sectorbar").innerHTML = `<a href="#/loja" data-s="all">Todos os produtos</a>${d.sectors.map(s => `<a href="#/setor/${s.slug}" data-s="${s.slug}">${s.name}</a>`).join("")}<a href="#/ofertas" data-s="ofertas">🔥 Ofertas</a>`;
   $("#footSectors").innerHTML = d.sectors.map(s => `<li><a href="#/setor/${s.slug}">${s.name}</a></li>`).join("");
-  // Retorno do Mercado Pago (?status=approved...) → página de pedido
-  const st = new URLSearchParams(location.search).get("status");
+  // Retorno do Mercado Pago (?pedido=<token>&status=...) → página do pedido com o status real
+  const back = new URLSearchParams(location.search).get("pedido");
+  if (back && /^[\w-]{16,64}$/.test(back)) { history.replaceState(null, "", `/#/pedido/${back}`); }
+  const st = back ? null : new URLSearchParams(location.search).get("status");
   if (st && !location.hash) location.hash = `#/pedido/${{ approved: "sucesso", pending: "pendente", in_process: "pendente" }[st] || "falha"}`;
   updateBadge(); route();
 });

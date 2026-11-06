@@ -1,17 +1,21 @@
 // Rotas públicas do site: catálogo, pedidos (com reserva), acompanhamento do pedido e tarefas agendadas.
 import { timingSafeEqual, createHash } from "node:crypto";
 import { db } from "../_lib/db.js";
-import { body, fail, clientIp } from "../_lib/http.js";
+import { body, fail, clientIp, origin } from "../_lib/http.js";
 import { rateLimit } from "../_lib/rate.js";
 import { text, email as parseEmail } from "../_lib/validate.js";
 import { resolvePublicStore, settingsOf } from "../_lib/store.js";
 import { quoteShipping } from "../_lib/shipping.js";
 import { createOnlineOrder, expireReservations } from "../_lib/orders.js";
+import { mpConfigured, verifySignature } from "../_lib/mercadopago.js";
+import { paymentLink, applyMpPaymentId, syncOrder } from "../_lib/mpsync.js";
 
 const CONDITION = { novo: "Novo", seminovo: "Seminovo", usado_revisado: "Usado revisado" };
 const ALL_METHODS = ["pix", "card", "boleto"];
 const ORDER_STATUS = { aguardando_pagamento: "Aguardando pagamento", pago: "Pago", em_processamento: "Em processamento",
   concluido: "Concluído", cancelado: "Cancelado", expirado: "Expirado", estornado: "Estornado" };
+const PAYMENT_STATUS = { pendente: "Aguardando", aprovado: "Aprovado", recusado: "Recusado", cancelado: "Cancelado",
+  estornado: "Estornado", desconhecido: "Em análise" };
 
 // Verificação oportunista de reservas vencidas (garante consistência mesmo se o cron atrasar).
 let lastSweep = 0;
@@ -63,7 +67,7 @@ export default [
       slug: c.slug, name: c.name, desc: c.description || "", cover: c.cover_url || out.find(p => p.sector === c.slug).images[0],
     }));
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=15, stale-while-revalidate=30");
-    return { configured: true, reservationHours: settingsOf(store).reservationHours, sectors, products: out };
+    return { configured: true, onlinePayment: mpConfigured(), reservationHours: settingsOf(store).reservationHours, sectors, products: out };
   }],
 
   // Checkout: cria o pedido e reserva os itens. O navegador envia SÓ produto + quantidade + dados do cliente.
@@ -109,8 +113,24 @@ export default [
     // Frete recalculado aqui pelo CEP (fora da transação, pois consulta APIs externas). O navegador não informa valor.
     const shipping = delivery === "entrega" ? await quoteShipping(store.settings, address.cep) : null;
     const order = await q.tx(t => createOnlineOrder(t, store.id, { items, customer, method, delivery, address, shipping }));
+    // Link do Mercado Pago (se falhar, o pedido e a reserva continuam valendo; o cliente tenta pagar pela página do pedido).
+    let paymentUrl = null;
+    try { paymentUrl = await paymentLink(order.id, origin(req)); } catch (e) { console.error("[pagamento]", e.message); }
     return { order: { number: order.number, token: order.public_token, reservedUntil: order.reserved_until,
-      totalCents: order.total_cents, shippingCents: order.shipping_cents } };
+      totalCents: order.total_cents, shippingCents: order.shipping_cents, paymentUrl } };
+  }],
+
+  // "Pagar agora" na página do pedido: devolve o link do Mercado Pago (cria se ainda não existir).
+  ["POST", "/orders/:token/pay", async req => {
+    if (!mpConfigured()) fail(503, "Pagamento online ainda não está ativo. Fale com a loja pelo WhatsApp.");
+    await rateLimit(`pay:${clientIp(req)}`, 30, 3600, "Muitas tentativas. Aguarde alguns minutos.");
+    const [o] = await (await db()).query("SELECT id, status, reserved_until FROM orders WHERE public_token = $1 AND channel = 'online'", [req.params.token]);
+    if (!o) fail(404, "Pedido não encontrado.");
+    if (o.status !== "aguardando_pagamento") fail(409, "Este pedido não está aguardando pagamento.");
+    if (new Date(o.reserved_until) <= new Date()) fail(409, "A reserva deste pedido venceu. Faça um novo pedido.");
+    const url = await paymentLink(o.id, origin(req));
+    if (!url) fail(409, "Não foi possível gerar o pagamento deste pedido.");
+    return { paymentUrl: url };
   }],
 
   // Acompanhamento do pedido pelo cliente (link com token secreto, sem login).
@@ -126,14 +146,19 @@ export default [
 
   ["GET", "/orders/:token", async req => {
     const q = await db();
+    // confere no Mercado Pago se o pagamento já foi feito (não depende só do webhook)
+    const [ref] = await q.query("SELECT id FROM orders WHERE public_token = $1 AND channel = 'online'", [req.params.token]);
+    if (ref) await syncOrder(ref.id).catch(e => console.error("[pagamento:sync]", e.message));
     const [o] = await q.query(
       `SELECT o.id, o.number, o.status, o.payment_status, o.payment_method, o.delivery, o.total_cents, o.discount_cents,
-              o.subtotal_cents, o.shipping_cents, o.shipping_info, o.reserved_until, o.created_at
+              o.subtotal_cents, o.shipping_cents, o.shipping_info, o.reserved_until, o.created_at,
+              (o.payment_url IS NOT NULL OR o.payment_pref_id IS NOT NULL) AS has_payment_link
          FROM orders o WHERE o.public_token = $1 AND o.channel = 'online'`, [req.params.token]);
     if (!o) fail(404, "Pedido não encontrado.");
     const items = await q.query("SELECT name, sku, quantity, unit_price_cents, total_cents FROM order_items WHERE order_id = $1", [o.id]);
     delete o.id;
-    return { order: { ...o, statusLabel: ORDER_STATUS[o.status], items } };
+    return { order: { ...o, statusLabel: ORDER_STATUS[o.status], paymentLabel: PAYMENT_STATUS[o.payment_status] || o.payment_status,
+      onlinePayment: mpConfigured(), items } };
   }],
 
   // Tarefa agendada (Vercel Cron ou serviço externo): processa reservas vencidas de todas as lojas.
@@ -146,8 +171,16 @@ export default [
     return { ok: true, released };
   }, { skipOrigin: true }],
 
-  // Webhook do Mercado Pago: estrutura reservada para a ETAPA 3. Ainda não processa nada.
-  ["POST", "/webhooks/mercadopago", async () => {
-    fail(501, "Integração com o Mercado Pago será ativada na etapa 3.");
+  // Webhook do Mercado Pago. O corpo da notificação só diz QUAL pagamento mudou; o status é sempre
+  // consultado na API do Mercado Pago com o Access Token da loja antes de qualquer alteração no pedido.
+  ["POST", "/webhooks/mercadopago", async (req, res) => {
+    if (!mpConfigured()) fail(503, "Mercado Pago não configurado.");
+    const b = body(req) || {};
+    const type = b.type || b.topic || req.query.type || req.query.topic;
+    const id = String(b.data?.id || req.query["data.id"] || req.query.id || "");
+    if (type !== "payment" || !/^\d{1,20}$/.test(id)) return { ok: true, ignored: true }; // outros avisos: só confirma o recebimento
+    if (!verifySignature(req, req.query["data.id"] || id)) fail(401, "Assinatura inválida.");
+    const r = await applyMpPaymentId(id); // erro aqui → 5xx → o Mercado Pago reenvia depois
+    return { ok: true, result: r.result };
   }, { skipOrigin: true }],
 ];

@@ -145,6 +145,8 @@ Nenhuma rota permite aprovar pagamento manualmente; o provedor `teste` só é ac
 | `DATABASE_URL` | sim | PostgreSQL (Neon/Supabase/outro). Local: `pglite:./.data/db` |
 | `OWNER_EMAIL` | sim (1º acesso) | e-mail do proprietário — único autorizado a fazer o primeiro acesso |
 | `AUTH_SECRET` | sim em produção | segredo (≥16 caracteres) para os códigos por e-mail |
+| `MP_ACCESS_TOKEN` | para pagamento online | Access Token do Mercado Pago (Checkout Pro). Secreto, só no servidor |
+| `MP_WEBHOOK_SECRET` | recomendado | assinatura secreta dos webhooks do Mercado Pago (cabeçalho `x-signature`) |
 | `GOOGLE_CLIENT_ID` | opcional | botão "Entrar com Google" (primeiro acesso do OWNER_EMAIL e login de usuários ativos; token conferido no Google: público = nosso app, e-mail verificado) |
 | `GMAIL_USER`, `GMAIL_APP_PASSWORD` | um dos dois em produção | envio de e-mails pelo Gmail da loja (senha de app do Google) |
 | `RESEND_API_KEY`, `EMAIL_FROM` | alternativa | envio de e-mails pelo Resend (domínio verificado) |
@@ -178,3 +180,17 @@ Origem: a loja (Rod. Anchieta, 1138 — lat −23.6155, lng −46.6014). Faixas,
 Coordenadas do CEP: AwesomeAPI → BrasilAPI v2 → OpenStreetMap (cidade), com cache na tabela `cep_cache`.
 Rotas: `GET /api/shipping/quote?cep=` (informativa, com limite de uso) e `POST /api/orders` (recalcula o frete; ignora qualquer valor enviado pelo navegador).
 Retirada na loja = frete zero.
+
+## 11. Pagamento online — Mercado Pago (Checkout Pro)
+
+1. `POST /api/orders` cria o pedido e a reserva (preço, frete e total calculados no servidor) e gera uma **preferência** no
+   Mercado Pago com exatamente esse total, `external_reference` = id do pedido, só a forma de pagamento escolhida
+   (o preço muda conforme PIX/cartão/boleto) e validade igual ao fim da reserva. O site redireciona o cliente para o link.
+2. O cliente paga **na página do Mercado Pago** (a RSC nunca vê dados de cartão) e volta para `/?pedido=<token>`.
+3. A confirmação chega por dois caminhos, ambos **consultando** `GET /v1/payments/{id}` com o Access Token:
+   - webhook `POST /api/webhooks/mercadopago` (assinatura `x-signature` conferida com `MP_WEBHOOK_SECRET`);
+   - verificação ativa ao abrir a página do pedido (`/v1/payments/search?external_reference=`), no máximo a cada 20 s.
+4. `applyPaymentStatus` aplica o resultado: aprovado → reserva vira venda (baixa única); recusado/pendente → reserva segue;
+   estornado → devolve ao estoque se ainda não entregue; pagamento tardio e valor divergente geram ocorrência no painel.
+   Eventos repetidos são ignorados (`payment_events`).
+5. "Pagar agora" na página do pedido reaproveita o mesmo link enquanto a reserva estiver válida.
